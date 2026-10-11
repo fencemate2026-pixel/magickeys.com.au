@@ -1,12 +1,11 @@
 {
   "name": "magickeys-com-au",
-  "version": "1.1.0",
   "private": true,
+  "version": "1.1.0",
   "type": "module",
+  "engines": {"node": ">=22"},
   "scripts": {
-    "build": "node scripts/build.mjs"
-  },
-  "engines": {
-    "node": ">=22"
+    "build": "node scripts/build.mjs",
+    "check": "npm run build && node scripts/verify.mjs"
   }
 }

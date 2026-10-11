@@ -1,0 +1,34 @@
+/* MagicKeys client-access section. Designed to extend, not replace, the supplied site. */
+.client-section{padding:90px 0 94px;background:radial-gradient(ellipse at 16% 20%,#0c69a44a,transparent 53%),linear-gradient(112deg,#071b31,#0f3756 65%,#092941);color:#dfedfb;border-top:1px solid #4e9dd044;border-bottom:1px solid #408dc044}
+.client-access-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,8vw,120px);align-items:center}
+.client-access-intro .eyebrow{color:#91d6fa;letter-spacing:2px;font-size:12px;margin-bottom:20px}
+.client-access-intro h2{font-size:clamp(44px,5vw,73px);line-height:1.09;color:#ff934d;letter-spacing:-.04em;margin-bottom:24px}
+.client-access-intro h2 span{color:#fff}
+.client-access-intro>p{font-size:17px;color:#b7d5e9;line-height:1.86;max-width:580px;margin:0 0 29px}
+.client-security-points{display:grid;gap:16px;color:#d1e9f7;font-size:13px;line-height:1.5}
+.client-security-points>div{display:flex;align-items:center;gap:12px}
+.client-security-points .icon{color:#7ed7ff;width:19px;height:19px}
+.client-access-panel{background:#fff;border:1px solid #c7dfef;border-radius:14px;color:#17344c;box-shadow:0 20px 70px #010b1c91;overflow:hidden;position:relative}
+.client-panel-heading{background:#f4f9fd;border-bottom:1px solid #dce9f3;padding:22px 32px 15px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.client-panel-heading img{display:block;object-fit:contain;width:min(40%,180px);height:auto;flex-shrink:0}
+.client-panel-subheading{font-size:10px;color:#37698f;letter-spacing:1px;font-weight:700;text-align:right}
+.client-panel-body{padding:28px 32px 32px}
+.client-panel-body h3{font-size:30px;font-weight:700;color:#053c6c;line-height:1.2}
+.client-panel-lede{font-size:14px!important;line-height:1.7!important;margin:8px 0 22px!important;color:#5a7489!important;max-width:none!important}
+.client-workspace-card{display:flex;align-items:center;gap:14px;background:#eef6fc;border:1px solid #c7ddeb;border-radius:9px;padding:15px 13px}
+.client-workspace-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;background:linear-gradient(140deg,#006cca,#023a78);border-radius:9px;color:#e9f6ff}
+.client-workspace-icon .icon{height:22px;width:22px}
+.client-workspace-text{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.client-workspace-text strong{font-weight:700;font-size:14px;line-height:1.4;color:#0d3655}
+.client-workspace-text span{font-size:12px;line-height:1.4;color:#587b93}
+.client-workspace-action{display:inline-flex;align-items:center;gap:8px;justify-content:center;background:#ff8a3d;color:#15344d;min-height:42px;padding:10px 13px;border-radius:5px;font-weight:700;font-size:13px;white-space:nowrap;transition:background .15s,transform .15s}
+.client-workspace-action:hover{background:#ffad76;transform:translateY(-1px)}
+.client-workspace-action .icon{width:17px;height:17px}
+.client-panel-note{display:flex;align-items:flex-start;gap:10px;color:#557890;margin-top:20px;font-size:12px;line-height:1.55}
+.client-panel-note .icon{width:18px;height:18px;color:#187ab2}
+.client-panel-footer{background:#eaf3fa;border-top:1px solid #d3e4f0;color:#496a81;font-size:12px;line-height:1.6;padding:17px 32px}
+.client-panel-footer a{color:#0a679f;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:970px){.client-access-grid{gap:35px}.client-section{padding-block:70px}.client-panel-heading{padding:22px}.client-panel-body{padding:25px 22px}.client-panel-footer{padding:17px 22px}}
+@media(max-width:760px){.client-access-grid{grid-template-columns:1fr}.client-access-intro h2{font-size:clamp(41px,11vw,63px)}.client-access-intro>p{font-size:15px}.client-access-panel{width:100%;max-width:600px}.client-security-points{grid-template-columns:1fr 1fr;gap:12px}.client-security-points>div:last-child{grid-column:1/-1}}
+@media(max-width:460px){.client-security-points{grid-template-columns:1fr}.client-security-points>div:last-child{grid-column:auto}.client-panel-heading img{width:44%}.client-panel-subheading{font-size:8px}.client-workspace-card{flex-wrap:wrap}.client-workspace-action{width:100%}.client-workspace-text{flex-basis:calc(100% - 65px)}}
+@media(prefers-reduced-motion:reduce){.client-workspace-action{transition:none}}
