@@ -1,0 +1,19 @@
+/* Keep the AI artwork behind the tilted control preview at every screen size. */
+.ai-stage {
+  isolation: isolate;
+  transform-style: flat;
+}
+.ai-aura,
+.ai-orbit {
+  z-index: 0;
+}
+.ai-face {
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-screen {
+  z-index: 2;
+}
+.hero-stage-caption {
+  z-index: 3;
+}

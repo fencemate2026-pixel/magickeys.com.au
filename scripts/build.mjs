@@ -18,6 +18,7 @@ try {
   // Preserve the site's real animations, 3D models, screenshots, logos and video files.
   writeFileSync(page, content, 'utf8');
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/client-access.css', 'utf8'));
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/hero-layers.css', 'utf8'));
   console.log('Original MagicKeys website extracted intact. Client Login section integrated.');
 } finally {
   rmSync(scratch, {recursive:true, force:true});
