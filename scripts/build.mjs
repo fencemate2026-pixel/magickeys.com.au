@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, appendFileSync, cpSync, mkdtempSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { buildPages } from './pages.mjs';
 
 const archive = join(process.cwd(), 'MagicKeys-Azure-Website (1).zip');
 if (!existsSync(archive)) throw new Error('The original MagicKeys Azure website ZIP is missing.');
@@ -19,7 +20,14 @@ try {
   writeFileSync(page, content, 'utf8');
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/client-access.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/hero-layers.css', 'utf8'));
-  console.log('Original MagicKeys website extracted intact. Client Login section integrated.');
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/multipage.css', 'utf8'));
+  cpSync('site-assets', 'dist/assets', {recursive:true});
+  cpSync('patches/multipage.js', 'dist/assets/multipage.js');
+  const siteScript='dist/assets/site.js';
+  writeFileSync(siteScript,readFileSync(siteScript,'utf8')
+    .replace("foyer:'Foyer detection'","foyer:'Anti-Tailgating System'")
+    .replace('if(!reducedMotion.matches) playIntro();','if(!reducedMotion.matches && !window.location.hash) playIntro();'));
+  buildPages();
 } finally {
   rmSync(scratch, {recursive:true, force:true});
 }

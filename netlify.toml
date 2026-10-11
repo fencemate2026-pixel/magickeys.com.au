@@ -8,7 +8,12 @@
 
 [[redirects]]
   from = "/login"
-  to = "/#client-access"
+  to = "/client-login/"
+  status = 302
+
+[[redirects]]
+  from = "/login/"
+  to = "/client-login/"
   status = 302
 
 [[headers]]
