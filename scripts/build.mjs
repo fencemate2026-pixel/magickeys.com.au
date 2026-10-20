@@ -22,6 +22,7 @@ try {
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/hero-layers.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/multipage.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/security-demo.css', 'utf8'));
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-consistency.css', 'utf8'));
   cpSync('patches/security-demo.js', 'dist/assets/security-demo.js');
   cpSync('site-assets', 'dist/assets', {recursive:true});
   cpSync('patches/multipage.js', 'dist/assets/multipage.js');

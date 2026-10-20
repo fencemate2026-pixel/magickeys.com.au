@@ -14,10 +14,14 @@
     get('sd-camera-code').textContent='CAM '+String(index+1).padStart(2,'0');
     get('sd-camera-label').textContent=label;
     get('sd-selected-title').textContent=label;
-    get('sd-camera-scene').setAttribute('aria-label','Illustrative camera view: '+label);
+    get('sd-camera-scene').setAttribute('aria-label',eventZone===selected?'Illustrative overhead camera view: '+label:'Illustrative camera view: '+label);
     get('sd-camera-scene').style.setProperty('--camera-x',((index%5)*25)+'%');
     get('sd-camera-scene').style.setProperty('--camera-y',(Math.floor(index/5)*50)+'%');
     get('sd-camera-main').dataset.event=String(eventZone===selected&&!reviewed);
+    const overhead=eventZone===selected&&index<3;
+    get('sd-camera-main').dataset.overhead=String(overhead);
+    get('sd-camera-scene').dataset.overhead=String(overhead);
+    get('sd-camera-scene').dataset.people=eventZone===selected?'two':'one';
     get('sd-view-status').textContent=eventZone===selected?(reviewed?'Example event · marked reviewed':'Example event · review required'):'Example view · no live connection';
   }
   function render() {
@@ -33,14 +37,14 @@
     get('sd-reset').disabled=!active;
     const stage=get('sd-foyer-model');
     stage.dataset.state=active?'alert':'closed';
-    globalThis.MagicKeysViews?.update(stage.id,{state:stage.dataset.state,animate:true});
+    stage.setAttribute('aria-label',active?'Overhead foyer camera: two people passing after one authorised entry':'Overhead foyer camera: one person passing through the inner doorway');
     selectCamera(selected);
   }
   cameras.forEach((camera,i)=>camera.addEventListener('click',()=>selectCamera(i)));
   zones.forEach((button,i)=>button.addEventListener('click',()=>{
     zone=i; eventZone=null; reviewed=false; selectCamera(i); render();
     get('sd-event-title').textContent='Foyer 0'+(zone+1)+' selected';
-    get('sd-event-description').textContent='This example monitors the inner doorway. Simulate two people passing after one authorised entry.';
+    get('sd-event-description').textContent='The ceiling camera looks directly down over the inner doorway. Run the demo to show a second person following one authorised entry.';
   }));
   get('sd-simulate').addEventListener('click',()=>{
     eventZone=zone; reviewed=false; selectCamera(zone); render();
@@ -59,4 +63,5 @@
     get('sd-event-description').textContent='Select any of the 15 camera views, or choose another foyer to try the detection example again.';
     get('sd-simulate').focus();
   });
+  selectCamera(0);
 })();

@@ -70,7 +70,7 @@ for(const [route,page] of pages) {
 
 const home=pages.get('/').html;
 assert(home.includes('id="site-intro"')&&home.includes('id="hero-preview"'),'Homepage intro or animated gate preview missing');
-assert(home.includes('/assets/custom-dashboard-cctv.webp'),'Homepage CCTV dashboard missing');
+assert(home.includes('/assets/custom-dashboard-cctv-v2.webp'),'Homepage CCTV dashboard missing');
 assert(!home.includes('id="portal-tour"')&&!home.includes('id="client-access"'),'Homepage still contains full sections that should have moved');
 assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/platform/').html.includes('id="media-gallery"'),'Actual portal tour and full gallery missing');
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');

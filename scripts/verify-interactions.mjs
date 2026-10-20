@@ -190,7 +190,7 @@ export function verifyInteractions(pages) {
         assert.equal(node(id).dataset.state,'closed');
       }
     }
-    if(route==='/security-integrations/') {
+    if(route==='/security-integrations/'||route==='/anti-tailgating/') {
       const cameras=document.querySelectorAll('[data-security-camera]');
       assert.equal(cameras.length,15);
       for(let i=0;i<15;i++) {
@@ -204,7 +204,9 @@ export function verifyInteractions(pages) {
         assert.equal(node('sd-camera-code').textContent,'CAM 0'+zone);
         assert.equal(node('sd-camera-main').dataset.event,'true');
         assert.equal(node('sd-foyer-model').dataset.state,'alert');
-        assert.equal(node('sd-foyer-model').querySelector('img').src,'/assets/model-foyer-alert.svg');
+        assert.ok(node('sd-foyer-model').getAttribute('aria-label').includes('Overhead'));
+        assert.equal(node('sd-camera-scene').dataset.overhead,'true');
+        assert.equal(node('sd-camera-scene').dataset.people,'two');
         assert.equal(node('sd-detected').textContent,'2');
         assert.equal(node('sd-authorisations').textContent,'1');
         assert.equal(node('sd-simulate').disabled,true);
