@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { securityDemo } from './security-demo.mjs';
 
 const origin = 'https://magickeys.com.au';
 const arrow = '<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>';
@@ -192,7 +193,7 @@ function buildMorePages({solutions, how, login}) {
     `<div class="custom-workspace"><div class="custom-workspace-bar"><span class="brand"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></span><span>COMMERCIAL SITE / SIMULATED CONTROLS</span><img src="/assets/rjl-logo.png" alt="RJL Commercial" width="900" height="210"></div><div class="custom-gates">${[
       ['entry-boom','boom','Entry boom gate'],['exit-boom','boom','Exit boom gate'],['main-double','double','Main double gate'],['service-double','double','Service double gate']
     ].map(([id,kind,title],i)=>`<article class="custom-gate-card"><div class="custom-gate-heading"><span>0${i+1}</span><h3>${title}</h3><strong id="${id}-status" aria-live="polite">Demo: closed</strong></div>${model(id,kind,title,true)}<div class="custom-gate-controls"><button type="button" class="btn btn-green" data-gate-target="${id}" data-gate-state="open" aria-label="Open the simulated ${title.toLowerCase()}">OPEN</button><button type="button" class="btn btn-dark" data-gate-target="${id}" data-gate-state="closed" aria-label="Close the simulated ${title.toLowerCase()}" disabled>CLOSE</button></div></article>`).join('')}</div><p class="custom-workspace-note">Configuration example · Sample controls and equipment · No live commands or notifications</p></div>`, 'section-shell section-space','custom-controls');
-  const secureVisual=`<div class="security-visual"><span class="security-emblem">${icon('shield')}</span><span class="eyebrow">CONTROL WITH ACCOUNTABILITY</span><h2>Authorised people.<br>Agreed permissions.<br>Recorded activity.</h2><div class="security-visual-points"><span>${icon('lock')} Secure client sign-in</span><span>${icon('users')} Site-specific roles</span><span>${icon('log')} Activity records</span></div></div>`;
+  const secureVisual=securityDemo(model);
   const developmentVisual=`<div class="development-visual"><span class="development-status">IN DEVELOPMENT</span><h2>Flag.<br>Review.<br><span>Acknowledge.</span></h2><ol><li><span>01</span> Potential event flagged</li><li><span>02</span> Authorised staff review</li><li><span>03</span> Human acknowledgement</li><li><span>04</span> Agreed site procedure</li></ol><p>Proposed workflow · Developing capability</p></div>`;
   const contactVisual=`<div class="contact-card"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"><span class="eyebrow">CONTACT THE TEAM</span><a class="contact-phone" href="tel:+61400101132">0400 101 132</a><p>Talk through your site, existing systems and the configuration you need.</p>${button('Call the team','tel:+61400101132')}${link('Visit RJL Commercial','https://www.rjlcommercialgroup.com')}</div>`;
   return [
@@ -216,8 +217,8 @@ function buildMorePages({solutions, how, login}) {
     },
     {
       route:'/security-integrations/', title:'MagicKeys Security & Integrations | Existing systems, connected',
-      description:'Explore secure client sign-in, operator permissions and activity records in MagicKeys, plus tailored integration with existing site equipment and systems.',
-      content:hero('SECURITY &amp; SYSTEM INTEGRATION','Secure access.<br><span>Connected systems.</span>','Keep control in the hands of authorised people and build around the systems your site already uses. MagicKeys combines secure client sign-in, site-specific permissions and recorded activity with a tailored approach to integration.',secureVisual,'Discuss security & integration')+
+      description:'Explore secure client sign-in, operator permissions and activity records in MagicKeys, plus a 15-camera apartment CCTV and anti-tailgating demonstration.',
+      content:hero('SECURITY &amp; SYSTEM INTEGRATION','Secure access.<br><span>Connected systems.</span>','Bring apartment CCTV, foyer anti-tailgating detection and entrance activity into one customised MagicKeys app. Explore a 15-camera configuration for foyers, lifts, car parks and shared spaces, with linked alerts for your authorised team.',secureVisual,'Discuss security & integration',button('Try the apartment demo','#apartment-security-demo','btn-outline'))+
         section(heading('SECURITY WITH CLEAR RESPONSIBILITIES','The right people.<br>The right level of control.','A secure setup combines the portal, the operating roles and a properly commissioned installation.')+cards([
           ['Secure client sign-in','Approved users enter their organisation’s existing portal. This public website does not collect passwords or issue gate commands.','lock'],
           ['Encrypted portal connection','Use the secure HTTPS portal address provided for your organisation. Account access remains within your dedicated client workspace.','shield'],
@@ -335,7 +336,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
 <title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}">
 <link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/custom-dashboard-cctv.webp">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
-${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>
+${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.route==='/security-integrations/'?'<script src="/assets/security-demo.js" defer></script>':''}
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">
 ${page.route==='/'?normalise(intro,page.route):''}<a class="skip-link" href="#main">Skip to content</a>${symbols}${header(page.route)}
 <main id="main" tabindex="-1">${normalise(page.content,page.route)}</main>

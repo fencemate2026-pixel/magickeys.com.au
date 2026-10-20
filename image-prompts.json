@@ -21,6 +21,11 @@
       "file": "site-assets/current-portal-layout.webp",
       "source": "Supplied image(20261011-143312).png",
       "prompt": null
+    },
+    {
+      "file": "site-assets/apartment-camera-atlas.webp",
+      "source": "exec-7d97cdd3-b113-4bde-993e-6fa8bd47c1de.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE composite texture atlas for an interactive CCTV demonstration on the MagicKeys apartment security website. Generate a single seamless-edged contact sheet laid out in exactly 5 equal columns by 3 equal rows, 15 rectangular photographs edge-to-edge, no gutters, no borders. Whole image wide landscape approximately 3:1; each individual view landscape 16:9. All show the same elegant modern Melbourne apartment complex, photographed from realistic fixed ceiling/wall security camera positions, bright clear premium full-colour CCTV views with natural architectural lighting, sharp high detail, no fisheye. Row 1 left to right: glass entrance foyer with two sequential sliding door sets, second different glass foyer with stone walls, third apartment entrance vestibule with swipe reader, main reception lobby with lounge and plants, brushed steel lift lobby. Row 2: long apartment corridor, basement car park ramp with boom barrier, basement vehicle exit boom, underground parking aisle with parked cars, underground lift access doorway. Row 3: delivery/service entrance, parcel room, landscaped pedestrian entrance, driveway vehicle entry overview, basement bicycle parking. No identifiable people, no actual business names, no branding, no text, no camera icons, no interface, no timestamps, no watermarks. The 15 photographs must fill their exactly aligned equal rectangular cells; they will be cropped independently by website CSS. One cohesive single 15-view camera-wall texture, not a screenshot of an app. Palette white stone, charcoal metal, clear glass, blue daylight, vivid natural green. Professional polished but plausible security-camera views."
     }
   ]
 }

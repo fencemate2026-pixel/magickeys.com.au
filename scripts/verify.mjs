@@ -103,7 +103,7 @@ for(const path of archiveFiles.filter(path=>/\/dist\/assets\/[^/]+\.(png|webp|sv
   assert(hash(readFileSync(destination))===hash(approved),'An approved media asset changed: '+destination);
   preserved++;
 }
-for(const source of ['site.js','multipage.js','scene3d.js','scene3d-mounts.js']) {
+for(const source of ['site.js','multipage.js','security-demo.js','scene3d.js','scene3d-mounts.js']) {
   execFileSync(process.execPath,['--check',join(root,'assets',source)]);
 }
 verifyInteractions(pages);

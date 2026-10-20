@@ -99,7 +99,7 @@ function parse(html) {
   document.body=document.querySelector('body');document.activeElement=document.body;document.hidden=false;
   return document;
 }
-const scripts=['scene3d-mounts.js','site.js','multipage.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
+const scripts=['scene3d-mounts.js','site.js','multipage.js','security-demo.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
 function environment(html,route,reduced=true,search='',hash='') {
   const document=parse(html), redirects=[];
   const location={pathname:route,search,hash,replace:destination=>redirects.push(destination)};
@@ -189,6 +189,38 @@ export function verifyInteractions(pages) {
         buttons.find(button=>button.dataset.gateState==='closed').click();actions++;
         assert.equal(node(id).dataset.state,'closed');
       }
+    }
+    if(route==='/security-integrations/') {
+      const cameras=document.querySelectorAll('[data-security-camera]');
+      assert.equal(cameras.length,15);
+      for(let i=0;i<15;i++) {
+        click('sd-cam-'+(i+1));
+        assert.equal(node('sd-camera-code').textContent,'CAM '+String(i+1).padStart(2,'0'));
+        assert.equal(node('sd-selected-title').textContent,cameras[i].dataset.cameraLabel);
+        assert.equal(cameras.filter(camera=>camera.getAttribute('aria-pressed')==='true').length,1);
+      }
+      for(let zone=1;zone<=3;zone++) {
+        click('sd-zone-'+zone);click('sd-simulate');
+        assert.equal(node('sd-camera-code').textContent,'CAM 0'+zone);
+        assert.equal(node('sd-camera-main').dataset.event,'true');
+        assert.equal(node('sd-foyer-model').dataset.state,'alert');
+        assert.equal(node('sd-foyer-model').querySelector('img').src,'/assets/model-foyer-alert.svg');
+        assert.equal(node('sd-detected').textContent,'2');
+        assert.equal(node('sd-authorisations').textContent,'1');
+        assert.equal(node('sd-simulate').disabled,true);
+        click('sd-cam-15');assert.equal(node('sd-camera-main').dataset.event,'false');
+        assert.equal(node('sd-cam-'+zone).dataset.event,'true');
+        click('sd-cam-'+zone);click('sd-acknowledge');
+        assert.equal(node('sd-zone-status').textContent,'REVIEWED');
+        assert.equal(node('sd-camera-main').dataset.event,'false');
+        assert.equal(node('sd-acknowledge').disabled,true);
+        click('sd-reset');assert.equal(node('sd-foyer-model').dataset.state,'closed');
+        assert.equal(node('sd-simulate').disabled,false);
+        assert.equal(node('sd-detected').textContent,'—');
+      }
+      click('sd-simulate');click('sd-zone-2');
+      assert.equal(node('sd-simulate').disabled,false,'Switching zones must reset the example');
+      assert.equal(node('sd-zone-status').textContent,'READY');
     }
     const preview=document.querySelector('[data-preview]');
     if(preview) {

@@ -13,7 +13,7 @@ The approved original website archive, MagicKeys-Azure-Website (1).zip, supplies
 - /cctv/ — CCTV views and the optional Sentinel package
 - /emergency-guidance/ — site-specific staff prompts, instructions and configured responses
 - /customisation/ — fully customisable app, dashboard concepts and four independent demo gates
-- /security-integrations/ — secure portal access, permissions, activity and assessed integration options
+- /security-integrations/ — interactive 15-camera apartment CCTV and three-foyer anti-tailgating example, secure portal access, permissions and integration options
 - /solutions/ — commercial, education, body corporate and logistics requirements
 - /how-it-works/ — assessment, app scope, connections, commissioning and handover
 - /development/ — developing AI threat and fire detection with human acknowledgement
@@ -36,6 +36,7 @@ The DOM harness tests state and events; it does not replace a visual browser rev
 
 - scripts/pages.mjs owns the page content, shared header/footer, metadata and sitemap.
 - patches/multipage.css owns responsive layouts and the brighter image presentation.
+- scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected apartment security demo. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review.
 - patches/multipage.js owns dropdown navigation, legacy bookmarks and the simulated multi-gate controls.
 - patches/hero-layers.css keeps the original AI face behind the gate preview.
 - patches/client-access.html and .css preserve the approved organisation-specific login section.
