@@ -24,7 +24,22 @@
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-[[headers]]
-  for = "/client-login/*"
-  [headers.values]
-    Content-Security-Policy = "form-action https://magickeys-balwyn-portal.com; base-uri 'self'; frame-ancestors 'none'"
+
+# Consolidate explicit index URLs into the public directory URLs.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/:section/index.html"
+  to = "/:section/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/:sector/index.html"
+  to = "/solutions/:sector/"
+  status = 301
+  force = true

@@ -276,3 +276,10 @@
   .product-card,.nav-group summary>span { transition:none; }
   .product-card:hover { transform:none; }
 }
+
+/* Industry navigation remains readable alongside the existing product navigation. */
+.footer-nav { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.footer-nav>div { min-width:0; }
+.footer-nav a { overflow-wrap:break-word; }
+@media (max-width:900px) { .footer-nav { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .footer-nav { grid-template-columns:1fr; } }

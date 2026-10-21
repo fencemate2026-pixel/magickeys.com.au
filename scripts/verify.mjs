@@ -4,6 +4,7 @@ import { join, relative, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { verifyInteractions } from './verify-interactions.mjs';
 import vm from 'node:vm';
+import { sectors } from './sector-pages.mjs';
 
 const root=resolve('dist');
 function walk(dir) {
@@ -12,7 +13,7 @@ function walk(dir) {
 function assert(condition,message) { if(!condition) throw new Error(message); }
 const files=walk(root);
 const htmlFiles=files.filter(path=>path.endsWith('.html'));
-const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/contact/'];
+const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/contact/','/melbourne/',...sectors.map(s=>'/solutions/'+s.slug+'/')];
 const pages=new Map();
 const titles=new Set(), descriptions=new Set();
 const parseAttributes=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)\s*=\s*"([^"]*)"/g)].map(match=>[match[1],match[2]]));
@@ -30,7 +31,7 @@ for(const file of htmlFiles) {
   const description=html.match(/<meta name="description" content="([^"]+)"/)?.[1];
   assert(title&&!titles.has(title),'Missing or duplicate title in '+route); titles.add(title);
   assert(description&&!descriptions.has(description),'Missing or duplicate description in '+route); descriptions.add(description);
-  assert(html.includes('href="https://magickeys.com.au'+route+'"'),'Canonical URL mismatch in '+route);
+  assert(html.includes('href="https://www.magickeys.com.au'+route+'"'),'Canonical URL mismatch in '+route);
   pages.set(route,{file,html,ids:new Set(ids)});
 }
 assert(pages.size===expectedRoutes.length+1,'Unexpected page count');
@@ -47,7 +48,7 @@ for(const [route,page] of pages) {
     links++;
     if(/^(?:https?:|tel:|mailto:|data:)/.test(value)) continue;
     assert(!value.startsWith('//'),'Unexpected external URL in '+route);
-    const url=new URL(value,'https://magickeys.com.au'+route);
+    const url=new URL(value,'https://www.magickeys.com.au'+route);
     if(url.pathname.startsWith('/assets/')) {
       assert(!url.hash,'Asset unexpectedly has an anchor in '+route);
       const target=join(root,decodeURIComponent(url.pathname));
@@ -77,9 +78,8 @@ assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/pl
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');
 assert((pages.get('/customisation/').html.match(/data-gate-target=/g)||[]).length===8,'Multi-gate controls missing');
 const clientLogin=pages.get('/client-login/').html;
-assert(clientLogin.includes('method="post" action="https://magickeys-balwyn-portal.com/api/auth/client-entry"'),'Secure portal POST missing');
-assert(clientLogin.includes('autocomplete="username"')&&clientLogin.includes('autocomplete="current-password"'),'Login autocomplete missing');
-assert(!clientLogin.includes('Balwyn High School')&&!clientLogin.includes('Select your site'),'Public login must be generic');
+assert(clientLogin.includes('href="https://magickeys-balwyn-portal.com/login"'),'Original secure portal link missing');
+assert(!clientLogin.includes('<form')&&!clientLogin.includes('/api/auth/client-entry')&&!clientLogin.includes('/assets/client-access.js'),'Public login changes were not fully removed');
 assert(pages.get('/development/').html.includes('IN DEVELOPMENT')&&pages.get('/development/').html.includes('Human acknowledgement'),'Development status or human acknowledgement missing');
 assert(home.includes('IN DEVELOPMENT')&&home.includes('/development/'),'Development programme not prominent on the homepage');
 for(const [route,page] of pages) if(route!=='/') assert(!page.html.includes('id="site-intro"'),'Intro unexpectedly blocks a detail page: '+route);
@@ -108,9 +108,34 @@ for(const [route,page] of pages) {
 
 const sitemap=readFileSync(join(root,'sitemap.xml'),'utf8');
 const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
-assert(locations.length===expectedRoutes.length,'Sitemap page count mismatch');
-for(const route of expectedRoutes) assert(locations.includes('https://magickeys.com.au'+route),'Sitemap URL missing: '+route);
-assert(readFileSync(join(root,'robots.txt'),'utf8').includes('https://magickeys.com.au/sitemap.xml'),'Robots sitemap missing');
+const indexableRoutes=expectedRoutes.filter(route=>route!=='/client-login/');
+assert(locations.length===indexableRoutes.length,'Sitemap page count mismatch');
+for(const route of indexableRoutes) assert(locations.includes('https://www.magickeys.com.au'+route),'Sitemap URL missing: '+route);
+assert(readFileSync(join(root,'robots.txt'),'utf8').includes('https://www.magickeys.com.au/sitemap.xml'),'Robots sitemap missing');
+assert(!locations.some(url=>url.includes('client-login')||url.includes('404')),'Private utility pages must be absent from sitemap');
+for(const [route,page] of pages) {
+  const noindex=route==='/client-login/'||route==='/404.html';
+  assert((page.html.match(/<meta name="robots"/g)||[]).length===1,'Expected one robots directive on '+route);
+  assert(page.html.includes(noindex?'content="noindex, follow"':'content="index, follow, max-image-preview:large"'),'Unexpected indexing rule on '+route);
+  const json=page.html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  assert(json,'Missing structured data on '+route);
+  const data=JSON.parse(json[1]);
+  assert(data['@context']==='https://schema.org'&&Array.isArray(data['@graph']),'Invalid schema graph on '+route);
+  const graph=data['@graph'];
+  assert(graph.some(n=>n['@type']==='Organization'&&n.telephone==='+61400101132'),'Missing consistent business contact on '+route);
+  assert(graph.some(n=>n['@id']==='https://www.magickeys.com.au'+route+'#webpage'),'Missing page entity on '+route);
+  for(const n of graph) assert(!n.aggregateRating&&!n.review&&!n.address,'Unverified business claims must not be introduced');
+  if(route.startsWith('/solutions/')) {
+    const crumbs=graph.find(n=>n['@type']==='BreadcrumbList');
+    assert(crumbs?.itemListElement.length===3,'Industry page needs a complete breadcrumb hierarchy');
+    assert(page.html.includes('href="/solutions/"')&&page.html.includes('href="/melbourne/"'),'Missing industry/hub links');
+    const words=page.html.split('<main')[1].split('</main>')[0].replace(/<[^>]+>/g,' ').trim().split(/\s+/).length;
+    assert(words>420,'Industry guide lacks substantive content: '+route);
+    assert(page.html.includes('fetchpriority="high"'),'Industry hero image is not prioritised');
+  }
+  assert(page.html.includes('name="twitter:card"'),'Missing social preview metadata on '+route);
+}
+assert(readFileSync(join(root,'assets/site.js'),'utf8').includes('Opening sequence plays only when the visitor chooses it.'),'Homepage must be visible without an automatic video overlay');
 const css=readFileSync(join(root,'assets/site.css'),'utf8');
 assert(/transform-style:\s*flat/.test(css)&&/\.hero-screen\s*\{[^}]*z-index:\s*2/.test(css),'Approved hero layer fix missing');
 assert(css.includes('.client-access-grid')&&css.includes('.page-hero-grid')&&css.includes('.custom-gates'),'Page styles missing');

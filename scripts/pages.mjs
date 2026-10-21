@@ -6,7 +6,8 @@ import { cameraOverlay } from './camera-style.mjs';
 import { securityDemo } from './security-demo.mjs';
 import { antiTailgatingContent } from './anti-tailgating.mjs';
 
-const origin = 'https://magickeys.com.au';
+import { origin, applyMetadata, seoHead } from './seo.mjs';
+import { localPages, sectorCards, sectors } from './sector-pages.mjs';
 const arrow = '<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>';
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
@@ -101,7 +102,7 @@ export function buildPages() {
   const how=original(/<section class="section-shell section-space how-section"/);
   const login=original(/<section class="client-section"/)
     .replace('<h2 id="client-access-heading">','<h1 id="client-access-heading">')
-    .replace('Your site awaits.</span></h2>','Your site awaits.</span></h1>');
+    .replace('Your access.</span></h2>','Your access.</span></h1>');
   let homeHero=original(/<section class="hero">/)
     .replace('THE MAGICKEYS PLATFORM','ALL-IN-ONE ACCESS CONTROL &amp; CCTV')
     .replace('Access,<br><span>connected.</span>','Your site.<br><span>Connected.</span>')
@@ -211,8 +212,20 @@ export function buildPages() {
   ];
 
   const morePages=buildMorePages({solutions, how, login, source});
-  pages.push(...morePages);
-  writeSite({pages, intro, symbols, posters, dialogs});
+  pages.push(...morePages, ...localPages({hero,image,section,heading,cards,rows,faq,cta,link}));
+  const industrySection=section(heading('MELBOURNE / SITES WE DESIGN AROUND','Access control for<br>your kind of property.','Explore site-specific access control and CCTV requirements for Melbourne owners corporations, schools, aged care, commercial properties and industrial facilities.')+sectorCards());
+  for(const page of pages) {
+    if(page.route==='/'||page.route==='/solutions/') page.content=page.content.replace(/(?=<section class="section-shell conversion-section")/,industrySection);
+    const audiences={
+      '/anti-tailgating/':['ENTRANCES / MELBOURNE PROPERTIES','Plan detection around<br>the entrance users.','Explore <a href="/solutions/owners-corporations/">apartment and owners corporation security</a> for shared foyers, <a href="/solutions/commercial-properties/">commercial access control</a> for staff entrances, and <a href="/solutions/aged-care/">aged care access planning</a> where assisted passage needs individual assessment.'],
+      '/gate-control/':['VEHICLE ACCESS / MELBOURNE','Different entrances.<br>Different operating needs.','Review <a href="/solutions/owners-corporations/">apartment car park access</a>, <a href="/solutions/schools/">school gate schedules</a> and <a href="/solutions/warehouses-logistics/">warehouse and factory entrances</a>. Boom gates, sliding gates and bollards are connected only where the equipment and agreed workflow support the installation.'],
+      '/cctv/':['CAMERA INTEGRATION / MELBOURNE','Camera context<br>for your property.','Discuss camera views alongside access controls for <a href="/solutions/commercial-properties/">commercial buildings</a>, <a href="/solutions/schools/">school campuses</a>, <a href="/solutions/aged-care/">aged care facilities</a> and <a href="/solutions/owners-corporations/">owners corporations</a>. The included views, review permissions and equipment connections are scoped for the site.'],
+      '/contact/':['MELBOURNE / PROJECT ENQUIRIES','Tell us where<br>your site operates.','Discuss <a href="/melbourne/">Melbourne service areas</a> and <a href="/solutions/">solutions for your property type</a>. Include your suburb, current equipment, entrances and the result you want so the team can assess a practical project scope.']
+    };
+    if(audiences[page.route]) page.content=page.content.replace(/(?=<section class="section-shell conversion-section")/,section(heading(...audiences[page.route])));
+    if(page.route==='/') page.content=page.content.replace('ALL-IN-ONE ACCESS CONTROL &amp; CCTV','MELBOURNE / ACCESS CONTROL &amp; CCTV').replace('Bring gate controls, CCTV, access schedules and activity into one fully customisable MagicKeys app.','Bring Melbourne gate controls, CCTV, access schedules and activity into one fully customisable MagicKeys app.');
+  }
+  writeSite({pages:applyMetadata(pages), intro, symbols, posters, dialogs});
 }
 
 function buildMorePages({solutions, how, login}) {
@@ -248,7 +261,7 @@ function buildMorePages({solutions, how, login}) {
       description:'Explore secure client sign-in, operator permissions and activity records in MagicKeys, plus a 15-camera apartment CCTV and anti-tailgating demonstration.',
       content:hero('SECURITY &amp; SYSTEM INTEGRATION','Secure access.<br><span>Connected systems.</span>','Bring apartment CCTV, foyer anti-tailgating detection and entrance activity into one customised MagicKeys app. Explore a 15-camera configuration for foyers, lifts, car parks and shared spaces, with linked alerts for your authorised team.',secureVisual,'Discuss security & integration',button('Try the apartment demo','#apartment-security-demo','btn-outline'))+
         section(heading('SECURITY WITH CLEAR RESPONSIBILITIES','The right people.<br>The right level of control.','A secure setup combines the portal, the operating roles and a properly commissioned installation.')+cards([
-          ['Secure client sign-in','Approved users enter their organisation’s existing portal. The secure portal verifies their credentials and permissions before giving access to site controls.','lock'],
+          ['Secure client sign-in','Approved users enter their organisation’s existing portal. This public website does not collect passwords or issue gate commands.','lock'],
           ['Encrypted portal connection','Use the secure HTTPS portal address provided for your organisation. Account access remains within your dedicated client workspace.','shield'],
           ['Site-specific permissions','Agree which authorised operators can use your workspace and the controls appropriate to their responsibilities.','users'],
           ['Recorded activity','Review the access events and operator actions recorded by the configured system, with equipment feedback kept clear.','log']
@@ -308,11 +321,10 @@ function buildMorePages({solutions, how, login}) {
     },
     {
       route:'/client-login/', title:'MagicKeys Client Login | Your organisation’s secure portal',
-      description:'Sign in to your MagicKeys workspace using your approved username or email and password. Access your site controls, CCTV and schedules in one familiar app.',
-      content:login+section(heading('YOUR WORKSPACE','A familiar app.<br>Built around your site.','Your installed features, access permissions and site configuration are available after you sign in.')+faq([
-          ['Which account should I use?','Use your existing approved MagicKeys username or email and password. Your account must be registered for the connected client workspace.'],
-          ['Will I need an authenticator code?','Operator and administrator accounts also require the current six-digit code from their authenticator app. Keep using your existing authenticator setup.'],
-          ['I need help accessing my workspace.','Contact the MagicKeys team on 0400 101 132. New workspaces and account access are set up by the team.'],
+      description:'Open your organisation’s existing MagicKeys client portal. Approved Balwyn High School users can sign in using their existing account.',
+      content:login+section(heading('EXISTING CLIENTS','The portal for<br>your organisation.','Your controls, schedules and permissions remain in your dedicated client workspace.')+faq([
+          ['Which login should I use?','Use the confirmed portal address for your organisation. The Balwyn High School link on this page is specifically for that organisation’s approved users.'],
+          ['My organisation is not listed. What should I do?','Contact the MagicKeys team for the correct portal address. Do not enter account credentials on this public marketing website.'],
           ['Can I operate a gate on this website?','The website demonstrations are simulated. Actual site controls are available only through your organisation’s approved portal and account permissions.']
         ]))
     },
@@ -342,14 +354,14 @@ function buildMorePages({solutions, how, login}) {
 function writeSite({pages,intro,symbols,posters,dialogs}) {
   const navigationLink=(route,label,current) => `<a href="${route}"${current===route?' aria-current="page"':''}>${label}</a>`;
   const platformNav=[['/platform/','Platform overview'],['/gate-control/','Gate control'],['/anti-tailgating/','Anti-tailgating &amp; integration'],['/cctv/','CCTV &amp; Sentinel'],['/emergency-guidance/','Emergency Guidance']];
-  const setupNav=[['/customisation/','Fully customisable app'],['/security-integrations/','Security &amp; integrations'],['/solutions/','Site solutions'],['/how-it-works/','How it works'],['/development/','In development: AI detection']];
+  const setupNav=[['/melbourne/','Melbourne service areas'],['/customisation/','Fully customisable app'],['/security-integrations/','Security &amp; integrations'],['/solutions/','Site solutions'],['/how-it-works/','How it works'],['/development/','In development: AI detection']];
   function navGroup(title,items,current) {
     return `<details class="nav-group"${items.some(([url])=>url===current)?' data-active-group':''}><summary>${title}<span aria-hidden="true">⌄</span></summary><div class="nav-dropdown">${items.map(([url,label])=>navigationLink(url,label,current)).join('')}</div></details>`;
   }
   function header(route) {
     return `<header class="site-header"><div class="nav-wrap"><a class="brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation"><span></span><span></span></button><nav id="main-navigation" aria-label="Main navigation">${navGroup('Explore MagicKeys',platformNav.filter(([url])=>url!=='/anti-tailgating/'),route)}${navGroup('Your setup',setupNav,route)}${navigationLink('/anti-tailgating/','Anti-tailgating &amp; integration',route)}<a href="/client-login/" class="nav-login"${route==='/client-login/'?' aria-current="page"':''}>${icon('lock')}Client login</a>${button('Contact the team','/contact/','btn-orange btn-nav')}</nav></div></header>`;
   }
-  const footer=`<footer class="site-footer"><div class="section-shell footer-main"><div><a class="brand footer-brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><p>All-in-one access control.<br>CCTV. And more.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div><span>EXPLORE MAGICKEYS</span>${platformNav.map(([url,label])=>navigationLink(url,label)).join('')}</div><div><span>YOUR SETUP</span>${setupNav.map(([url,label])=>navigationLink(url,label)).join('')}${navigationLink('/contact/','Contact the team')}${navigationLink('/client-login/','Client login')}<button class="plain-button" id="privacy-open">Privacy information</button></div></nav><div class="footer-rjl"><span>DEVELOPED &amp; MANAGED BY</span><a href="https://www.rjlcommercialgroup.com" target="_blank" rel="noopener noreferrer"><img src="/assets/rjl-logo.png" alt="RJL Commercial Fencing and Gates" width="900" height="210"></a><a class="footer-phone" href="tel:+61400101132">0400 101 132</a></div></div><div class="section-shell footer-bottom"><span>© <span id="copyright-year">2026</span> MagicKeys · RJL Commercial</span><span>magickeys.com.au <span class="footer-dot">●</span> Melbourne, Australia</span></div></footer>`;
+  const footer=`<footer class="site-footer"><div class="section-shell footer-main"><div><a class="brand footer-brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><p>All-in-one access control.<br>CCTV. And more.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div><span>EXPLORE MAGICKEYS</span>${platformNav.map(([url,label])=>navigationLink(url,label)).join('')}</div><div><span>YOUR SETUP</span>${setupNav.map(([url,label])=>navigationLink(url,label)).join('')}${navigationLink('/contact/','Contact the team')}${navigationLink('/client-login/','Client login')}<button class="plain-button" id="privacy-open">Privacy information</button></div><div><span>SOLUTIONS BY INDUSTRY</span>${sectors.map(s=>navigationLink(`/solutions/${s.slug}/`,s.label)).join('')}</div></nav><div class="footer-rjl"><span>DEVELOPED &amp; MANAGED BY</span><a href="https://www.rjlcommercialgroup.com" target="_blank" rel="noopener noreferrer"><img src="/assets/rjl-logo.png" alt="RJL Commercial Fencing and Gates" width="900" height="210"></a><a class="footer-phone" href="tel:+61400101132">0400 101 132</a></div></div><div class="section-shell footer-bottom"><span>© <span id="copyright-year">2026</span> MagicKeys · RJL Commercial</span><span>magickeys.com.au <span class="footer-dot">●</span> Melbourne, Australia</span></div></footer>`;
   const anchorRoutes={'portal-tour':'/platform/','platform':'/platform/','interactive-demo':'/gate-control/','solutions':'/solutions/','upgrades':'/cctv/','how-it-works':'/how-it-works/','client-access':'/client-login/','contact':'/contact/'};
   function normalise(content,route) {
     return content.replace(/(?<!\/)assets\//g,'/assets/').replace(/href="#([^"]+)"/g,(full,id)=>{
@@ -357,18 +369,23 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
       return `href="${anchorRoutes[id]}${id==='upgrades'?'':'#'+id}"`;
     });
   }
+  function prioritiseHero(content) {
+    // The first visible hero image should load promptly; lower content stays lazy.
+    return content.replace(/(<img\b[^>]*?) loading="lazy"/, '$1 loading="eager" fetchpriority="high"');
+  }
   function document(page) {
     const usesModels=page.content.includes('data-scene-kind=');
     return `<!doctype html>
 <html lang="en-AU"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c3152">
 <title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}">
+${seoHead(page)}
 <link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/app-reference.jpg">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
-${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>${page.content.includes('data-va-card')?'<script src="/assets/vehicle-access.js" defer></script>':''}${page.route==='/client-login/'?'<script src="/assets/client-access.js" defer></script>':''}
+${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>${page.content.includes('data-va-card')?'<script src="/assets/vehicle-access.js" defer></script>':''}
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">
 ${page.route==='/'?normalise(intro,page.route):''}<a class="skip-link" href="#main">Skip to content</a>${symbols}${header(page.route)}
-<main id="main" tabindex="-1">${normalise(page.content,page.route)}</main>
+<main id="main" tabindex="-1">${normalise(prioritiseHero(page.content),page.route)}</main>
 ${footer}${usesModels?normalise(posters,page.route):''}${dialogs.replace(/(?<!\/)assets\//g,'/assets/')}
 </body></html>`;
   }
@@ -377,9 +394,9 @@ ${footer}${usesModels?normalise(posters,page.route):''}${dialogs.replace(/(?<!\/
     mkdirSync(dirname(path),{recursive:true});
     writeFileSync(path,document(page));
   }
-  const notFound={route:'/404.html',title:'Page not found | MagicKeys',description:'Find your way back to the MagicKeys platform.',content:section(`<div class="not-found"><div class="eyebrow">MAGICKEYS / 404</div><h1>Let’s get you<br>to the right place.</h1><p>This page could not be found. Explore MagicKeys or contact the team for help.</p><div class="hero-actions">${button('Explore MagicKeys','/')}${button('Contact the team','/contact/','btn-dark')}</div></div>`)};
-  writeFileSync('dist/404.html',document(notFound).replace('<link rel="canonical"','<meta name="robots" content="noindex"><link rel="canonical"'));
-  writeFileSync('dist/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(page=>`  <url><loc>${origin}${page.route}</loc></url>`).join('\n')}\n</urlset>\n`);
+  const notFound={route:'/404.html',noindex:true,title:'Page not found | MagicKeys',description:'Find your way back to the MagicKeys platform.',content:section(`<div class="not-found"><div class="eyebrow">MAGICKEYS / 404</div><h1>Let’s get you<br>to the right place.</h1><p>This page could not be found. Explore MagicKeys or contact the team for help.</p><div class="hero-actions">${button('Explore MagicKeys','/')}${button('Contact the team','/contact/','btn-dark')}</div></div>`)};
+  writeFileSync('dist/404.html',document(notFound));
+  writeFileSync('dist/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(page=>!page.noindex).map(page=>`  <url><loc>${origin}${page.route}</loc></url>`).join('\n')}\n</urlset>\n`);
   writeFileSync('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: '+origin+'/sitemap.xml\n');
   const azure=JSON.parse(readFileSync('dist/staticwebapp.config.json','utf8'));
   azure.routes.forEach(route=>{if(route.route==='/login'||route.route==='/login/') route.redirect='/client-login/';});
