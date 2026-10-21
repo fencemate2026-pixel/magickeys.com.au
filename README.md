@@ -36,6 +36,8 @@ The DOM harness tests state and events; it does not replace a visual browser rev
 
 scripts/app-layout.mjs is the single source for app navigation, palette and frame. It builds the HTML frame used by the homepage, gate demo, custom gate controls and CCTV/anti-tailgating demos, plus the self-contained SVG app images used throughout the site. Real supplied panel screenshots are embedded unchanged inside that frame. The current supplied app screenshot remains the layout reference; the sidebar, bar and card colours are sampled from it. Exported app views include their images and logos so enlargement preserves the same layout. No generated mockup is used as an alternative app design.
 
+The homepage presents the complete app in a compact landscape tablet beside the headline. `patches/hero-tablet.css` preserves a 1200×750 workspace and scales the whole screen uniformly, so the navigation, calendar, controls, CCTV and overhead detection stay in proportion at every device width. The anti-tailgating introduction uses the same landscape viewport with camera and event details side by side. `patches/multipage.js` fits these viewports with ResizeObserver; no app content is cropped to make the device frame fit.
+
 The single anti-tailgating product page is /anti-tailgating/. It has one direct header entry, kept on one line. The separate /security-integrations/ page covers integration scope and reuses the same demo module. The obsolete isometric foyer tab has been removed from the gate-only demo.
 
 ## Editing

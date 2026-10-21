@@ -1,0 +1,118 @@
+/* A complete desktop workspace, scaled uniformly inside a landscape device. */
+.home-page .hero{padding-block:48px 34px}
+.home-page .hero-grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:34px;min-height:540px;align-items:center}
+.home-page .hero-copy{max-width:540px;padding:0}
+.home-page .hero h1{font-size:clamp(52px,5.7vw,80px);line-height:1.06;margin-bottom:24px}
+.home-page .hero-eyebrow{font-size:11px;letter-spacing:1.3px;margin-bottom:25px}
+.home-page .hero-intro{font-size:21px;margin-bottom:16px}
+.home-page .hero-detail{font-size:15px;line-height:1.8;max-width:500px}
+.home-page .hero-actions{gap:10px;margin-top:27px;flex-wrap:wrap}
+.home-page .hero-actions .btn{font-size:11px;padding:15px 17px;gap:13px}
+.home-page .watch-intro{font-size:10px;margin-top:23px}
+.home-page .ai-stage{height:auto;transform:none;isolation:isolate;margin:0;min-width:0;padding:26px 0 22px}
+.home-page .ai-aura{inset:-20%;opacity:.6}
+.home-page .ai-orbit{display:none}
+.home-page .ai-face{width:240px;height:305px;right:5%;top:-95px;opacity:.15;z-index:-1;filter:saturate(.9)}
+.hero-tablet{position:relative;width:100%;padding:16px 20px;border:1px solid #748495;border-radius:26px;background:linear-gradient(145deg,#3c4550,#111820 26%,#080d13 75%,#4e5965);box-shadow:0 35px 65px #0008,0 1px 0 #d4e3ee88 inset,0 0 0 2px #0007;transform:perspective(1600px) rotateY(-7deg) rotateX(2deg) rotateZ(-1.5deg);transform-origin:center;z-index:2}
+.hero-tablet:after{content:"";position:absolute;left:25%;right:25%;height:3px;bottom:6px;border-radius:3px;background:#b8c4ce55}
+.tablet-camera{position:absolute;left:7px;top:50%;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#203b54 15%,#000 60%);box-shadow:0 0 0 1px #8997a533;z-index:3}
+.tablet-screen{position:relative;aspect-ratio:8/5;overflow:hidden;border-radius:10px;background:var(--mk-app-paper);--app-screen-scale:.5;isolation:isolate}
+.tablet-screen>.mk-app{position:absolute;left:0;top:0;inset:auto auto auto 0;width:1200px;height:750px;max-width:none;min-width:1200px;grid-template-columns:105px minmax(0,1fr);transform:scale(var(--app-screen-scale));transform-origin:top left;border:0;border-radius:0;box-shadow:none;overflow:hidden;font-family:Arial,Helvetica,sans-serif}
+.tablet-screen .mk-app-body{height:750px;overflow:hidden}
+.tablet-screen .mk-app-sidebar{display:flex;flex-direction:column;padding:9px 5px;border-right:1px solid #365a74;gap:0}
+.tablet-screen .mk-app-brand{width:95px;margin:0 0 20px}
+.tablet-screen .mk-app .sd-nav-heading{display:block;font-size:6px;margin:0 4px 7px;letter-spacing:.5px}
+.tablet-screen .mk-app .sd-app-nav,.tablet-screen .mk-app .sd-app-sidebar>.sd-app-nav:first-of-type{display:grid;gap:4px;margin:0 0 20px;justify-content:normal}
+.tablet-screen .mk-app .sd-app-nav>span,.tablet-screen .mk-app .sd-app-nav>strong{display:block;font-size:7px;line-height:1.4;padding:8px 5px;white-space:nowrap;text-align:left}
+.tablet-screen .mk-app .sd-sidebar-note{display:block;font-size:6px;padding:10px 4px;line-height:1.7}
+.tablet-screen .mk-app .sd-sidebar-rjl{display:block;width:88px;height:auto;margin:24px auto}
+.tablet-screen .mk-app .sd-app-user{display:flex;gap:5px;font-size:6px;margin-top:auto;padding-top:10px}
+.tablet-screen .mk-app .sd-app-user>span,.tablet-screen .mk-app .sd-app-user>div{font-size:6px}
+.tablet-screen .mk-app .sd-app-user small{font-size:5px}
+.tablet-screen .mk-app .mk-app-topbar{display:flex;min-height:50px;height:50px;padding:8px 12px;gap:16px;background:var(--mk-app-bar)}
+.tablet-screen .mk-app-topbar>div>strong{font-size:6px;letter-spacing:.6px}
+.tablet-screen .mk-app-topbar>div>span{font-size:9px}
+.tablet-screen .mk-app .mk-emergency-label{font-size:9px;padding:6px 12px;gap:3px}
+.tablet-screen .mk-emergency-label>small{font-size:6px}
+.tablet-screen .mk-app .sd-demo-badge{display:block;font-size:6px;padding:5px 8px}
+.tablet-screen .mk-app .sd-app-profile{display:block;font-size:8px;padding-left:10px}
+.tablet-screen .mk-app .sd-app-profile>small{font-size:6px}
+.tablet-screen .mk-app .sd-app-summary{display:grid;grid-template-columns:2.3fr 1fr;gap:9px;height:165px;padding:10px 10px 0}
+.tablet-screen .mk-app .sd-app-schedule,.tablet-screen .mk-app .sd-app-weather{padding:12px;background:var(--mk-app-bar);border:1px solid #547c9866}
+.tablet-screen .mk-app .sd-app-schedule strong{font-size:12px}
+.tablet-screen .sd-app-schedule>div:first-child>span{font-size:7px}
+.tablet-screen .mk-app .sd-app-week{gap:5px;margin-top:10px}
+.tablet-screen .mk-app .sd-app-week>span{height:104px;min-height:0;padding:8px 6px}
+.tablet-screen .mk-app .sd-app-week b{font-size:8px}
+.tablet-screen .mk-app .sd-app-week small{font-size:6px}
+.tablet-screen .mk-app .sd-app-weather{display:flex;gap:5px}
+.tablet-screen .mk-app .sd-app-weather>strong{font-size:12px}
+.tablet-screen .mk-app .sd-app-weather>span{font-size:8px}
+.tablet-screen .mk-app .sd-app-weather>b{font-size:30px}
+.tablet-screen .mk-app .sd-app-weather>small{font-size:7px}
+.tablet-screen .mk-module-heading{height:45px;margin:10px;padding:10px 12px;gap:12px;font-size:10px}
+.tablet-screen .mk-module-heading>strong{font-size:12px}
+.tablet-screen .mk-module-heading>span{font-size:8px}
+.home-page #hero-preview{position:absolute;inset:0 auto auto 0;width:1200px;transform:scale(var(--app-screen-scale));z-index:2}
+.home-page .hero-preview-toggle{font-size:9px;padding:6px 10px;background:var(--mk-app-card);color:#fff;border:1px solid #547c98}
+.mk-home-workspace{display:grid;grid-template-columns:1.1fr 1fr;gap:10px;height:300px;margin:0 10px 10px}
+.mk-home-gate,.mk-home-tailgate{min-width:0;background:var(--mk-app-card);border:1px solid #547c9866;overflow:hidden}
+.home-page .hero-portal-title{height:51px;margin:0;padding:10px 12px;background:var(--mk-app-card)}
+.home-page .hero-portal-title strong{font-size:13px}
+.home-page .hero-portal-title small{font-size:7px}
+.home-page .hero-portal-title b{font-size:9px}
+.home-page .hero-portal-workspace{height:247px;grid-template-columns:60px minmax(0,1fr) 90px;gap:10px;padding:10px 12px;margin:0;background:var(--mk-app-card)}
+.home-page .hero-gate-stage.model-stage{height:220px;overflow:hidden}
+.home-page .hero-portal-buttons button{height:35px;font-size:10px}
+.home-page .hero-gate-current{padding:11px 8px;background:#0d3455}
+.home-page .hero-gate-current>span{font-size:6px}
+.home-page .hero-gate-current strong{font-size:11px}
+.home-page .hero-gate-current small{font-size:7px}
+.mk-tailgate-title{height:51px;display:flex;align-items:center;justify-content:space-between;gap:7px;border-bottom:1px solid #547c9866;padding:10px 12px}
+.mk-tailgate-title>strong{font-size:13px;color:#fff}
+.mk-tailgate-title>span{font-size:7px;color:#ffb2b7;border:1px solid #e86874;padding:5px;border-radius:3px}
+.mk-tailgate-camera{height:247px;display:grid;grid-template-columns:220px 1fr;align-items:center;gap:14px;padding:12px}
+.tablet-screen .mk-home-tailgate .sd-overhead-view{width:220px;height:220px;max-width:none;margin:0;aspect-ratio:1}
+.mk-tailgate-camera>div:last-child>strong{display:block;font-size:12px;line-height:1.5;color:#fff;margin:9px 0}
+.mk-tailgate-camera p{font-size:10px;line-height:1.8;color:#b9d6e9;margin:0 0 16px}
+.mk-tailgate-camera a{font-size:10px;color:#b1e4ff;text-decoration:underline;text-underline-offset:3px}
+.mk-alert-dot{font-size:17px;color:#ff4857}
+.tablet-screen .sd-track{border-width:2px}
+.tablet-screen .sd-track>b{font-size:7px;top:-13px;padding:2px 4px}
+.home-page .hero-cctv-preview{height:145px;margin:0 10px 10px;padding:10px;grid-template-columns:65px 1fr 1fr;gap:10px;background:var(--mk-app-bar)}
+.home-page .hero-cctv-preview>span{font-size:10px}
+.home-page .hero-cctv-preview>span>small{font-size:6px}
+.home-page .hero-cctv-preview figure{height:125px;max-height:none}
+.home-page .hero-cctv-preview img{height:125px;width:100%;object-fit:cover;filter:none}
+.home-page .hero-cctv-preview figcaption{font-size:8px;padding:5px 8px}
+.home-page .hero-stage-caption{position:static;margin:23px 0 0;text-align:center;font-size:9px;letter-spacing:.8px;color:#a7c8df}
+/* A wide operator screen for the dedicated anti-tailgating introduction. */
+body[data-page="/anti-tailgating/"] .page-hero-grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:38px}
+body[data-page="/anti-tailgating/"] .page-hero h1{font-size:clamp(38px,4vw,61px)}
+body[data-page="/anti-tailgating/"] .page-hero-copy>p{font-size:15px;line-height:1.8}
+.ov-landscape-screen{border:1px solid #7997ad;border-radius:8px;box-shadow:0 25px 65px #0005}
+.tablet-screen .mk-overhead-app .mk-module-heading{height:46px;margin:10px}
+.mk-overhead-layout{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;height:580px;margin:0 10px;background:var(--mk-app-card);padding:15px;border:1px solid #547c9866}
+.mk-overhead-layout .mk-overhead-feature{display:flex;align-items:center;justify-content:center;padding:0;min-width:0;background:#082945}
+.tablet-screen .mk-overhead-feature>.sd-overhead-view{width:100%;height:auto;max-width:none;aspect-ratio:1;margin:0;border-radius:0}
+.tablet-screen .mk-overhead-feature .sd-overhead-label{font-size:9px;padding:9px}
+.tablet-screen .mk-overhead-feature .sd-track>b{font-size:10px;top:-17px}
+.tablet-screen .mk-overhead-feature .sd-threshold{font-size:8px}
+.mk-overhead-event{padding:25px 18px;color:#e1effa}
+.mk-event-label{display:inline-block;background:#d9384b22;border:1px solid #f36172;color:#ffb3bd;font-size:11px;font-weight:700;padding:8px 12px;letter-spacing:.5px}
+.mk-overhead-event h3{font-size:26px;line-height:1.3;color:#fff;margin:20px 0 10px}
+.mk-overhead-event>p{font-size:13px;color:#bbd8eb;line-height:1.7;margin:0 0 20px}
+.mk-event-count{display:flex;gap:16px;align-items:center;padding:16px;border:1px solid #547c9877;background:#0c3151;margin:10px 0}
+.mk-event-count>strong{font-size:32px;color:#70e0b9}
+.mk-event-count>span{font-size:14px}
+.mk-event-alert>strong{color:#ff8c98}
+.mk-event-direction{font-size:12px;display:flex;align-items:center;gap:12px;margin:18px 0}
+.mk-event-direction>span{font-size:24px;color:#80eaff}
+.mk-overhead-event .mk-event-explanation{font-size:12px;line-height:1.8}
+.mk-overhead-event>a{display:inline-block;background:#d93d50;color:#fff;padding:12px 17px;font-size:12px;border-radius:3px}
+.tablet-screen .mk-module-note{font-size:10px;padding:13px 15px;line-height:1.6}
+@media(min-width:1600px){.home-page .hero-grid{min-height:565px}.home-page .hero{padding-block:55px 40px}}
+@media(max-width:1100px) and (min-width:981px){.home-page .hero-grid{grid-template-columns:.9fr 1.1fr;gap:20px;min-height:500px}.home-page .hero h1{font-size:57px}.home-page .hero-intro{font-size:19px}.home-page .hero-detail{font-size:14px}.home-page .hero-actions .btn{font-size:10px;padding:13px}.hero-tablet{padding:12px 16px;border-radius:21px}}
+@media(max-width:980px){.home-page .hero-grid{grid-template-columns:1fr;gap:28px;min-height:0}.home-page .hero-copy{max-width:640px}.home-page .hero h1{font-size:clamp(50px,8vw,72px)}.home-page .hero-intro{font-size:21px}.home-page .hero-detail{max-width:620px}.home-page .ai-stage{width:100%;max-width:740px;justify-self:center;padding:8px 0 0}.home-page .ai-face{top:-90px;right:0}.hero-tablet{transform:perspective(1600px) rotateY(-3deg) rotateZ(-1deg)}body[data-page="/anti-tailgating/"] .page-hero-grid{grid-template-columns:1fr;gap:32px}body[data-page="/anti-tailgating/"] .page-hero-visual{width:100%;max-width:840px}body[data-page="/anti-tailgating/"] .page-hero-copy{max-width:740px}}
+@media(max-width:620px){.home-page .hero{padding-block:29px 24px}.home-page .hero-grid{gap:25px}.home-page .hero h1{font-size:clamp(46px,11.8vw,66px);margin-bottom:19px}.home-page .hero-eyebrow{font-size:8px;margin-bottom:21px}.home-page .hero-intro{font-size:17px;margin-bottom:12px}.home-page .hero-detail{font-size:13px;line-height:1.75}.home-page .hero-actions{margin-top:22px;gap:9px}.home-page .hero-actions .btn{font-size:10px;padding:13px 12px;gap:9px}.home-page .watch-intro{font-size:9px;margin-top:19px}.hero-tablet{padding:9px 12px;border-radius:17px;transform:none;box-shadow:0 18px 35px #0007,0 1px 0 #d4e3ee88 inset}.tablet-screen{border-radius:6px}.tablet-camera{left:4px;width:4px;height:4px}.hero-tablet:after{height:2px;bottom:4px}.home-page .ai-face{display:none}.home-page .hero-stage-caption{font-size:7px;line-height:1.6;margin-top:14px}.ov-landscape-screen{border-radius:5px}body[data-page="/anti-tailgating/"] .page-hero h1{font-size:40px}}
+@media(prefers-reduced-motion:reduce){.home-page .hero-tablet{transform:none}}

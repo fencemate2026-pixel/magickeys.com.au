@@ -1,5 +1,12 @@
 /* Shared navigation, legacy bookmarks and a disconnected custom configuration demo. */
 (() => {
+  // Scale a complete landscape app as one screen, preserving its desktop proportions.
+  document.querySelectorAll('[data-app-viewport]').forEach(viewport=>{
+    const fit=()=>viewport.style.setProperty('--app-screen-scale',String(viewport.clientWidth/Number(viewport.dataset.appViewport)));
+    fit();
+    if(typeof ResizeObserver!=='undefined') new ResizeObserver(fit).observe(viewport);
+    else window.addEventListener('resize',fit);
+  });
   const groups=[...document.querySelectorAll('.nav-group')];
   groups.forEach(group=>group.addEventListener('toggle',()=>{
     if(group.open) groups.forEach(other=>{if(other!==group) other.open=false;});
