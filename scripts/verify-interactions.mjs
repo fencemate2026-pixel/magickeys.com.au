@@ -99,7 +99,7 @@ function parse(html) {
   document.body=document.querySelector('body');document.activeElement=document.body;document.hidden=false;
   return document;
 }
-const scripts=['scene3d-mounts.js','site.js','multipage.js','security-demo.js','clear-space.js','camera-style.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
+const scripts=['scene3d-mounts.js','site.js','multipage.js','security-demo.js','clear-space.js','camera-style.js','vehicle-access.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
 function environment(html,route,reduced=true,search='',hash='') {
   const document=parse(html), redirects=[];
   const location={pathname:route,search,hash,replace:destination=>redirects.push(destination)};
@@ -133,7 +133,7 @@ export function verifyInteractions(pages) {
       click('hero-gate-open');
       assert.equal(node('hero-gate-stage').dataset.state,'open');
       assert.equal(node('hero-gate-state').textContent,'OPEN');
-      assert.equal(node('hero-gate-stage').querySelector('img').src,'/assets/model-single-open.svg');
+      assert.equal(node('hero-gate-stage').querySelector('img').src,'/assets/model-boom-open.svg');
       click('hero-gate-close');assert.equal(node('hero-gate-stage').dataset.state,'closed');
       click('hero-preview-toggle');assert.equal(node('hero-gate-stage').dataset.state,'open');
       click('intro-replay');assert.equal(node('site-intro').hidden,false);
@@ -248,6 +248,18 @@ export function verifyInteractions(pages) {
       assert.equal(entry.dataset.state,'waiting','Reset during clearance must cancel the pending release');
     }
     const preview=document.querySelector('[data-preview]');
+    for(const card of document.querySelectorAll('[data-va-card]')) {
+      const stage=card.querySelector('[data-scene-kind]');
+      const controls=card.querySelectorAll('[data-va-state]');
+      controls.find(button=>button.dataset.vaState==='open').click();actions++;
+      assert.equal(stage.dataset.state,'open');
+      assert.equal(stage.querySelector('img').src,'/assets/model-'+card.dataset.vaKind+'-open.svg');
+      assert.equal(card.querySelector('.va-current').querySelector('span').textContent,card.dataset.vaKind==='bollard'?'LOWERED':'OPEN');
+      assert.equal(controls.find(button=>button.dataset.vaState==='open').disabled,true);
+      controls.find(button=>button.dataset.vaState==='closed').click();actions++;
+      assert.equal(stage.dataset.state,'closed');
+      assert.equal(card.querySelector('.va-current').querySelector('span').textContent,card.dataset.vaKind==='bollard'?'RAISED':'CLOSED');
+    }
     if(preview) {
       preview.click();actions++;
       assert.equal(node('image-dialog-image').src,preview.dataset.preview);

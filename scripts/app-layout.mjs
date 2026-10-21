@@ -1,4 +1,5 @@
 import {readFileSync,writeFileSync} from 'node:fs';
+import { hardwareFaces } from './vehicle-access.mjs';
 
 // The supplied current app screenshot is the single visual authority.
 export const APP_LAYOUT='magickeys-reference-v1';
@@ -12,7 +13,7 @@ export function appSummary() {return `<div class="sd-app-summary"><div class="sd
 
 // Exact vector app chrome keeps exported images and interactive demos in sync.
 // Original photos/screenshots are embedded intact as content, not repainted.
-export function buildAppVisuals() {
+export function buildAppVisuals(vehicleModels) {
   const c=APP_COLOURS,W=1891,H=895,L=165,T=52;
   writeFileSync('dist/assets/app-palette.css',`:root{--mk-app-sidebar:${c.sidebar};--mk-app-bar:${c.bar};--mk-app-card:${c.card};--mk-app-paper:${c.paper};--mk-app-orange:${c.orange};--mk-app-open:${c.green};--mk-app-close:${c.red}}.mk-app{background:var(--mk-app-paper)}.mk-app-sidebar{background:var(--mk-app-sidebar)}.mk-app-topbar{background:var(--mk-app-bar)}.mk-app .sd-vision,.mk-app .sd-detection,.mk-app .sd-panel-heading,.mk-app .demo-panel,.mk-app .demo-menu,.mk-app .demo-workspace,.mk-app .demo-bottom,.mk-app .custom-gate-card,.mk-app .custom-gate-heading,.mk-app .hero-portal-title,.mk-app .hero-portal-workspace{background:var(--mk-app-card)}.mk-app .sd-toolbar strong,.mk-app .sd-camera-wall-heading strong,.mk-module-heading>strong,.mk-app .sd-app-schedule strong,.mk-app .sd-app-weather>strong{color:var(--mk-app-orange)}.mk-app .hero-open,.mk-app .btn-green{background:var(--mk-app-open)}.mk-app .hero-close,.mk-app .custom-gate-controls .btn-dark,.mk-app .btn-dark-outline{background:var(--mk-app-close);color:#fff}`);
   const embedded=name=>{name=({'apartment-camera-atlas-v2.webp':'app-camera-atlas.jpg','foyer-overhead-atlas.webp':'app-overhead-photo.jpg','current-portal-layout-v2.webp':'app-reference.jpg'})[name]||name;const ext=name.split('.').at(-1);return `data:image/${ext==='svg'?'svg+xml':ext==='jpg'?'jpeg':ext};base64,${readFileSync('dist/assets/'+name).toString('base64')}`;};
@@ -28,6 +29,25 @@ export function buildAppVisuals() {
   for(const [name,source,active] of [['app-schedules.svg','portal-schedules.png','schedules'],['app-bookings.svg','portal-bookings.png','bookings'],['app-activity.svg','portal-activity.png','activity']]) save(name,active,img(source,L+12,T+12,W-L-24,H-T-24,'preserveAspectRatio="xMinYMin meet"'));
   const reference=`<defs><clipPath id="app-body-clip"><rect x="${L}" y="${T}" width="${W-L}" height="${H-T}"/></clipPath></defs><g clip-path="url(#app-body-clip)"><use xlink:href="#app-reference"/></g>`;
   save('app-overview.svg','overview',reference);
+  // Hardware is projected from the same meshes used by the interactive app.
+  // Every image retains the canonical sidebar, header, colours and proportions.
+  const sequence=[0,0,0,1,2,3,4,5,6,7,8,8,8,8,8,8,8,7,6,5,4,3,2,1,0,0];
+  const poses=Array.from({length:9},(_,pose)=>`@keyframes va-pose-${pose}{${sequence.map((n,i)=>`${(i/sequence.length*100).toFixed(3)}%{opacity:${n===pose?1:0}}`).join('')}100%{opacity:${pose===0?1:0}}}.va-pose-${pose}{opacity:${pose===0?1:0};animation:va-pose-${pose} 10s steps(1,end) infinite}@media(prefers-reduced-motion:reduce){.va-pose-${pose}{animation:none;opacity:${pose===0?1:0}}}`).join('');
+  let vehicleBody=`<style>${poses}.va-hardware-led{animation:rec-led 1.2s steps(1,end) infinite}@media(prefers-reduced-motion:reduce){.va-hardware-led{animation:none}}</style><rect x="177" y="66" width="1125" height="149" fill="${c.bar}"/><rect x="1314" y="66" width="563" height="149" fill="${c.bar}"/>${text(193,92,'Gate schedules',18,c.orange,700)}${text(1331,92,'Local weather',18,c.orange,700)}${text(1331,119,'Melbourne · Example weather',12)}${text(1331,172,'☀ 20°',32,'#fff',700)}`;
+  ['MON','TUE','WED','THU','FRI','SAT','SUN'].forEach((day,i)=>{const x=193+i*156;vehicleBody+=`<rect x="${x}" y="105" width="146" height="95" fill="${i===2?'#43505a':'#1c4668'}" stroke="${i===2?c.orange:'#547c98'}"/>${text(x+10,126,day,10,'#bed8ea',700)}${text(x+10,149,String(19+i),20,'#fff',700)}${text(x+10,188,'No bookings',8)}`;});
+  vehicleBody+=`<rect x="177" y="227" width="1700" height="43" fill="#fff" stroke="#bfd1dd"/>${text(193,254,'Active vehicle access controls',20,c.orange,700)}${text(1573,253,'CONFIGURATION PREVIEW',10,'#557a94')}`;
+  [['boom','Car park entry','VEHICLE BOOM BARRIER'],['sliding','Main sliding gate','HORIZONTAL GATE TRAVEL'],['bollard','Protected driveway','RETRACTABLE BOLLARDS']].forEach(([kind,title,subtitle],i)=>{
+    const x=177+i*571,y=282,w=558;
+    vehicleBody+=`<rect x="${x}" y="${y}" width="${w}" height="498" fill="${c.card}" stroke="#547c98"/><rect x="${x+12}" y="${y+13}" width="32" height="32" fill="${c.orange}"/>${text(x+18,y+35,'0'+(i+1),12,'#fff',700)}${text(x+56,y+30,title,19,'#fff',700)}${text(x+56,y+49,subtitle,9)}<circle class="va-hardware-led" cx="${x+w-77}" cy="${y+26}" r="4" fill="#35ddb0"/>${text(x+w-67,y+30,'PREVIEW',9)}<path d="M${x} ${y+62}h${w}" stroke="#547c98"/>`;
+    for(let pose=0;pose<=8;pose++){
+      const open=pose===8,closed=pose===0;
+      const status=kind==='bollard'?(open?'LOWERED':closed?'RAISED':'MOVING'):(open?'OPEN':closed?'CLOSED':'MOVING');
+      vehicleBody+=`<g class="va-pose-${pose}"><g transform="translate(${x+10} ${y+78})">${hardwareFaces(vehicleModels,kind,pose/8,w-20,300)}</g><circle class="va-hardware-led" cx="${x+388}" cy="${y+419}" r="6" fill="${open?'#35ddb0':closed?'#ff5265':'#ffc05b'}"/>${text(x+403,y+425,status,16,'#fff',700)}</g>`;
+    }
+    vehicleBody+=`<rect x="${x+16}" y="${y+395}" width="151" height="45" fill="${c.green}" stroke="#53a678"/><rect x="${x+181}" y="${y+395}" width="151" height="45" fill="#a53543" stroke="#cf5967"/>${text(x+60,y+423,kind==='bollard'?'LOWER':'OPEN',14,'#fff',700)}${text(x+227,y+423,kind==='bollard'?'RAISE':'CLOSE',14,'#fff',700)}${text(x+389,y+446,'Simulated position',8,'#a9cbdc')}<path d="M${x} ${y+466}h${w}" stroke="#547c98"/>${text(x+16,y+487,'3D HARDWARE VIEW',9,'#9bbfd5')}${text(x+342,y+487,'CONNECTED ACCESS',9,'#9bbfd5')}`;
+  });
+  vehicleBody+=`<rect x="177" y="795" width="1700" height="80" fill="#fff" stroke="#bfd1dd"/>${text(194,825,'Boom gates. Sliding gates. Rising bollards. One MagicKeys workspace.',20,c.card,700)}${text(194,854,'Animated configuration example · Operator permissions and installed features are agreed for each site · No live equipment connected.',13,'#557a94')}`;
+  save('app-vehicle-access.svg','overview',vehicleBody);
   for(const [name,title,lines] of [
     ['app-emergency-confirm.svg','Review fire / evacuation request',['Check the site procedure and authorised recipients.','Requested gate movements require operator confirmation.','Example workflow · no live command is issued.']],
     ['app-priority-clear.svg','Review emergency priority',['Confirm the agreed site procedure before clearing priority.','Example workflow · no live controller is connected.']],

@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { join, relative, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { verifyInteractions } from './verify-interactions.mjs';
+import vm from 'node:vm';
 
 const root=resolve('dist');
 function walk(dir) {
@@ -128,8 +129,27 @@ for(const path of archiveFiles.filter(path=>/\/dist\/assets\/[^/]+\.(png|webp|sv
   assert(hash(readFileSync(destination))===hash(approved),'An approved media asset changed: '+destination);
   preserved++;
 }
-for(const source of ['site.js','multipage.js','security-demo.js','scene3d.js','scene3d-mounts.js']) {
+for(const source of ['site.js','multipage.js','security-demo.js','scene3d.js','scene3d-mounts.js','vehicle-access.js']) {
   execFileSync(process.execPath,['--check',join(root,'assets',source)]);
 }
 verifyInteractions(pages);
+const vehicleContext=vm.createContext({});
+vm.runInContext(readFileSync(join(root,'assets/scene3d.js'),'utf8'),vehicleContext);
+const vehicles=vehicleContext.MagicKeys3D;
+assert(vehicles.kinds.includes('bollard'),'Bollard model is missing');
+const shaftHeights=[];
+for(const progress of [0,.25,.5,.75,1]) {
+  const model=vehicles.buildModel({kind:'bollard',progress});
+  const shaft=model.meshes.find(mesh=>mesh.id==='bollard-1-shaft');
+  shaftHeights.push(Math.max(...shaft.vertices.map(v=>v.y)));
+  assert(shaft.vertices.every(v=>v.y>=0),'A lowered bollard went below the rendered road surface');
+  for(const kind of ['bollard','boom','sliding']) {
+    const scene=vehicles.project({kind,progress,width:500,height:300});
+    assert(scene.faces.every(face=>face.points.every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y))),'Invalid vehicle projection');
+    assert(scene.metadata.projectedBounds.minX>=0&&scene.metadata.projectedBounds.maxX<=500,'Vehicle clipped horizontally');
+    assert(scene.metadata.projectedBounds.minY>=0&&scene.metadata.projectedBounds.maxY<=300,'Vehicle clipped vertically');
+  }
+}
+assert(shaftHeights.every((height,i)=>i===0||height<shaftHeights[i-1]),'Bollards must retract vertically as the driveway opens');
+assert(readFileSync(join(root,'assets/app-vehicle-access.svg'),'utf8').includes('Main sliding gate'),'Sliding gate missing from the vehicle portal image');
 console.log('Verified '+expectedRoutes.length+' pages plus 404, '+links+' links/media references, all canonical URLs and sitemap entries, '+preserved+' unchanged original media assets, and page/control behaviour.');

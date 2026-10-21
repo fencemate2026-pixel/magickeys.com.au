@@ -1,0 +1,65 @@
+/* Hardware controls preserve the same navy/white/orange operator workspace. */
+.va-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:0 12px 12px}
+.va-card{min-width:0;background:var(--mk-app-card);color:#e6f2fb;border:1px solid #547c98;overflow:hidden;font-family:Arial,Helvetica,sans-serif}
+.va-heading{display:flex;align-items:center;gap:9px;min-height:58px;padding:10px 12px;border-bottom:1px solid #6287a177}
+.va-heading>span:first-child{display:grid;place-items:center;flex:0 0 26px;height:28px;background:var(--mk-app-orange);color:#fff;font-size:11px;font-weight:700}
+.va-heading>div{min-width:0;flex:1}
+.va-heading strong{display:block;color:#fff;font-size:13px;line-height:1.35}
+.va-heading small{display:block;font-size:7px;letter-spacing:.4px;margin-top:4px;color:#b9d8eb}
+.va-connection{font-size:6px;color:#bedbea;border:1px solid #6a9ab5;border-radius:20px;padding:5px;white-space:nowrap}
+.va-connection i{display:inline-block;width:4px;height:4px;border-radius:50%;margin-right:3px;background:#36dfb1;animation:va-led 1.5s steps(1,end) infinite}
+.va-model.model-stage{height:260px;min-height:0;background:linear-gradient(150deg,#173e5e,#0c304e);border:0;border-radius:0;box-shadow:none;overflow:hidden;position:relative}
+.va-model .model-poster,.va-model .model-canvas{width:100%;height:100%;object-fit:contain;filter:none}
+.va-model .model-canvas{position:absolute;inset:0;display:block}
+.va-model .model-canvas[hidden],.va-model .model-poster[hidden]{display:none}
+.va-controls{display:grid;grid-template-columns:1fr 1fr 1.2fr;align-items:center;gap:8px;padding:10px 12px;background:#0d3354;border-top:1px solid #547c9866}
+.va-controls button{border:1px solid #6b8da2;border-radius:2px;padding:10px 7px;font:bold 10px Arial,sans-serif;color:#fff;cursor:pointer}
+.va-controls .va-open{background:#286b46;border-color:#3f9a6d}
+.va-controls .va-close{background:#a53543;border-color:#ce5867}
+.va-controls button:disabled{opacity:.45;cursor:default}
+.va-controls button:focus-visible{outline:3px solid #ffad5a;outline-offset:3px}
+.va-controls button:hover:enabled{filter:brightness(1.2)}
+.va-current{display:grid;grid-template-columns:7px 1fr;align-items:center;column-gap:6px;row-gap:3px;padding-left:7px;border-left:1px solid #638ba266;min-width:0}
+.va-current span{font-size:10px;font-weight:700;line-height:1.4;color:#fff}
+.va-current small{grid-column:2;font-size:6px;color:#a5c7dc}
+.va-led{display:block;width:6px;height:6px;border-radius:50%;background:#ff5265;box-shadow:0 0 8px #ff526566;animation:va-led 1.2s steps(1,end) infinite}
+.va-current[data-state="open"] .va-led{background:#35ddb0;box-shadow:0 0 8px #35ddb077}
+.va-current[data-state="moving"] .va-led{background:#ffc05b;box-shadow:0 0 8px #ffc05b77;animation-duration:.5s}
+.va-telemetry{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #6287a133;padding:8px 12px;color:#91b8ce;font-size:6px;letter-spacing:.3px}
+.va-workspace-note{font:10px/1.6 Arial,sans-serif!important;color:#54748c!important;margin:0!important;padding:10px 15px 16px}
+.va-full-workspace{border:1px solid #547c9866;box-shadow:0 25px 50px #061e3022}
+.home-page .mk-home-workspace{grid-template-columns:1fr 1fr 1.04fr;height:300px;gap:8px}
+.home-page .mk-home-workspace .va-heading{height:48px;min-height:0;padding:8px;gap:6px}
+.home-page .mk-home-workspace .va-heading strong{font-size:11px}
+.home-page .mk-home-workspace .va-heading small{font-size:6px}
+.home-page .mk-home-workspace .va-heading>span:first-child{flex-basis:22px;height:24px;font-size:9px}
+.home-page .mk-home-workspace .va-connection{font-size:5px;padding:4px}
+.home-page .mk-home-workspace .va-model.model-stage{height:168px}
+.home-page .mk-home-workspace .va-controls{height:56px;padding:8px;gap:6px}
+.home-page .mk-home-workspace .va-controls button{font-size:8px;padding:8px 5px}
+.home-page .mk-home-workspace .va-current span{font-size:8px}
+.home-page .mk-home-workspace .va-current small{font-size:5px}
+.home-page .mk-home-workspace .va-telemetry{height:24px;font-size:5px;padding:7px 8px}
+.home-page .mk-tailgate-title{padding:8px;height:48px}
+.home-page .mk-tailgate-title>strong{font-size:10px}
+.home-page .mk-tailgate-title>span{font-size:5px;padding:4px}
+.home-page .mk-tailgate-camera{height:250px;display:grid;grid-template-columns:1fr;grid-template-rows:180px 1fr;padding:8px;gap:5px}
+.home-page .tablet-screen .mk-home-tailgate .sd-overhead-view{width:180px;height:180px;margin:auto}
+.home-page .mk-tailgate-camera>div:last-child{display:grid;grid-template-columns:10px 1fr;column-gap:5px;align-items:center}
+.home-page .mk-tailgate-camera>div:last-child>strong{font-size:9px;margin:0}
+.home-page .mk-tailgate-camera p{display:none}
+.home-page .mk-tailgate-camera a{grid-column:2;font-size:7px;margin-top:3px}
+.home-page .mk-alert-dot{font-size:10px}
+.home-page .va-grid{padding:0}
+.home-page .hero-cctv-preview{grid-template-columns:55px 1fr 1fr 1.05fr;gap:8px}
+.home-page .hero-cctv-preview .mk-home-tailgate{height:125px;background:var(--mk-app-card);border:1px solid #547c98;overflow:hidden}
+.home-page .hero-cctv-preview .mk-tailgate-title{height:23px;padding:4px 6px}
+.home-page .hero-cctv-preview .mk-tailgate-title>strong{font-size:8px}
+.home-page .hero-cctv-preview .mk-tailgate-title>span{font-size:4px;padding:2px}
+.home-page .hero-cctv-preview .mk-tailgate-camera{height:100px;grid-template-columns:88px 1fr;grid-template-rows:1fr;gap:7px;padding:5px}
+.home-page .hero-cctv-preview .sd-overhead-view{width:88px!important;height:88px!important}
+.home-page .hero-cctv-preview .mk-tailgate-camera>div:last-child>strong{font-size:8px}
+.home-page .hero-cctv-preview .mk-tailgate-camera a{font-size:6px}
+@keyframes va-led{0%,65%{opacity:1}66%,100%{opacity:.2}}
+@media(max-width:1000px){.va-grid{grid-template-columns:1fr}.va-model.model-stage{height:290px}.va-heading strong{font-size:15px}.va-heading small{font-size:9px}.va-connection{font-size:8px}.va-controls button{font-size:12px}.va-current span{font-size:12px}.va-current small{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.va-led,.va-connection i{animation:none}}

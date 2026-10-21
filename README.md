@@ -71,3 +71,7 @@ The generic form posts credentials directly over HTTPS to the existing secure po
 The root netlify.toml sets the base to the repository root, the command to npm run check, the publish directory to dist and Node to version 22. Connect Netlify to this repository's main branch. The checked-in configuration supplies the build settings. All required media and scripts are emitted into dist/assets. DNS must use the actual domain target supplied by Netlify for magickeys.com.au.
 
 The retained Azure static configuration also sends legacy login URLs to the new Client Login page. No operational portal or Azure resource is changed by this advertising-site update.
+
+## Vehicle access previews
+
+The homepage tablet now includes a boom barrier, retractable bollards and a sliding gate, alongside CCTV and overhead anti-tailgating. `scripts/vehicle-access.mjs` extends the original native mesh renderer with three vertically retracting bollards and creates matching SVG fallbacks. The same meshes produce the animated `app-vehicle-access.svg` used on the platform, customisation and client-entry pages. A complete interactive workspace on /gate-control/ and /customisation/ offers OPEN/CLOSE and LOWER/RAISE with matching position text and flashing status indicators. Reduced motion uses immediate position changes and steady LEDs. No live controller calls are made.

@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { buildAppVisuals } from './app-layout.mjs';
 import { buildPages } from './pages.mjs';
+import { prepareVehicleModels } from './vehicle-access.mjs';
 
 const archive = join(process.cwd(), 'MagicKeys-Azure-Website (1).zip');
 if (!existsSync(archive)) throw new Error('The original MagicKeys Azure website ZIP is missing.');
@@ -28,17 +29,21 @@ try {
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-layout.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/hero-tablet.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/camera-style.css', 'utf8'));
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/vehicle-access.css', 'utf8'));
   cpSync('patches/security-demo.js', 'dist/assets/security-demo.js');
   cpSync('patches/clear-space.js', 'dist/assets/clear-space.js');
   cpSync('patches/camera-style.js', 'dist/assets/camera-style.js');
   cpSync('patches/client-access.js', 'dist/assets/client-access.js');
+  cpSync('patches/vehicle-access.js', 'dist/assets/vehicle-access.js');
   cpSync('site-assets', 'dist/assets', {recursive:true});
-  buildAppVisuals();
+  const vehicleModels = prepareVehicleModels();
+  buildAppVisuals(vehicleModels);
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('dist/assets/app-palette.css','utf8'));
   cpSync('patches/multipage.js', 'dist/assets/multipage.js');
   const siteScript='dist/assets/site.js';
   writeFileSync(siteScript,readFileSync(siteScript,'utf8')
     .replace("foyer:'Foyer detection'","foyer:'Anti-Tailgating System'")
+    .replace("const preview=$('#hero-preview');", "const preview=$('#legacy-hero-preview');")
     .replace('if(!reducedMotion.matches) playIntro();','if(!reducedMotion.matches && !window.location.hash) playIntro();'));
   buildPages();
 } finally {
