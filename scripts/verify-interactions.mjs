@@ -99,7 +99,7 @@ function parse(html) {
   document.body=document.querySelector('body');document.activeElement=document.body;document.hidden=false;
   return document;
 }
-const scripts=['scene3d-mounts.js','site.js','multipage.js','security-demo.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
+const scripts=['scene3d-mounts.js','site.js','multipage.js','security-demo.js','clear-space.js','camera-style.js'].map(name=>[name,readFileSync('dist/assets/'+name,'utf8')]);
 function environment(html,route,reduced=true,search='',hash='') {
   const document=parse(html), redirects=[];
   const location={pathname:route,search,hash,replace:destination=>redirects.push(destination)};
@@ -219,6 +219,33 @@ export function verifyInteractions(pages) {
       click('sd-simulate');click('sd-zone-2');
       assert.equal(node('sd-simulate').disabled,false,'Switching zones must reset the example');
       assert.equal(node('sd-zone-status').textContent,'READY');
+    }
+    if(route==='/anti-tailgating/') {
+      const entry=node('clear-space-entry-demo');
+      // A valid swipe cannot open a door while a second person remains in the zone.
+      assert.equal(entry.dataset.state,'waiting');
+      assert.equal(node('ce-open').disabled,true);
+      click('ce-swipe');
+      assert.equal(entry.dataset.state,'blocked');
+      assert.equal(node('ce-door-state').textContent,'DOOR CLOSED');
+      assert.equal(node('ce-open').disabled,true);
+      assert.equal(node('ce-people').textContent,'2');
+      assert.ok(node('ce-prompt').textContent.includes('step out'));
+      node('ce-open').dispatch('click');
+      assert.equal(entry.dataset.state,'blocked','A blocked entry must reject an open attempt');
+      click('ce-step-back');
+      assert.equal(entry.dataset.state,'clear');
+      assert.equal(node('ce-people').textContent,'1');
+      click('ce-open');
+      assert.equal(entry.dataset.state,'open');
+      assert.equal(node('ce-door-state').textContent,'DOOR OPEN');
+      click('ce-reset');
+      assert.equal(entry.dataset.state,'waiting');
+      assert.equal(node('ce-door-state').textContent,'DOOR CLOSED');
+      node('ce-open').dispatch('click');
+      assert.equal(entry.dataset.state,'waiting','Reset must invalidate the previous authorisation');
+      click('ce-swipe');click('ce-step-back');click('ce-reset');
+      assert.equal(entry.dataset.state,'waiting','Reset during clearance must cancel the pending release');
     }
     const preview=document.querySelector('[data-preview]');
     if(preview) {

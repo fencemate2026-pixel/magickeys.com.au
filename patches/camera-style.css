@@ -1,0 +1,77 @@
+/* The same recorder overlay on every simulated camera image, never on site photos. */
+.sd-scene{background-image:url('cctv-camera-atlas-v3.jpg')}
+.sd-camera-tile,.sd-camera-main,.sd-overhead-view,.hero-cctv-preview>figure,.ce-camera{container-type:inline-size;isolation:isolate}
+.mk-camera-osd{position:absolute;inset:0;z-index:5;pointer-events:none;color:#fff;font:600 clamp(6px,2.25cqw,11px)/1.25 Consolas,'Courier New',monospace;text-shadow:0 1px 2px #000,1px 0 2px #000;letter-spacing:.1px;overflow:hidden}
+.mk-camera-osd:before{content:"";position:absolute;inset:0;background:linear-gradient(#0006,transparent 21%,transparent 78%,#0005);box-shadow:inset 0 0 25px #0002;z-index:-1}
+.mk-camera-code{position:absolute;top:7px;left:7px;max-width:75%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-camera-rec{position:absolute;top:7px;right:7px;display:flex;align-items:center;gap:4px}
+.mk-camera-rec>i{width:.65em;height:.65em;border-radius:50%;background:#ff3448;box-shadow:0 0 5px #ff3448b3;animation:mk-recording-led 1.5s steps(1,end) infinite}
+.mk-camera-clock{position:absolute;left:7px;bottom:7px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mk-camera-example{position:absolute;right:7px;bottom:7px;font-size:.75em;opacity:.9;white-space:nowrap}
+.mk-camera-osd-compact .mk-camera-example{display:none}
+.sd-camera-tile .mk-camera-clock{bottom:31px;font-size:.9em}
+.sd-camera-tile .sd-tile-number{display:none}
+.sd-camera-tile .sd-tile-alert{top:26px;right:7px;z-index:6}
+.sd-camera-main .sd-view-top{display:none}
+.sd-camera-main .sd-view-bottom{bottom:25px;z-index:6;background:none}
+.sd-overhead-view .sd-overhead-label{display:none}
+.sd-camera-main[data-overhead="true"]{background:#071e2e}
+.sd-camera-main[data-overhead="true"] .mk-camera-example{display:none}
+.hero-cctv-preview>figure>.sd-scene{position:absolute;inset:0;background-size:500% 300%}
+.home-page .hero-cctv-preview .mk-camera-clock{bottom:26px;font-size:8px}
+.home-page .hero-cctv-preview .mk-camera-code,.home-page .hero-cctv-preview .mk-camera-rec{font-size:9px}
+.home-page .mk-home-tailgate .mk-camera-osd{font-size:7px}
+.home-page .mk-home-tailgate .mk-camera-example{display:none}
+.sd-led{animation:mk-connected-led 2.4s ease-in-out infinite}
+@keyframes mk-recording-led{0%,62%{opacity:1}63%,100%{opacity:.12}}
+@keyframes mk-connected-led{0%,100%{box-shadow:0 0 3px #39daaa55;opacity:.75}50%{box-shadow:0 0 10px #39daaacc;opacity:1}}
+.ce-app{grid-template-columns:110px minmax(0,1fr)}
+.ce-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;padding:0 12px 12px;color:#e3f1fb}
+.ce-camera{position:relative;aspect-ratio:1;background:#163646;overflow:hidden;border:1px solid #547c98;border-radius:4px}
+.ce-photo{position:absolute;inset:0;background:url('clear-space-entry-atlas.jpg') 0% 0%/300% 100% no-repeat}
+.ce-layout[data-state="clear"] .ce-photo{background-position:50% 0%}
+.ce-layout[data-state="open"] .ce-photo{background-position:100% 0%}
+.ce-zone{position:absolute;left:21%;top:27%;width:57%;height:68%;border:1px dashed #82edff88;background:#2bd8e009}
+.ce-layout[data-state="blocked"] .ce-zone{border-color:#ff596d;background:#ff3f5509}
+.ce-person{position:absolute;border:2px solid #43dfab;border-radius:3px;pointer-events:none}
+.ce-person>b{position:absolute;top:-18px;left:-2px;padding:3px 5px;background:#147e5a;color:#fff;font:700 9px Arial;white-space:nowrap}
+.ce-resident{left:38%;top:29%;width:26%;height:32%}
+.ce-follower{left:34%;top:61%;width:32%;height:33%;border-color:#ff4056}
+.ce-follower>b{background:#ce2c41}
+.ce-layout[data-state="clear"] .ce-follower,.ce-layout[data-state="open"] .ce-follower{display:none}
+.ce-layout[data-state="open"] .ce-resident{top:6%;height:39%;left:38%;width:28%}
+.ce-door-state{position:absolute;top:23%;left:4%;color:#fff;background:#ba2f40;padding:5px 8px;font:700 9px Arial;border-radius:2px}
+.ce-layout[data-state="open"] .ce-door-state{background:#137852}
+.ce-camera-caption{position:absolute;bottom:29px;left:7px;color:#fff;font:700 7px Consolas,monospace;letter-spacing:.3px;text-shadow:0 1px 3px #000;z-index:6}
+.ce-controls{background:var(--mk-app-card);border:1px solid #547c9866;border-radius:4px;padding:25px;min-width:0}
+.ce-status{display:inline-block;font:700 10px Arial;letter-spacing:.7px;color:#abdced;border:1px solid #78aec6;padding:7px 9px;border-radius:3px}
+.ce-controls h3{font-size:27px;color:#fff;line-height:1.3;margin:20px 0 12px}
+.ce-controls>p{font:13px/1.8 Arial;color:#bfd8e9;margin:0 0 18px}
+.ce-prompt{font:700 14px/1.65 Arial;color:#fff;background:#082945;border-left:3px solid #73c6e4;padding:14px;margin:0 0 16px;min-height:70px}
+.ce-layout[data-state="blocked"] .ce-prompt{border-color:#ff4a61;background:#60232e}
+.ce-layout[data-state="blocked"] .ce-status{border-color:#ff7585;color:#ffb9c2}
+.ce-layout[data-state="clear"] .ce-prompt,.ce-layout[data-state="open"] .ce-prompt{background:#104c40;border-color:#4bdbab}
+.ce-layout[data-state="open"] .ce-status{color:#93f3ce;border-color:#4bdbab}
+.ce-readings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.ce-readings>span{display:flex;align-items:center;gap:9px;font:10px/1.5 Arial;color:#c7e2f3;background:#082b48;padding:12px}
+.ce-readings b{font-size:23px;color:#fff}
+.ce-buttons{display:grid;gap:8px}
+.ce-buttons>button{border:1px solid #628fae;border-radius:3px;background:#174967;color:#fff;text-align:left;padding:12px;font:700 11px/1.3 Arial;cursor:pointer}
+.ce-buttons>button:disabled{opacity:.4;cursor:default}
+.ce-buttons>button:not(:disabled):hover{background:#25638b}
+.ce-buttons>#ce-swipe{background:#ff8000;border-color:#ff8000;color:#10283a}
+.ce-buttons>#ce-open{background:#207651}
+.ce-buttons>#ce-reset{background:transparent;color:#bddded;text-align:center;font-weight:400}
+.ce-controls .ce-workflow-note{font-size:10px;line-height:1.7;margin:17px 0 0}
+.ov-video{aspect-ratio:16/9;overflow:hidden;background:#061f33;border:1px solid #9db9cc;border-radius:8px}
+.ov-video>iframe{display:block;width:100%;height:100%;border:0}
+.ov-video-link{margin-top:16px;font-size:14px;color:#205779}
+.ov-video-link a{text-decoration:underline;text-underline-offset:4px}
+.ov-reference-details{margin-top:25px;border-top:1px solid #b9d3e5;padding-top:20px;color:#1a4e70}
+.ov-reference-details>summary{cursor:pointer;font-size:14px;line-height:1.7}
+.ov-manufacturer-references{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;margin-top:28px;align-items:start}
+.ov-manufacturer-references .detail-image-button>img{object-fit:contain;filter:none;background:#fff}
+@media(max-width:1100px){.ce-controls{padding:18px}.ce-controls h3{font-size:23px}.ce-controls>p{font-size:12px}.ce-prompt{font-size:12px;padding:12px}.ce-buttons>button{padding:10px}}
+@media(max-width:850px){.ce-layout{grid-template-columns:1fr;gap:12px}.ce-camera{max-width:620px;width:100%;justify-self:center}.ce-controls h3{font-size:25px}.ce-buttons{grid-template-columns:1fr 1fr}.ce-controls{padding:22px}.ce-controls>p{font-size:13px}.ov-manufacturer-references{grid-template-columns:1fr}}
+@media(max-width:520px){.ce-app{grid-template-columns:60px minmax(0,1fr)}.ce-layout{padding:0 8px 8px;gap:8px}.ce-controls{padding:14px}.ce-controls h3{font-size:21px}.ce-buttons{grid-template-columns:1fr}.ce-controls>p{font-size:12px}.ce-readings{gap:6px}.ce-readings>span{font-size:9px;padding:9px}.ce-readings b{font-size:20px}.ce-person>b{font-size:7px;top:-15px;padding:2px 3px}.ce-door-state{font-size:7px;padding:4px}.ce-camera-caption{font-size:5px;bottom:22px}.mk-camera-clock{font-size:.9em}.mk-camera-example{font-size:.65em}}
+@media(prefers-reduced-motion:reduce){.mk-camera-rec>i,.sd-led{animation:none!important;opacity:1}}

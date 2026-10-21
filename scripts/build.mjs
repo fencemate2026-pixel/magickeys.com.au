@@ -26,7 +26,10 @@ try {
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-consistency.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-layout.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/hero-tablet.css', 'utf8'));
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/camera-style.css', 'utf8'));
   cpSync('patches/security-demo.js', 'dist/assets/security-demo.js');
+  cpSync('patches/clear-space.js', 'dist/assets/clear-space.js');
+  cpSync('patches/camera-style.js', 'dist/assets/camera-style.js');
   cpSync('site-assets', 'dist/assets', {recursive:true});
   buildAppVisuals();
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('dist/assets/app-palette.css','utf8'));

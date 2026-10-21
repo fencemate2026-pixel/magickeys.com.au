@@ -93,6 +93,14 @@ for(const file of files.filter(path=>/\/assets\/app-[^/]+\.svg$/.test(path))) {
   assert(svg.includes('Gate schedules')&&svg.includes('CCTV &amp; zones'),'App navigation missing in '+file);
 }
 assert(home.includes('data-app-layout="magickeys-reference-v1"'),'Homepage does not use the common app layout');
+const cameraSvg=readFileSync(join(root,'assets/app-cctv.svg'),'utf8');
+assert((cameraSvg.match(/class="mk-rec-led"/g)||[]).length===16,'Each of the 15 cameras and the overhead camera must have a recording indicator');
+assert(cameraSvg.includes('@keyframes rec-led'),'SVG camera recording animation missing');
+assert(pages.get('/anti-tailgating/').html.includes('youtube-nocookie.com/embed/SOBpnzIweak?rel=0'),'Supplied OPTEX video is missing');
+for(const [route,page] of pages) {
+  const cameraCount=(page.html.match(/class="mk-camera-osd/g)||[]).length;
+  if(cameraCount) assert(page.html.includes('/assets/camera-style.js'),'Camera example clock script missing on '+route);
+}
 
 const sitemap=readFileSync(join(root,'sitemap.xml'),'utf8');
 const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);

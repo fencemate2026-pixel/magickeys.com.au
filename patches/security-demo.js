@@ -12,6 +12,7 @@
     cameras.forEach((tile,i)=>tile.setAttribute('aria-pressed',String(i===index)));
     const label=camera.dataset.cameraLabel;
     get('sd-camera-code').textContent='CAM '+String(index+1).padStart(2,'0');
+    get('sd-recording-code').textContent='CAM '+String(index+1).padStart(2,'0');
     get('sd-camera-label').textContent=label;
     get('sd-selected-title').textContent=label;
     get('sd-camera-scene').setAttribute('aria-label',eventZone===selected?'Illustrative overhead camera view: '+label:'Illustrative camera view: '+label);
@@ -42,7 +43,7 @@
   }
   cameras.forEach((camera,i)=>camera.addEventListener('click',()=>selectCamera(i)));
   zones.forEach((button,i)=>button.addEventListener('click',()=>{
-    zone=i; eventZone=null; reviewed=false; selectCamera(i); render();
+    zone=i; get('sd-zone-recording-code').textContent='FOYER 0'+(i+1)+' / OVERHEAD'; eventZone=null; reviewed=false; selectCamera(i); render();
     get('sd-event-title').textContent='Foyer 0'+(zone+1)+' selected';
     get('sd-event-description').textContent='The ceiling camera looks directly down over the inner doorway. Run the demo to show a second person following one authorised entry.';
   }));

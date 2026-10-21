@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { appShell } from './app-layout.mjs';
+import { cameraOverlay } from './camera-style.mjs';
 import { securityDemo } from './security-demo.mjs';
 import { antiTailgatingContent } from './anti-tailgating.mjs';
 
@@ -14,7 +15,7 @@ const heading = (eyebrow, title, text) => `<div class="section-heading"><div><di
 const section = (content, classes='section-shell section-space', id='') => `<section class="${classes}"${id ? ` id="${id}"` : ''}>${content}</section>`;
 const cards = items => `<div class="benefit-grid">${items.map(([title,text,name='check']) => `<article>${icon(name)}<h3>${title}</h3><p>${text}</p></article>`).join('')}</div>`;
 const faq = items => `<div class="faq-list">${items.map(([q,a])=>`<details><summary>${q}<span>+</span></summary><p>${a}</p></details>`).join('')}</div>`;
-const dimensions = {'tailgating-example.webp':[750,346], 'projector-guidance.png':[941,630], 'sentinel-preview.png':[1769,749], 'portal-overview.png':[1917,911], 'detection-unit.webp':[540,540], 'hyd-pasins-3d.webp':[1536,1024]};
+const dimensions = {'optex-system-reference.jpg':[750,405], 'optex-detection-reference.jpg':[640,480], 'tailgating-example.webp':[750,346], 'projector-guidance.png':[941,630], 'sentinel-preview.png':[1769,749], 'portal-overview.png':[1917,911], 'detection-unit.webp':[540,540], 'hyd-pasins-3d.webp':[1536,1024]};
 const image = (file, alt, caption, branded=false) => {
   const [width,height]=file.startsWith('app-')&&file.endsWith('.svg')?[1891,895]:dimensions[file] || [1672,941];
   const appVisual=file.startsWith('app-');
@@ -107,19 +108,19 @@ export function buildPages() {
     .replace('Discuss your site','Plan your MagicKeys system')
     .replace('The selected blue holographic AI face with connected points and data patterns','Blue digital face with connected points and data patterns')
     .replace('<div class="hero-portal-foot">',
-      '<div class="hero-cctv-preview"><span>CCTV<br><small>EXAMPLE VIEWS</small></span><figure><img src="/assets/commercial-entry-concept.webp" width="1672" height="941" alt="Commercial entrance CCTV view example"><figcaption>Main entry</figcaption></figure><figure><img src="/assets/venue-concept.png" width="1672" height="941" alt="Shared venue CCTV view example"><figcaption>Venue entrance</figcaption></figure></div><div class="hero-portal-foot">');
+      '<div class="hero-cctv-preview"><span>CCTV<br><small>EXAMPLE VIEWS</small></span><figure><span class="sd-scene" style="--camera-x:50%;--camera-y:100%" role="img" aria-label="High-mounted CCTV view of the pedestrian entry"></span>'+cameraOverlay('CAM 13',{compact:true})+'<figcaption>Pedestrian entry</figcaption></figure><figure><span class="sd-scene" style="--camera-x:0%;--camera-y:0%" role="img" aria-label="Ceiling-mounted CCTV view of the foyer inner doors"></span>'+cameraOverlay('CAM 01',{compact:true})+'<figcaption>Foyer 01 · Inner doors</figcaption></figure></div><div class="hero-portal-foot">');
   const oldHomeApp=extract(homeHero,/<div class="hero-screen hero-control-preview"/,'div');
   const homeTitle=extract(oldHomeApp,/<div class="hero-portal-title"/,'div').replace('Campus entry','Main entry');
   const homeWorkspace=extract(oldHomeApp,/<div class="hero-portal-workspace"/,'div');
   const homeCameras=extract(oldHomeApp,/<div class="hero-cctv-preview"/,'div');
-  const homeApp=appShell(`<div class="mk-module-heading"><strong>Active gate controls &amp; site security</strong><button type="button" class="hero-preview-toggle" id="hero-preview-toggle">Pause preview</button></div><div class="mk-home-workspace"><div class="mk-home-gate">${homeTitle}${homeWorkspace}</div><div class="mk-home-tailgate"><div class="mk-tailgate-title"><strong>Foyer 01 / anti-tailgating</strong><span>EVENT FLAGGED</span></div><div class="mk-tailgate-camera"><div class="sd-overhead-view" data-state="alert" role="img" aria-label="Overhead foyer example with the following person boxed in red"><div class="sd-overhead-photo"></div><span class="sd-track sd-track-one" aria-hidden="true"><b>Authorised entrant</b></span><span class="sd-track sd-track-two" aria-hidden="true"><b>Following person</b></span></div><div><span class="mk-alert-dot">●</span><strong>Following person detected</strong><p>Overhead camera<br>Foyer 01 · Inner doorway</p><a href="/anti-tailgating/#apartment-security-demo">Review event →</a></div></div></div></div>${homeCameras}`,{active:'overview',classes:'hero-control-preview',attributes:'id="hero-preview" role="group" aria-labelledby="hero-preview-title"'});
+  const homeApp=appShell(`<div class="mk-module-heading"><strong>Active gate controls &amp; site security</strong><button type="button" class="hero-preview-toggle" id="hero-preview-toggle">Pause preview</button></div><div class="mk-home-workspace"><div class="mk-home-gate">${homeTitle}${homeWorkspace}</div><div class="mk-home-tailgate"><div class="mk-tailgate-title"><strong>Foyer 01 / anti-tailgating</strong><span>EVENT FLAGGED</span></div><div class="mk-tailgate-camera"><div class="sd-overhead-view" data-state="alert" role="img" aria-label="Overhead foyer example with the following person boxed in red"><div class="sd-overhead-photo"></div>${cameraOverlay('FOYER 01 / OVERHEAD',{compact:true})}<span class="sd-track sd-track-one" aria-hidden="true"><b>Authorised entrant</b></span><span class="sd-track sd-track-two" aria-hidden="true"><b>Following person</b></span></div><div><span class="mk-alert-dot">●</span><strong>Following person detected</strong><p>Overhead camera<br>Foyer 01 · Inner doorway</p><a href="/anti-tailgating/#apartment-security-demo">Review event →</a></div></div></div></div>${homeCameras}`,{active:'overview',classes:'hero-control-preview',attributes:'id="hero-preview" role="group" aria-labelledby="hero-preview-title"'});
   homeHero=homeHero.replace(oldHomeApp,`<div class="hero-tablet" aria-label="MagicKeys app displayed on a landscape tablet"><span class="tablet-camera" aria-hidden="true"></span><div class="tablet-screen" data-app-viewport="1200">${homeApp}</div></div>`);
   const maker=original(/<div class="principle-strip"/,'div').replace('Detection alerts','Anti-Tailgating Systems');
 
   const productCards=[
     ['/gate-control/','lock','Gate control','Manage connected swing, sliding and boom gates through familiar controls.'],
     ['/cctv/','grid','CCTV &amp; Sentinel','Bring camera views and configured alerts into your site workspace.'],
-    ['/anti-tailgating/','users','Anti-Tailgating Systems','Installed entrance detection with event alerts for your nominated team.'],
+    ['/anti-tailgating/','users','Anti-Tailgating Systems','Installed entrance detection, clear-space entry checks and event alerts for your team.'],
     ['/platform/','clock','Schedules &amp; bookings','Plan gate access around operating hours and approved venue hire.'],
     ['/customisation/','check','Fully customisable app','Shape the screens, access rules and workflow around your operation.'],
     ['/emergency-guidance/','shield','Emergency Guidance','Discuss staff prompts, visual instructions and agreed gate responses.']
@@ -355,7 +356,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
 <title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}">
 <link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/app-reference.jpg">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
-${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}
+${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">
 ${page.route==='/'?normalise(intro,page.route):''}<a class="skip-link" href="#main">Skip to content</a>${symbols}${header(page.route)}
 <main id="main" tabindex="-1">${normalise(page.content,page.route)}</main>

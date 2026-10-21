@@ -76,6 +76,34 @@
       "source": "site-assets/current-portal-layout-v2.webp",
       "prompt": null,
       "notes": "JPEG delivery encoding of the supplied actual app screenshot; also supplies the exact app logo appearance for all preview frames."
+    },
+    {
+      "file": "site-assets/cctv-camera-atlas-v3.jpg",
+      "source": "exec-d6f842e8-b06b-4c8d-91de-38303bede68f.png",
+      "reference": [
+        "apartment-camera-atlas-v2.webp",
+        "foyer-overhead-atlas.webp"
+      ],
+      "prompt": "Remake all 15 equal cells of the five-column, three-row apartment camera atlas as authentic fixed ceiling/high-wall CCTV views looking steeply down at the floor, 3–4m high, 45–70 degree angle and mild wide-angle distortion. Match the neutral natural surveillance realism of the overhead tailgating reference. Preserve the exact location order: three glass inner-door foyers, reception, lift lobby; corridor, parking entry boom, exit boom, parking bays, basement lift; service alley, mail room, pedestrian path, driveway ramp, bicycle racks. Every label must still match the scene. No UI, written text, camera labels or timestamps; all overlays are generated accurately in code. Five columns, three rows, no gutters.",
+      "notes": "Generated with built-in image tool. JPEG delivery encoding only; the code uses the same atlas for all previews and interactive camera tiles."
+    },
+    {
+      "file": "site-assets/clear-space-entry-atlas.jpg",
+      "source": "exec-faffa908-caa1-4b58-8af0-137a0d30260d.png",
+      "prompt": "Photorealistic overhead CCTV storyboard, three equal square frames horizontally, fixed camera straight down. Glass sliding door at top one-fifth y20% of each square. First frame: visibly closed door, navy-clad woman below it x45% y48% facing up, grey-clad man directly behind x48% y78%, both before the door. Second frame: same door closed, same woman waiting, man fully absent after stepping clear. Third frame: same door with glass panels retracted and centre passage open, woman entering at y20%, man absent. Same grey tiled vestibule, dark floor mat, natural neutral CCTV exposure and registration across frames. No words, overlays, boxes or UI.",
+      "notes": "Generated with built-in image tool. The website overlays the detection zone, tracking boxes, door state and recording OSD; no real access-control commands are sent."
+    },
+    {
+      "file": "site-assets/optex-system-reference.jpg",
+      "source": "Supplied image(20261021-121944).png",
+      "prompt": null,
+      "notes": "Supplied OPTEX system reference; unchanged JPEG delivery encoding."
+    },
+    {
+      "file": "site-assets/optex-detection-reference.jpg",
+      "source": "Supplied image(20261021-122032).png",
+      "prompt": null,
+      "notes": "Supplied OPTEX video still; unchanged JPEG delivery encoding. The full supplied video is embedded beside these optional references."
     }
   ]
 }
