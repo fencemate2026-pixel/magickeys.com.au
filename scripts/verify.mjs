@@ -75,7 +75,10 @@ assert(!home.includes('id="portal-tour"')&&!home.includes('id="client-access"'),
 assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/platform/').html.includes('id="media-gallery"'),'Actual portal tour and full gallery missing');
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');
 assert((pages.get('/customisation/').html.match(/data-gate-target=/g)||[]).length===8,'Multi-gate controls missing');
-assert(pages.get('/client-login/').html.includes('https://magickeys-balwyn-portal.com/login'),'Approved client portal link missing');
+const clientLogin=pages.get('/client-login/').html;
+assert(clientLogin.includes('method="post" action="https://magickeys-balwyn-portal.com/api/auth/client-entry"'),'Secure portal POST missing');
+assert(clientLogin.includes('autocomplete="username"')&&clientLogin.includes('autocomplete="current-password"'),'Login autocomplete missing');
+assert(!clientLogin.includes('Balwyn High School')&&!clientLogin.includes('Select your site'),'Public login must be generic');
 assert(pages.get('/development/').html.includes('IN DEVELOPMENT')&&pages.get('/development/').html.includes('Human acknowledgement'),'Development status or human acknowledgement missing');
 assert(home.includes('IN DEVELOPMENT')&&home.includes('/development/'),'Development programme not prominent on the homepage');
 for(const [route,page] of pages) if(route!=='/') assert(!page.html.includes('id="site-intro"'),'Intro unexpectedly blocks a detail page: '+route);

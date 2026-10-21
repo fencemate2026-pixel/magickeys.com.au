@@ -98,7 +98,7 @@ export function buildPages() {
   const how=original(/<section class="section-shell section-space how-section"/);
   const login=original(/<section class="client-section"/)
     .replace('<h2 id="client-access-heading">','<h1 id="client-access-heading">')
-    .replace('Your access.</span></h2>','Your access.</span></h1>');
+    .replace('Your site awaits.</span></h2>','Your site awaits.</span></h1>');
   let homeHero=original(/<section class="hero">/)
     .replace('THE MAGICKEYS PLATFORM','ALL-IN-ONE ACCESS CONTROL &amp; CCTV')
     .replace('Access,<br><span>connected.</span>','Your site.<br><span>Connected.</span>')
@@ -240,7 +240,7 @@ function buildMorePages({solutions, how, login}) {
       description:'Explore secure client sign-in, operator permissions and activity records in MagicKeys, plus a 15-camera apartment CCTV and anti-tailgating demonstration.',
       content:hero('SECURITY &amp; SYSTEM INTEGRATION','Secure access.<br><span>Connected systems.</span>','Bring apartment CCTV, foyer anti-tailgating detection and entrance activity into one customised MagicKeys app. Explore a 15-camera configuration for foyers, lifts, car parks and shared spaces, with linked alerts for your authorised team.',secureVisual,'Discuss security & integration',button('Try the apartment demo','#apartment-security-demo','btn-outline'))+
         section(heading('SECURITY WITH CLEAR RESPONSIBILITIES','The right people.<br>The right level of control.','A secure setup combines the portal, the operating roles and a properly commissioned installation.')+cards([
-          ['Secure client sign-in','Approved users enter their organisation’s existing portal. This public website does not collect passwords or issue gate commands.','lock'],
+          ['Secure client sign-in','Approved users enter their organisation’s existing portal. The secure portal verifies their credentials and permissions before giving access to site controls.','lock'],
           ['Encrypted portal connection','Use the secure HTTPS portal address provided for your organisation. Account access remains within your dedicated client workspace.','shield'],
           ['Site-specific permissions','Agree which authorised operators can use your workspace and the controls appropriate to their responsibilities.','users'],
           ['Recorded activity','Review the access events and operator actions recorded by the configured system, with equipment feedback kept clear.','log']
@@ -300,10 +300,11 @@ function buildMorePages({solutions, how, login}) {
     },
     {
       route:'/client-login/', title:'MagicKeys Client Login | Your organisation’s secure portal',
-      description:'Open your organisation’s existing MagicKeys client portal. Approved Balwyn High School users can sign in using their existing account.',
-      content:login+section(heading('EXISTING CLIENTS','The portal for<br>your organisation.','Your controls, schedules and permissions remain in your dedicated client workspace.')+faq([
-          ['Which login should I use?','Use the confirmed portal address for your organisation. The Balwyn High School link on this page is specifically for that organisation’s approved users.'],
-          ['My organisation is not listed. What should I do?','Contact the MagicKeys team for the correct portal address. Do not enter account credentials on this public marketing website.'],
+      description:'Sign in to your MagicKeys workspace using your approved username or email and password. Access your site controls, CCTV and schedules in one familiar app.',
+      content:login+section(heading('YOUR WORKSPACE','A familiar app.<br>Built around your site.','Your installed features, access permissions and site configuration are available after you sign in.')+faq([
+          ['Which account should I use?','Use your existing approved MagicKeys username or email and password. Your account must be registered for the connected client workspace.'],
+          ['Will I need an authenticator code?','Operator and administrator accounts also require the current six-digit code from their authenticator app. Keep using your existing authenticator setup.'],
+          ['I need help accessing my workspace.','Contact the MagicKeys team on 0400 101 132. New workspaces and account access are set up by the team.'],
           ['Can I operate a gate on this website?','The website demonstrations are simulated. Actual site controls are available only through your organisation’s approved portal and account permissions.']
         ]))
     },
@@ -356,7 +357,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
 <title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}">
 <link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/app-reference.jpg">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
-${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>
+${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>${page.route==='/client-login/'?'<script src="/assets/client-access.js" defer></script>':''}
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">
 ${page.route==='/'?normalise(intro,page.route):''}<a class="skip-link" href="#main">Skip to content</a>${symbols}${header(page.route)}
 <main id="main" tabindex="-1">${normalise(page.content,page.route)}</main>

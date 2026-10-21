@@ -23,3 +23,8 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/client-login/*"
+  [headers.values]
+    Content-Security-Policy = "form-action https://magickeys-balwyn-portal.com; base-uri 'self'; frame-ancestors 'none'"

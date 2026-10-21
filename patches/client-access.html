@@ -1,31 +1,48 @@
 <section class="client-section" id="client-access" aria-labelledby="client-access-heading">
+  <div class="client-access-glow" aria-hidden="true"></div>
   <div class="section-shell client-access-grid">
-    <div class="client-access-intro" data-reveal>
-      <div class="eyebrow">MAGICKEYS / CLIENT ACCESS</div>
-      <h2 id="client-access-heading">Your site.<br><span>Your access.</span></h2>
-      <p>Already using MagicKeys? Open your organisation's secure workspace using your existing approved account. All of your site controls, schedules and permissions remain in your dedicated portal.</p>
-      <div class="client-security-points" aria-label="Security features">
-        <div><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> Approved operators only</div>
-        <div><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Secure customer workspaces</div>
-        <div><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Existing logins continue working</div>
+    <div class="client-access-intro">
+      <div class="eyebrow"><span class="client-status-led" aria-hidden="true"></span> MAGICKEYS / YOUR CONNECTED WORKSPACE</div>
+      <h2 id="client-access-heading">Welcome back.<br><span>Your site awaits.</span></h2>
+      <p>One familiar workspace for your entrances, cameras and daily operations. Sign in with your approved account to get back to your site.</p>
+      <div class="client-app-stage">
+        <div class="client-device" role="img" aria-label="MagicKeys CCTV and overhead anti-tailgating app displayed on a landscape tablet. Illustrative workspace.">
+          <span class="client-device-camera" aria-hidden="true"></span>
+          <img src="assets/app-cctv.svg" width="1600" height="870" alt="" fetchpriority="high">
+        </div>
+        <div class="client-device-caption"><span class="client-status-led" aria-hidden="true"></span> YOUR CONTROLS. YOUR CAMERAS. ONE APP.<small>Illustrative workspace · Your installed features may differ.</small></div>
+      </div>
+      <div class="client-security-points" aria-label="Workspace features">
+        <span><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Site access</span>
+        <span><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg> CCTV &amp; zones</span>
+        <span><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> Your permissions</span>
       </div>
     </div>
-    <div class="client-access-panel" data-reveal>
+    <div class="client-access-panel">
       <div class="client-panel-heading">
-        <img src="assets/magickeys-logo.png" width="2061" height="763" alt="MagicKeys" loading="lazy">
-        <span class="client-panel-subheading">SECURE WORKSPACE ACCESS</span>
+        <img src="assets/magickeys-logo.png" width="2061" height="763" alt="MagicKeys">
+        <span class="client-secure-badge"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> SECURE SIGN IN</span>
       </div>
       <div class="client-panel-body">
-        <h3>Client Login</h3>
-        <p class="client-panel-lede">Select your site to sign in to its existing MagicKeys portal.</p>
-        <div class="client-workspace-card">
-          <div class="client-workspace-icon"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div>
-          <div class="client-workspace-text"><strong>Balwyn High School</strong><span>Campus access portal</span></div>
-          <a class="client-workspace-action" href="https://magickeys-balwyn-portal.com/login" aria-label="Open Balwyn High School secure client login">Sign in <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="client-panel-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span>Your password is entered only on your secure customer portal, never on this public website.</span></div>
+        <div class="client-form-eyebrow">YOUR MAGICKEYS WORKSPACE</div>
+        <h3>Let’s get you in.</h3>
+        <p class="client-panel-lede">Use your existing username or email and password.</p>
+        <form id="client-login-form" method="post" action="https://magickeys-balwyn-portal.com/api/auth/client-entry" autocomplete="on">
+          <div class="client-form-field">
+            <label for="client-username">Username or email</label>
+            <input id="client-username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254" required placeholder="Enter your username or email">
+          </div>
+          <div class="client-form-field">
+            <label for="client-password">Password</label>
+            <div class="client-password-wrap"><input id="client-password" name="password" type="password" autocomplete="current-password" maxlength="1024" required placeholder="Enter your password"><button type="button" id="client-show-password" aria-controls="client-password" aria-pressed="false">Show</button></div>
+          </div>
+          <div class="client-login-message" id="client-login-message" role="status" aria-live="polite" hidden></div>
+          <button class="client-submit" type="submit"><span>Sign in to my workspace</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </form>
+        <a class="client-login-help" href="tel:+61400101132">Need help signing in? Contact the team <span aria-hidden="true">↗</span></a>
+        <div class="client-panel-note"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Your approved account controls access to your workspace. An authenticator code may also be required.</span></div>
       </div>
-      <div class="client-panel-footer">Not seeing your organisation? <a href="tel:+61400101132">Contact the MagicKeys team <span aria-hidden="true">↗</span></a></div>
+      <div class="client-panel-footer"><span class="client-footer-lock" aria-hidden="true">●</span> Built around your site. Protected by your permissions.</div>
     </div>
   </div>
 </section>

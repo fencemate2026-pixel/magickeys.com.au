@@ -17,7 +17,7 @@ The approved original website archive, MagicKeys-Azure-Website (1).zip, supplies
 - /solutions/ — commercial, education, body corporate and logistics requirements
 - /how-it-works/ — assessment, app scope, connections, commissioning and handover
 - /development/ — developing AI threat and fire detection with human acknowledgement
-- /client-login/ — organisation-specific client portal links
+- /client-login/ — generic username/password entry for approved client accounts
 - /contact/ — contact the team and discuss requirements
 
 Each page has its own title, description and canonical URL. The sitemap lists every public page. A real 404 page is included. Previously shared homepage section bookmarks navigate to their new pages; /login and /login/ redirect to /client-login/.
@@ -53,7 +53,7 @@ The single anti-tailgating product page is /anti-tailgating/. It has one direct 
 - scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected apartment security demo. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review. The ceiling-camera photo pair shows one entrant and a follower directly from above; a red box identifies the following person. Portal chrome follows the supplied MagicKeys app screen.
 - patches/multipage.js owns dropdown navigation, legacy bookmarks and the simulated multi-gate controls.
 - patches/hero-layers.css keeps the original AI face behind the gate preview.
-- patches/client-access.html and .css preserve the approved organisation-specific login section.
+- patches/client-access.html, .css and .js define the generic client login, canonical app tablet and accessible form states.
 - site-assets holds new project-bound WebP images. image-prompts.json documents their provenance and prompts.
 
 Screenshots from the actual supplied portal are identified as portal/setup views. Custom dashboard and site visuals are identified as configuration examples without AI wording in their captions. Image brightness and contrast are presentation styles; the original source assets and logo transparency remain intact.
@@ -64,7 +64,7 @@ Security copy is limited to the supplied portal's secure sign-in, HTTPS connecti
 
 AI-assisted threat and fire detection is clearly marked IN DEVELOPMENT. The proposed workflow includes authorised human review and acknowledgement. No release date or current commissioned capability is claimed.
 
-The only listed organisation-specific sign-in is the existing approved Balwyn High School portal at https://magickeys-balwyn-portal.com/login. This marketing site never collects credentials, handles access tokens, sends notifications or issues hardware commands. All demonstrations are disconnected browser simulations.
+The generic form posts credentials directly over HTTPS to the existing secure portal’s /api/auth/client-entry adapter. It retains no credentials, tokens or sessions in browser storage or URLs. The portal reuses existing password verification, permissions, rate limits and mandatory operator/administrator TOTP checks. Only the existing customer workspace is configured today; additional sites require a trusted account-to-workspace directory and explicit onboarding. The marketing site sends no hardware commands. All demonstrations are disconnected browser simulations.
 
 ## Netlify deployment
 

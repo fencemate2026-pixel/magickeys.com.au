@@ -17,6 +17,7 @@ try {
   const original = /<section class="client-section" id="client-access">[\s\S]*?<\/section>/g;
   if ([...content.matchAll(original)].length !== 1) throw new Error('Expected exactly one original Client Access section; check the source ZIP before replacing.');
   content = content.replace(original, readFileSync('patches/client-access.html', 'utf8').trim());
+  content = content.replace('Client sign-in takes place in the existing MagicKeys portal. That portal handles account information separately. This advertising website does not collect passwords.', 'The client login form sends your username and password directly over HTTPS to the secure MagicKeys portal for verification. This website does not save your credentials. The portal manages your account, authenticator checks and session.');
   // Preserve the site's real animations, 3D models, screenshots, logos and video files.
   writeFileSync(page, content, 'utf8');
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/client-access.css', 'utf8'));
@@ -30,6 +31,7 @@ try {
   cpSync('patches/security-demo.js', 'dist/assets/security-demo.js');
   cpSync('patches/clear-space.js', 'dist/assets/clear-space.js');
   cpSync('patches/camera-style.js', 'dist/assets/camera-style.js');
+  cpSync('patches/client-access.js', 'dist/assets/client-access.js');
   cpSync('site-assets', 'dist/assets', {recursive:true});
   buildAppVisuals();
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('dist/assets/app-palette.css','utf8'));
