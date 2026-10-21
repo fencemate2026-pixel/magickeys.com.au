@@ -148,11 +148,7 @@ export function verifyInteractions(pages) {
         assert.equal(node('demo-close').disabled,false);
         click('demo-close');assert.equal(node('gate-stage').dataset.state,'closed');
       }
-      click('tab-foyer');click('demo-alert');
-      assert.equal(node('gate-stage').dataset.state,'alert');
-      assert.equal(node('gate-stage').querySelector('img').src,'/assets/model-foyer-alert.svg');
-      assert.equal(node('gate-controls').hidden,true);
-      click('demo-reset');assert.equal(node('gate-stage').dataset.state,'closed');
+      assert.equal(node('tab-foyer'),null,'Anti-tailgating uses the canonical overhead page');
     }
     if(route==='/platform/') {
       for(const tab of document.querySelectorAll('[data-portal-screen]')) {

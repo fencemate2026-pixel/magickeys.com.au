@@ -58,6 +58,24 @@
       "source": "exec-b2baf8fc-3208-4220-9abf-b0bfc19c6d96.png",
       "reference": "Supplied image(20261020-221902).png and exact selected edit target image-edit-target-b2e934bebf36309d.png",
       "prompt": "Use case: precise-object-edit. Image 1 is the EXACT SELECTED EDIT TARGET. Image 2 is the user's actual current MagicKeys app and is the authoritative appearance reference. Correct Image 1 so that it looks like it is truly inside Image 2's app. Preserve the six commercial equipment cards and two camera scenes from the selected target. Match Image 2's narrow 8.7%-width deep navy sidebar, small logo, small compact menu typography, solid muted dark-blue panels, orange headings, fine pale-blue separators, white outer page gutters, and the EXACT restrained green OPEN and muted red CLOSE button styling. Use Image 2's compact navy calendar and weather row across the top of the workspace (calendar left, weather right), above a white strip labelled Active gate controls. Keep six silver 3D hardware models: entry boom, exit boom, visitor boom, main double gate, service double gate, sliding gate. They sit on solid deep blue card bodies rather than overly saturated gradients. Retain two camera previews on the right and a compact schedule. Use authentic MagicKeys and RJL marks exactly as in Image 2; no fake badge/logo. Keep configuration example identified. Change personal names to Authorised operator, omit Balwyn school name/crest and the red emergency trigger, since this is a generic commercial configuration. Do not introduce a new UI, use the actual app's design. Full landscape screen around16:9, no device frame or cropping. Return the edited selected target only.\nADDITIONAL REQUIRED EDIT: Inside the app's right-hand camera column, include a prominent third camera panel labelled FOYER / ANTI-TAILGATING. Its camera view must be strict 90-degree TOP DOWN, matching the SECOND (right) square of image 3: woman in navy walking ahead up through the sliding glass doorway, man in grey following behind lower in the image. Draw a clear RED rectangular detection box tightly around ONLY THE MAN BEHIND, including his entire visible overhead body. The leading woman may have a thin green box. Show small label Following person on the red box and a compact Tailgating event badge in this panel. It must be visibly part of the same app camera module, not floating outside the UI. The overhead people and doorway must be photorealistic, not icons. Retain the two other cameras as smaller panels if needed. Image 3 is the overhead scene reference only; do not show its two-frame contact sheet, use its RIGHT frame. All the actual app styling and the six gate models from selected target must remain. Make the overhead camera legible enough to see the two people and red tracking box."
+    },
+    {
+      "file": "site-assets/app-camera-atlas.jpg",
+      "source": "site-assets/apartment-camera-atlas-v2.webp",
+      "prompt": null,
+      "notes": "JPEG delivery encoding of the approved camera scenes for embedded SVG compatibility; no layout or subject changes."
+    },
+    {
+      "file": "site-assets/app-overhead-photo.jpg",
+      "source": "site-assets/foyer-overhead-atlas.webp",
+      "prompt": null,
+      "notes": "JPEG delivery encoding of the approved overhead scenes for embedded SVG compatibility; no layout or subject changes."
+    },
+    {
+      "file": "site-assets/app-reference.jpg",
+      "source": "site-assets/current-portal-layout-v2.webp",
+      "prompt": null,
+      "notes": "JPEG delivery encoding of the supplied actual app screenshot; also supplies the exact app logo appearance for all preview frames."
     }
   ]
 }

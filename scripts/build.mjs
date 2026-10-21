@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, appendFileSync, cpSync, mkdtempSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { buildAppVisuals } from './app-layout.mjs';
 import { buildPages } from './pages.mjs';
 
 const archive = join(process.cwd(), 'MagicKeys-Azure-Website (1).zip');
@@ -23,8 +24,11 @@ try {
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/multipage.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/security-demo.css', 'utf8'));
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-consistency.css', 'utf8'));
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/app-layout.css', 'utf8'));
   cpSync('patches/security-demo.js', 'dist/assets/security-demo.js');
   cpSync('site-assets', 'dist/assets', {recursive:true});
+  buildAppVisuals();
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('dist/assets/app-palette.css','utf8'));
   cpSync('patches/multipage.js', 'dist/assets/multipage.js');
   const siteScript='dist/assets/site.js';
   writeFileSync(siteScript,readFileSync(siteScript,'utf8')

@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { appShell } from './app-layout.mjs';
 import { securityDemo } from './security-demo.mjs';
 import { antiTailgatingContent } from './anti-tailgating.mjs';
 
@@ -15,8 +16,10 @@ const cards = items => `<div class="benefit-grid">${items.map(([title,text,name=
 const faq = items => `<div class="faq-list">${items.map(([q,a])=>`<details><summary>${q}<span>+</span></summary><p>${a}</p></details>`).join('')}</div>`;
 const dimensions = {'tailgating-example.webp':[750,346], 'projector-guidance.png':[941,630], 'sentinel-preview.png':[1769,749], 'portal-overview.png':[1917,911], 'detection-unit.webp':[540,540], 'hyd-pasins-3d.webp':[1536,1024]};
 const image = (file, alt, caption, branded=false) => {
-  const [width,height]=dimensions[file] || [1672,941];
-  return `<figure class="detail-figure${branded?' dashboard-figure':''}">${branded ? '<div class="dashboard-brandbar"><span class="brand"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></span><span>YOUR SITE / YOUR CONFIGURATION</span><img class="dashboard-rjl" src="/assets/rjl-logo.png" alt="RJL Commercial" width="900" height="210"></div>' : ''}<button type="button" class="detail-image-button" data-preview="/assets/${file}" data-preview-alt="${escape(alt)}" data-preview-caption="${escape(caption)}" aria-label="Enlarge ${escape(alt)}"><img src="/assets/${file}" alt="${escape(alt)}" width="${width}" height="${height}" loading="lazy"><span aria-hidden="true">↗</span></button><figcaption>${caption}</figcaption></figure>`;
+  const [width,height]=file.startsWith('app-')&&file.endsWith('.svg')?[1891,895]:dimensions[file] || [1672,941];
+  const appVisual=file.startsWith('app-');
+  if(appVisual) branded=false;
+  return `<figure class="detail-figure${appVisual?' app-screen-figure':''}${branded?' dashboard-figure':''}">${branded ? '<div class="dashboard-brandbar"><span class="brand"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></span><span>YOUR SITE / YOUR CONFIGURATION</span><img class="dashboard-rjl" src="/assets/rjl-logo.png" alt="RJL Commercial" width="900" height="210"></div>' : ''}<button type="button" class="detail-image-button" data-preview="/assets/${file}" data-preview-alt="${escape(alt)}" data-preview-caption="${escape(caption)}" aria-label="Enlarge ${escape(alt)}"><img src="/assets/${file}" alt="${escape(alt)}" width="${width}" height="${height}" loading="lazy"><span aria-hidden="true">↗</span></button><figcaption>${caption}</figcaption></figure>`;
 };
 const model = (id, kind, title, compact=false) => `<div class="model-stage detail-model${compact?' model-stage-compact':''}" id="${id}" data-scene-kind="${kind}" data-state="closed"${compact?' data-scene-compact="true"':''} role="group" aria-label="Illustrative 3D ${title}"><img class="model-poster" src="/assets/model-${kind}-closed.svg" width="800" height="560" alt="Proportioned 3D ${title}" loading="lazy"><canvas class="model-canvas" tabindex="0" role="img" aria-label="3D ${title}. Drag or use arrow keys to rotate; press R to reset." hidden></canvas><div class="model-caption"><span>Drag to inspect · Arrow keys · R to reset</span><span>ILLUSTRATIVE HARDWARE</span></div></div>`;
 const hero = (eyebrow, title, text, visual, primary='Discuss your site', extra='') => `<section class="page-hero"><div class="section-shell"><a class="breadcrumb" href="/">MagicKeys ${arrow}</a><div class="page-hero-grid"><div class="page-hero-copy"><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${text}</p><div class="hero-actions">${button(primary)}${extra}</div></div><div class="page-hero-visual">${visual}</div></div></div></section>`;
@@ -46,17 +49,36 @@ export function buildPages() {
   const posters=extract(source,/<div class="model-poster-assets"/,'div');
   const dialogs=source.slice(source.indexOf('<dialog class="image-dialog"'),source.indexOf('</body>'))
     .replace('Azure hosting may record standard request and security logs.','Our hosting provider may record standard request and security logs.');
-  const original=(pattern,tag) => extract(source,pattern,tag);
-  const currentPortalCard='<figure class="media-card" role="listitem"><button type="button" class="media-card-image" data-preview="/assets/current-portal-layout-v2.webp" data-preview-alt="Current MagicKeys portal layout with gate controls, schedules and operator navigation" data-preview-caption="Current portal layout · Supplied setup screen" aria-label="Enlarge current portal layout"><img src="/assets/current-portal-layout-v2.webp" width="1891" height="895" alt="Current MagicKeys portal layout with gate controls, schedules and operator navigation" loading="lazy"><span aria-hidden="true">↗</span></button><figcaption><span>Portal / setup view</span><h3>Current portal layout</h3></figcaption></figure>';
+  const appAssetMap={
+    'portal-overview.png':'app-overview.svg','current-portal-layout-v2.webp':'app-overview.svg',
+    'portal-schedules.png':'app-schedules.svg','portal-bookings.png':'app-bookings.svg',
+    'portal-activity.png':'app-activity.svg','portal-gate-response.png':'app-overview.svg',
+    'portal-emergency-confirm.png':'app-emergency-confirm.svg','portal-priority-clear.png':'app-priority-clear.svg',
+    'sentinel-preview.png':'app-cctv.svg','emergency-staff-preview.png':'app-guidance.svg',
+    'tailgating-example.webp':'app-cctv.svg'
+  };
+  const original=(pattern,tag) => {
+    let result=extract(source,pattern,tag);
+    // Remove superseded gallery repeats while retaining the actual equipment views.
+    result=result.replace(/<figure class="media-card"[\s\S]*?<\/figure>/g,card=>/portal-gate-response|tailgating-example/.test(card)?'':card);
+    for(const [before,after] of Object.entries(appAssetMap)) result=result.replaceAll(before,after);
+    return result.replace(/<[^>]+(?:src|data-image|data-preview)="(?:\/)?assets\/app-[^"]+\.svg"[^>]*>/g,tag=>tag.replace(/(width|data-width)="\d+"/g,'$1="1891"').replace(/(height|data-height)="\d+"/g,'$1="895"'));
+  };
+
   const tour=original(/<section class="portal-tour/)
-    .replaceAll('portal-overview.png','current-portal-layout-v2.webp')
+    .replaceAll('portal-overview.png','app-overview.svg')
     .replaceAll('1917','1891').replaceAll('911','895')
     .replace('THE FULL PICTURE / 13 IMAGES','PORTAL SCREENS &amp; SITE EQUIPMENT')
     .replace('Explore the screens and equipment.','See the details behind the platform.')
     .replace('Every supplied screen and equipment image, ready to enlarge.','Explore the supplied portal screens and equipment. Select an image for a closer view.')
-    .replace('</div><p class="media-gallery-note">',currentPortalCard+'</div><p class="media-gallery-note">');
+;
   const capabilities=original(/<section class="platform /);
-  const demo=original(/<section class="demo-section"/).replaceAll('Foyer detection','Anti-Tailgating System');
+  let demo=original(/<section class="demo-section"/).replaceAll('Foyer detection','Anti-Tailgating System');
+  // The dedicated overhead product page owns anti-tailgating; this selector is gates only.
+  demo=demo.replace(/<button id="tab-foyer"[\s\S]*?<\/button>/,'');
+  const demoWindow=extract(demo,/<div class="demo-workspace"/,'div');
+  demo=demo.replace(demoWindow,appShell(demoWindow,{active:'overview'}));
+
   const solutions=original(/<section class="solutions /)
     .replaceAll('AI-GENERATED CONCEPT','SITE CONFIGURATION EXAMPLE')
     .replaceAll('AI-generated architectural concept','Architectural site concept')
@@ -86,6 +108,11 @@ export function buildPages() {
     .replace('The selected blue holographic AI face with connected points and data patterns','Blue digital face with connected points and data patterns')
     .replace('<div class="hero-portal-foot">',
       '<div class="hero-cctv-preview"><span>CCTV<br><small>EXAMPLE VIEWS</small></span><figure><img src="/assets/commercial-entry-concept.webp" width="1672" height="941" alt="Commercial entrance CCTV view example"><figcaption>Main entry</figcaption></figure><figure><img src="/assets/venue-concept.png" width="1672" height="941" alt="Shared venue CCTV view example"><figcaption>Venue entrance</figcaption></figure></div><div class="hero-portal-foot">');
+  const oldHomeApp=extract(homeHero,/<div class="hero-screen hero-control-preview"/,'div');
+  const homeTitle=extract(oldHomeApp,/<div class="hero-portal-title"/,'div').replace('Campus entry','Main entry');
+  const homeWorkspace=extract(oldHomeApp,/<div class="hero-portal-workspace"/,'div');
+  const homeCameras=extract(oldHomeApp,/<div class="hero-cctv-preview"/,'div');
+  homeHero=homeHero.replace(oldHomeApp,appShell(`<div class="mk-module-heading"><strong>Active gate controls</strong><button type="button" class="hero-preview-toggle" id="hero-preview-toggle">Pause preview</button></div>${homeTitle}${homeWorkspace}${homeCameras}<div class="mk-home-tailgate"><div class="sd-overhead-view" data-state="alert" role="img" aria-label="Overhead foyer example with the following person boxed in red"><div class="sd-overhead-photo"></div><span class="sd-track sd-track-two" aria-hidden="true"><b>Following person</b></span></div><div><strong>Foyer / anti-tailgating</strong><p>Overhead camera view · Following person flagged</p><a href="/anti-tailgating/#apartment-security-demo">Explore the tailgating demo →</a></div></div>`,{active:'overview',classes:'hero-control-preview',attributes:'id="hero-preview" role="group" aria-labelledby="hero-preview-title"'}));
   const maker=original(/<div class="principle-strip"/,'div').replace('Detection alerts','Anti-Tailgating Systems');
 
   const productCards=[
@@ -105,7 +132,7 @@ export function buildPages() {
       description:'Connect access control, CCTV, schedules and more in one fully customisable MagicKeys app. Installed Anti-Tailgating Systems by RJL Commercial.',
       content:homeHero+maker+
         section(heading('YOUR SITE, IN VIEW','Control the entrance.<br>See the bigger picture.','From the gate at the driveway to the camera above it, MagicKeys brings the parts of your site together in a workspace designed for your team.')+
-          image('custom-dashboard-cctv-v2.webp','Custom MagicKeys dashboard with entry and exit boom gates, a double gate, a sliding gate and CCTV views','Custom configuration example · Gate controls, schedules and CCTV in one workspace. Final features depend on the agreed installation.',true)+
+          image('app-cctv.svg','MagicKeys app with 15 CCTV views and an overhead tailgating detection panel','Custom configuration example · CCTV and overhead anti-tailgating in the same MagicKeys workspace. Final features depend on the agreed installation.',true)+
           `<div class="overview-links">${link('Explore the platform','/platform/')}${link('See CCTV capabilities','/cctv/')}</div>`,'section-shell section-space home-overview','site-overview')+
         productGrid+
         section(`<div class="customisation-pitch"><div><div class="eyebrow">FULLY CUSTOMISABLE</div><h2>Your operation.<br>Your MagicKeys.</h2><p>Your site has its own entrances, routines and responsibilities. The MagicKeys app can be customised to suit your client requirements, from the dashboard layout to the access rules and day-to-day workflows.</p>${link('Explore customisation','/customisation/')}</div>${image('commercial-entry-concept.webp','Commercial site concept with double swing gates, a boom gate and CCTV cameras','Site configuration example · Equipment and layout are agreed for each project.')}</div>`)+future()+cta()
@@ -113,7 +140,7 @@ export function buildPages() {
     {
       route:'/platform/', title:'The MagicKeys Platform | Access control, CCTV & schedules',
       description:'Explore the MagicKeys all-in-one platform: gate controls, CCTV, access schedules, venue bookings and activity in a fully customisable app.',
-      content:hero('THE MAGICKEYS PLATFORM','One workspace.<br><span>More control.</span>','Access control, CCTV, schedules, bookings and activity belong together. MagicKeys brings them into a fully customisable app, so your team can manage the connected parts of your site with clarity.',image('custom-dashboard-cctv-v2.webp','MagicKeys combined gate and CCTV dashboard concept','Custom configuration example · Modules and connections are scoped for your site.',true),'Discuss your platform',button('View real portal screens','#portal-tour','btn-outline'))+
+      content:hero('THE MAGICKEYS PLATFORM','One workspace.<br><span>More control.</span>','Access control, CCTV, schedules, bookings and activity belong together. MagicKeys brings them into a fully customisable app, so your team can manage the connected parts of your site with clarity.',image('app-cctv.svg','MagicKeys CCTV and anti-tailgating view in the supplied app layout','Custom configuration example · Modules and connections are scoped for your site.',true),'Discuss your platform',button('View real portal screens','#portal-tour','btn-outline'))+
         section(cards([
           ['A clearer working day','Find configured entrance controls, access windows and recorded activity in one site workspace.','grid'],
           ['A setup that fits','Customise the app around your site layout, authorised operators and agreed operating procedures.','users'],
@@ -149,7 +176,7 @@ export function buildPages() {
     {
       route:'/cctv/', title:'MagicKeys CCTV & Sentinel | Camera views in your workspace',
       description:'Bring compatible CCTV cameras and configured Sentinel alerts into MagicKeys. See your access points and review visual context in a customised workspace.',
-      content:hero('CCTV &amp; MAGICKEYS SENTINEL','See the entrance.<br><span>Understand the context.</span>','Bring compatible camera views into the same MagicKeys workspace as your connected entrances. Discuss the zones, visibility and optional Sentinel alerts that support your team’s day-to-day oversight.',image('custom-dashboard-cctv-v2.webp','MagicKeys gate-control dashboard with four CCTV camera views','Custom configuration example · CCTV connections and modules are confirmed for each project.',true),'Discuss your CCTV setup')+
+      content:hero('CCTV &amp; MAGICKEYS SENTINEL','See the entrance.<br><span>Understand the context.</span>','Bring compatible camera views into the same MagicKeys workspace as your connected entrances. Discuss the zones, visibility and optional Sentinel alerts that support your team’s day-to-day oversight.',image('app-cctv.svg','MagicKeys app with 15 CCTV views and an overhead anti-tailgating panel','Custom configuration example · CCTV connections and modules are confirmed for each project.',true),'Discuss your CCTV setup')+
         section(heading('ACCESS AND CCTV, TOGETHER','The control.<br>The camera view.','Your team should be able to understand which entrance it is managing and the visual context available for that area.')+cards([
           ['Views around your site','Plan the camera views that matter: the main entry, parking area, pedestrian entrance or service yard.','grid'],
           ['A dashboard built for your team','Arrange included camera views and gate controls around the way your operators work.','users'],
@@ -181,9 +208,9 @@ export function buildPages() {
 
 function buildMorePages({solutions, how, login}) {
   const combinedDemo=section(heading('YOUR WORKSPACE / INTERACTIVE EXAMPLE','More entrances.<br>One familiar workspace.','Try the controls across two boom gates and two double gates. This configuration example runs in your browser and is disconnected from physical equipment.')+
-    `<div class="custom-workspace"><div class="custom-workspace-bar"><span class="brand"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></span><span>COMMERCIAL SITE / SIMULATED CONTROLS</span><img src="/assets/rjl-logo.png" alt="RJL Commercial" width="900" height="210"></div><div class="custom-gates">${[
+    appShell(`<div class="mk-module-heading"><strong>Active gate controls</strong><span>SIMULATED CONTROLS</span></div><div class="custom-gates">${[
       ['entry-boom','boom','Entry boom gate'],['exit-boom','boom','Exit boom gate'],['main-double','double','Main double gate'],['service-double','double','Service double gate']
-    ].map(([id,kind,title],i)=>`<article class="custom-gate-card"><div class="custom-gate-heading"><span>0${i+1}</span><h3>${title}</h3><strong id="${id}-status" aria-live="polite">Demo: closed</strong></div>${model(id,kind,title,true)}<div class="custom-gate-controls"><button type="button" class="btn btn-green" data-gate-target="${id}" data-gate-state="open" aria-label="Open the simulated ${title.toLowerCase()}">OPEN</button><button type="button" class="btn btn-dark" data-gate-target="${id}" data-gate-state="closed" aria-label="Close the simulated ${title.toLowerCase()}" disabled>CLOSE</button></div></article>`).join('')}</div><p class="custom-workspace-note">Configuration example · Sample controls and equipment · No live commands or notifications</p></div>`, 'section-shell section-space','custom-controls');
+    ].map(([id,kind,title],i)=>`<article class="custom-gate-card"><div class="custom-gate-heading"><span>0${i+1}</span><h3>${title}</h3><strong id="${id}-status" aria-live="polite">Demo: closed</strong></div>${model(id,kind,title,true)}<div class="custom-gate-controls"><button type="button" class="btn btn-green" data-gate-target="${id}" data-gate-state="open" aria-label="Open the simulated ${title.toLowerCase()}">OPEN</button><button type="button" class="btn btn-dark" data-gate-target="${id}" data-gate-state="closed" aria-label="Close the simulated ${title.toLowerCase()}" disabled>CLOSE</button></div></article>`).join('')}</div><p class="custom-workspace-note">Configuration example · Sample controls and equipment · No live commands or notifications</p>`,{active:'overview',classes:'custom-workspace'}), 'section-shell section-space','custom-controls');
   const secureVisual=securityDemo();
   const developmentVisual=`<div class="development-visual"><span class="development-status">IN DEVELOPMENT</span><h2>Flag.<br>Review.<br><span>Acknowledge.</span></h2><ol><li><span>01</span> Potential event flagged</li><li><span>02</span> Authorised staff review</li><li><span>03</span> Human acknowledgement</li><li><span>04</span> Agreed site procedure</li></ol><p>Proposed workflow · Developing capability</p></div>`;
   const contactVisual=`<div class="contact-card"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"><span class="eyebrow">CONTACT THE TEAM</span><a class="contact-phone" href="tel:+61400101132">0400 101 132</a><p>Talk through your site, existing systems and the configuration you need.</p>${button('Call the team','tel:+61400101132')}${link('Visit RJL Commercial','https://www.rjlcommercialgroup.com')}</div>`;
@@ -191,7 +218,7 @@ function buildMorePages({solutions, how, login}) {
     {
       route:'/customisation/', title:'Fully Customisable MagicKeys App | Built around your site',
       description:'The MagicKeys app is fully customisable to suit each client. Explore custom gate, boom, CCTV and scheduling layouts, roles and operating workflows.',
-      content:hero('FULLY CUSTOMISABLE MAGICKEYS APP','Your site.<br><span>Your way of working.</span>','MagicKeys is fully customisable to suit each client’s requirements. Shape the dashboard, connected entrances, CCTV views, access rules and workflows around the people who use your site.',image('custom-dashboard-commercial-v3.webp','Custom MagicKeys app with three boom gates, two double gates, a sliding gate, CCTV and an overhead anti-tailgating view','Commercial configuration example · Includes an overhead tailgating camera with the following person highlighted in red. Features are agreed for your project.',true),'Discuss your custom app',button('Try a multi-gate setup','#custom-controls','btn-outline'))+
+      content:hero('FULLY CUSTOMISABLE MAGICKEYS APP','Your site.<br><span>Your way of working.</span>','MagicKeys is fully customisable to suit each client’s requirements. Shape the dashboard, connected entrances, CCTV views, access rules and workflows around the people who use your site.',image('app-cctv.svg','MagicKeys app with 15 CCTV views and an overhead anti-tailgating view in the same supplied app layout','Commercial configuration example · Includes an overhead tailgating camera with the following person highlighted in red. Features are agreed for your project.',true),'Discuss your custom app',button('Try a multi-gate setup','#custom-controls','btn-outline'))+
         section(heading('A PLATFORM THAT FITS','Build the experience<br>around your operation.','Customisation goes beyond adding a site name. We work through what your team needs to see, control and manage, then agree the app and installation scope.')+cards([
           ['Dashboard and site layout','Organise the workspace around your entrances, areas and included modules. Make the controls your team needs easy to find.','grid'],
           ['Equipment and camera views','Include connected boom, swing and sliding gates alongside compatible CCTV views and configured detection equipment.','lock'],
@@ -199,7 +226,7 @@ function buildMorePages({solutions, how, login}) {
           ['Schedules and workflows','Tailor access windows, booking routines and event response around the way your client operates.','clock']
         ]))+combinedDemo+
         section(heading('CUSTOM CONFIGURATION EXAMPLES','Different sites.<br>The same connected approach.','These examples show how MagicKeys can be presented for different equipment and operating needs. They illustrate configurations rather than completed client installations.')+
-          `<div class="custom-example-grid">${image('custom-dashboard-cctv-v2.webp','Combined gate and CCTV dashboard configuration','Access and CCTV example · Boom gates, double gates and camera views.',true)}${image('commercial-entry-concept.webp','Bright commercial entrance with two-leaf gates, a boom barrier and CCTV','Commercial entrance example · Physical equipment and software are scoped together.')}</div>`)+
+          `<div class="custom-example-grid">${image('app-cctv.svg','MagicKeys CCTV and anti-tailgating configuration in the same app layout','CCTV and anti-tailgating example · The same navigation, header and controls across the platform.',true)}${image('commercial-entry-concept.webp','Bright commercial entrance with two-leaf gates, a boom barrier and CCTV','Commercial entrance example · Physical equipment and software are scoped together.')}</div>`)+
         section(heading('FROM YOUR REQUIREMENTS TO A PROPOSAL','Tell us what<br>your site needs to do.','Start with your equipment and working day. We will identify the connection options, tailor the workflow and confirm what can be delivered.')+rows([
           ['01','Your existing setup','Share the entrances, controllers, cameras and other systems already in place. We assess compatibility and practical connection options.'],
           ['02','Your operating priorities','Explain who needs to use the system, which tasks take time and how you want access, CCTV and alerts to work together.'],
@@ -309,7 +336,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
     return `<details class="nav-group"${items.some(([url])=>url===current)?' data-active-group':''}><summary>${title}<span aria-hidden="true">⌄</span></summary><div class="nav-dropdown">${items.map(([url,label])=>navigationLink(url,label,current)).join('')}</div></details>`;
   }
   function header(route) {
-    return `<header class="site-header"><div class="nav-wrap"><a class="brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation"><span></span><span></span></button><nav id="main-navigation" aria-label="Main navigation">${navGroup('Explore MagicKeys',platformNav,route)}${navGroup('Your setup',setupNav,route)}${navigationLink('/anti-tailgating/','Anti-tailgating &amp; integration',route)}<a href="/client-login/" class="nav-login"${route==='/client-login/'?' aria-current="page"':''}>${icon('lock')}Client login</a>${button('Contact the team','/contact/','btn-orange btn-nav')}</nav></div></header>`;
+    return `<header class="site-header"><div class="nav-wrap"><a class="brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation"><span></span><span></span></button><nav id="main-navigation" aria-label="Main navigation">${navGroup('Explore MagicKeys',platformNav.filter(([url])=>url!=='/anti-tailgating/'),route)}${navGroup('Your setup',setupNav,route)}${navigationLink('/anti-tailgating/','Anti-tailgating &amp; integration',route)}<a href="/client-login/" class="nav-login"${route==='/client-login/'?' aria-current="page"':''}>${icon('lock')}Client login</a>${button('Contact the team','/contact/','btn-orange btn-nav')}</nav></div></header>`;
   }
   const footer=`<footer class="site-footer"><div class="section-shell footer-main"><div><a class="brand footer-brand" href="/" aria-label="MagicKeys home"><img src="/assets/magickeys-logo.png" alt="MagicKeys" width="2061" height="763"></a><p>All-in-one access control.<br>CCTV. And more.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div><span>EXPLORE MAGICKEYS</span>${platformNav.map(([url,label])=>navigationLink(url,label)).join('')}</div><div><span>YOUR SETUP</span>${setupNav.map(([url,label])=>navigationLink(url,label)).join('')}${navigationLink('/contact/','Contact the team')}${navigationLink('/client-login/','Client login')}<button class="plain-button" id="privacy-open">Privacy information</button></div></nav><div class="footer-rjl"><span>DEVELOPED &amp; MANAGED BY</span><a href="https://www.rjlcommercialgroup.com" target="_blank" rel="noopener noreferrer"><img src="/assets/rjl-logo.png" alt="RJL Commercial Fencing and Gates" width="900" height="210"></a><a class="footer-phone" href="tel:+61400101132">0400 101 132</a></div></div><div class="section-shell footer-bottom"><span>© <span id="copyright-year">2026</span> MagicKeys · RJL Commercial</span><span>magickeys.com.au <span class="footer-dot">●</span> Melbourne, Australia</span></div></footer>`;
   const anchorRoutes={'portal-tour':'/platform/','platform':'/platform/','interactive-demo':'/gate-control/','solutions':'/solutions/','upgrades':'/cctv/','how-it-works':'/how-it-works/','client-access':'/client-login/','contact':'/contact/'};
@@ -325,7 +352,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
 <html lang="en-AU"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c3152">
 <title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}">
-<link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/custom-dashboard-cctv-v2.webp">
+<link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/app-reference.jpg">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
 ${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">

@@ -32,10 +32,16 @@ Run npm run check to build and verify every page, media link, internal anchor, a
 
 The DOM harness tests state and events; it does not replace a visual browser review. The generated dist folder is a build output and is not committed.
 
+## Consistent app presentation
+
+scripts/app-layout.mjs is the single source for app navigation, palette and frame. It builds the HTML frame used by the homepage, gate demo, custom gate controls and CCTV/anti-tailgating demos, plus the self-contained SVG app images used throughout the site. Real supplied panel screenshots are embedded unchanged inside that frame. The current supplied app screenshot remains the layout reference; the sidebar, bar and card colours are sampled from it. Exported app views include their images and logos so enlargement preserves the same layout. No generated mockup is used as an alternative app design.
+
+The single anti-tailgating product page is /anti-tailgating/. It has one direct header entry, kept on one line. The separate /security-integrations/ page covers integration scope and reuses the same demo module. The obsolete isometric foyer tab has been removed from the gate-only demo.
+
 ## Editing
 
 - scripts/pages.mjs owns the page content, shared header/footer, metadata and sitemap.
-- patches/app-consistency.css owns the shared MagicKeys app palette and accurate screen colours; app screenshots are exempt from photographic brightness filters. New v2 dashboard images replace the older generated app concepts site-wide.
+- patches/app-consistency.css owns the shared MagicKeys app palette and accurate screen colours; app screenshots are exempt from photographic brightness filters. The displayed app views use one shared frame; superseded generated dashboards are no longer referenced.
 - scripts/anti-tailgating.mjs owns the OPTEX and HYD product and integration page, with links to the manufacturer references.
 - patches/multipage.css owns responsive layouts and the brighter image presentation.
 - scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected apartment security demo. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review. The ceiling-camera photo pair shows one entrant and a follower directly from above; a red box identifies the following person. Portal chrome follows the supplied MagicKeys app screen.

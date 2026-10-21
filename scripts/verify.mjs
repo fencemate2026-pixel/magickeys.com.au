@@ -70,7 +70,7 @@ for(const [route,page] of pages) {
 
 const home=pages.get('/').html;
 assert(home.includes('id="site-intro"')&&home.includes('id="hero-preview"'),'Homepage intro or animated gate preview missing');
-assert(home.includes('/assets/custom-dashboard-cctv-v2.webp'),'Homepage CCTV dashboard missing');
+assert(home.includes('/assets/app-cctv.svg'),'Homepage CCTV dashboard missing');
 assert(!home.includes('id="portal-tour"')&&!home.includes('id="client-access"'),'Homepage still contains full sections that should have moved');
 assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/platform/').html.includes('id="media-gallery"'),'Actual portal tour and full gallery missing');
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');
@@ -79,6 +79,20 @@ assert(pages.get('/client-login/').html.includes('https://magickeys-balwyn-porta
 assert(pages.get('/development/').html.includes('IN DEVELOPMENT')&&pages.get('/development/').html.includes('Human acknowledgement'),'Development status or human acknowledgement missing');
 assert(home.includes('IN DEVELOPMENT')&&home.includes('/development/'),'Development programme not prominent on the homepage');
 for(const [route,page] of pages) if(route!=='/') assert(!page.html.includes('id="site-intro"'),'Intro unexpectedly blocks a detail page: '+route);
+
+
+// A new page cannot quietly reintroduce a different app layout or obsolete mockup.
+for(const [route,page] of pages) {
+  assert(!/custom-dashboard-(?:commercial|cctv)|sentinel-preview\.png|emergency-staff-preview\.png|src="\/assets\/portal-(?:overview|schedules|bookings|activity|gate-response|emergency-confirm|priority-clear)\.png/.test(page.html),'Obsolete app image on '+route);
+  const header=page.html.match(/<header[\s\S]*?<\/header>/)?.[0]||'';
+  assert((header.match(/href="\/anti-tailgating\/"/g)||[]).length===1,'Expected exactly one anti-tailgating header entry on '+route);
+}
+for(const file of files.filter(path=>/\/assets\/app-[^/]+\.svg$/.test(path))) {
+  const svg=readFileSync(file,'utf8');
+  assert(svg.includes('data-app-layout="magickeys-reference-v1"'),'App export has inconsistent chrome: '+file);
+  assert(svg.includes('Gate schedules')&&svg.includes('CCTV &amp; zones'),'App navigation missing in '+file);
+}
+assert(home.includes('data-app-layout="magickeys-reference-v1"'),'Homepage does not use the common app layout');
 
 const sitemap=readFileSync(join(root,'sitemap.xml'),'utf8');
 const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
