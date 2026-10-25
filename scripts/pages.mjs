@@ -321,10 +321,10 @@ function buildMorePages({solutions, how, login}) {
     },
     {
       route:'/client-login/', title:'MagicKeys Client Login | Your organisation’s secure portal',
-      description:'Open your organisation’s existing MagicKeys client portal. Approved Balwyn High School users can sign in using their existing account.',
+      description:'Sign in to your secure MagicKeys client portal using your approved account. Access your site controls, schedules and permissions in your dedicated workspace.',
       content:login+section(heading('EXISTING CLIENTS','The portal for<br>your organisation.','Your controls, schedules and permissions remain in your dedicated client workspace.')+faq([
-          ['Which login should I use?','Use the confirmed portal address for your organisation. The Balwyn High School link on this page is specifically for that organisation’s approved users.'],
-          ['My organisation is not listed. What should I do?','Contact the MagicKeys team for the correct portal address. Do not enter account credentials on this public marketing website.'],
+          ['How do I sign in?','Select Sign in and use the approved account issued for your MagicKeys workspace. If your team has supplied a dedicated portal address, use that address.'],
+          ['Need help accessing your workspace?','Contact the MagicKeys team for help with your account or portal address. Enter your credentials only on your secure client portal.'],
           ['Can I operate a gate on this website?','The website demonstrations are simulated. Actual site controls are available only through your organisation’s approved portal and account permissions.']
         ]))
     },
