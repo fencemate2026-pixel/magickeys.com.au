@@ -32,3 +32,30 @@
 @media(max-width:760px){.client-access-grid{grid-template-columns:1fr}.client-access-intro h2{font-size:clamp(41px,11vw,63px)}.client-access-intro>p{font-size:15px}.client-access-panel{width:100%;max-width:600px}.client-security-points{grid-template-columns:1fr 1fr;gap:12px}.client-security-points>div:last-child{grid-column:1/-1}}
 @media(max-width:460px){.client-security-points{grid-template-columns:1fr}.client-security-points>div:last-child{grid-column:auto}.client-panel-heading img{width:44%}.client-panel-subheading{font-size:8px}.client-workspace-card{flex-wrap:wrap}.client-workspace-action{width:100%}.client-workspace-text{flex-basis:calc(100% - 65px)}}
 @media(prefers-reduced-motion:reduce){.client-workspace-action{transition:none}}
+
+/* General client sign-in: the form uses readable UI type and native controls. */
+.client-access-intro :is(h1,h2){font-size:clamp(44px,5vw,73px);line-height:1.09;color:#ff934d;letter-spacing:-.04em;margin-bottom:24px}
+.client-access-intro :is(h1,h2) span{color:#fff}
+.client-login-form,.client-google-signin,.client-login-divider,.client-login-help{font-family:Arial,Helvetica,sans-serif}
+.client-login-form{display:grid;gap:9px}
+.client-login-form>label{font-size:14px;font-weight:700;color:#17344c;margin-top:8px}
+.client-login-form>input{width:100%;min-width:0;min-height:50px;padding:13px 14px;border:1px solid #a7bfd0;border-radius:7px;background:#fff;color:#15344d;font:16px/1.4 Arial,Helvetica,sans-serif;letter-spacing:normal;text-transform:none}
+.client-login-form>input::placeholder{color:#647b8b;opacity:1}
+.client-password-options{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:4px 0 10px;font-size:13px}
+.client-password-options label{display:flex;align-items:center;gap:8px;color:#3f596d;cursor:pointer}
+.client-password-options input{width:16px;height:16px;accent-color:#086eb7;margin:0}
+.client-password-options a,.client-login-help a{color:#08649f;text-decoration:underline;text-underline-offset:3px}
+.client-login-submit,.client-google-signin{display:flex;width:100%;align-items:center;justify-content:center;gap:12px;min-height:50px;padding:13px 16px;border-radius:7px;font-size:15px;font-weight:700;line-height:1.4;text-decoration:none;cursor:pointer}
+.client-login-submit{background:#ff8a3d;color:#14334b;border:1px solid #ff8a3d;font-family:Arial,Helvetica,sans-serif}
+.client-login-submit:hover{background:#ffa469;border-color:#ffa469}
+.client-login-submit .icon{width:18px;height:18px}
+.client-login-divider{display:flex;align-items:center;gap:16px;color:#627a8b;font-size:13px;margin:20px 0}
+.client-login-divider::before,.client-login-divider::after{content:"";height:1px;background:#dce6ee;flex:1}
+.client-google-signin{border:1px solid #b8ccd9;background:#fff;color:#17344c}
+.client-google-signin:hover{background:#f0f7fc;border-color:#5189b1}
+.client-google-signin svg{width:22px;height:22px;flex:0 0 22px}
+.client-login-help{font-size:13px;color:#4a6579;margin-top:18px;line-height:1.65}
+.client-login-help summary{cursor:pointer;color:#145781;font-weight:600}
+.client-login-help p{font:13px/1.7 Arial,Helvetica,sans-serif!important;margin:10px 0 0;color:#4a6579!important}
+.client-access-panel :is(input,button,a,summary):focus-visible{outline:3px solid #087ccc;outline-offset:3px}
+@media(max-width:760px){.client-access-intro :is(h1,h2){font-size:clamp(41px,11vw,63px)}}

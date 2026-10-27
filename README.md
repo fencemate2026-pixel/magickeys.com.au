@@ -53,7 +53,7 @@ The single anti-tailgating product page is /anti-tailgating/. It has one direct 
 - scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected apartment security demo. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review. The ceiling-camera photo pair shows one entrant and a follower directly from above; a red box identifies the following person. Portal chrome follows the supplied MagicKeys app screen.
 - patches/multipage.js owns dropdown navigation, legacy bookmarks and the simulated multi-gate controls.
 - patches/hero-layers.css keeps the original AI face behind the gate preview.
-- patches/client-access.html and .css define the client portal link section. Sign-in takes place only in the existing Azure portal.
+- patches/client-access.html and .css define the general client login form. patches/client-access.js only toggles password visibility. Authentication and sessions remain in the existing Azure portal.
 - site-assets holds new project-bound WebP images. image-prompts.json documents their provenance and prompts.
 
 Screenshots from the actual supplied portal are identified as portal/setup views. Custom dashboard and site visuals are identified as configuration examples without AI wording in their captions. Image brightness and contrast are presentation styles; the original source assets and logo transparency remain intact.
@@ -64,7 +64,7 @@ Security copy is limited to the supplied portal's secure sign-in, HTTPS connecti
 
 AI-assisted threat and fire detection is clearly marked IN DEVELOPMENT. The proposed workflow includes authorised human review and acknowledgement. No release date or current commissioned capability is claimed.
 
-The Client Login page links directly to the existing Azure portal. There is no username/password form or sign-in adapter on the marketing site. Credentials, account verification and sessions are handled only by the operational portal. The marketing site sends no hardware commands. All demonstrations are disconnected browser simulations.
+The Client Login page contains email/username and password fields plus Continue with Google. The native HTTPS form posts directly to the existing Azure portal at /api/auth/client-entry; the marketing site does not receive or store the credentials. The portal retains existing approval, rate limits, authenticator and session checks. Google continues at the general /client-login page on its existing authorised portal domain. The marketing site sends no hardware commands. All demonstrations are disconnected browser simulations.
 
 ## Netlify deployment
 

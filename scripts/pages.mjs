@@ -261,7 +261,7 @@ function buildMorePages({solutions, how, login}) {
       description:'Explore secure client sign-in, operator permissions and activity records in MagicKeys, plus a 15-camera apartment CCTV and anti-tailgating demonstration.',
       content:hero('SECURITY &amp; SYSTEM INTEGRATION','Secure access.<br><span>Connected systems.</span>','Bring apartment CCTV, foyer anti-tailgating detection and entrance activity into one customised MagicKeys app. Explore a 15-camera configuration for foyers, lifts, car parks and shared spaces, with linked alerts for your authorised team.',secureVisual,'Discuss security & integration',button('Try the apartment demo','#apartment-security-demo','btn-outline'))+
         section(heading('SECURITY WITH CLEAR RESPONSIBILITIES','The right people.<br>The right level of control.','A secure setup combines the portal, the operating roles and a properly commissioned installation.')+cards([
-          ['Secure client sign-in','Approved users enter their organisation’s existing portal. This public website does not collect passwords or issue gate commands.','lock'],
+          ['Secure client sign-in','Approved users enter their organisation’s existing portal. Sign-in is verified by the existing secure portal. This website does not issue gate commands.','lock'],
           ['Encrypted portal connection','Use the secure HTTPS portal address provided for your organisation. Account access remains within your dedicated client workspace.','shield'],
           ['Site-specific permissions','Agree which authorised operators can use your workspace and the controls appropriate to their responsibilities.','users'],
           ['Recorded activity','Review the access events and operator actions recorded by the configured system, with equipment feedback kept clear.','log']
@@ -323,8 +323,8 @@ function buildMorePages({solutions, how, login}) {
       route:'/client-login/', title:'MagicKeys Client Login | Your organisation’s secure portal',
       description:'Sign in to your secure MagicKeys client portal using your approved account. Access your site controls, schedules and permissions in your dedicated workspace.',
       content:login+section(heading('EXISTING CLIENTS','The portal for<br>your organisation.','Your controls, schedules and permissions remain in your dedicated client workspace.')+faq([
-          ['How do I sign in?','Select Sign in and use the approved account issued for your MagicKeys workspace. If your team has supplied a dedicated portal address, use that address.'],
-          ['Need help accessing your workspace?','Contact the MagicKeys team for help with your account or portal address. Enter your credentials only on your secure client portal.'],
+          ['How do I sign in?','Enter your approved email or username and password, or choose Continue with Google. Password accounts may require a code from your authenticator app. Your existing access permissions still apply.'],
+          ['Need help accessing your workspace?','Contact the MagicKeys team for help with your account or portal address. Passwords are submitted directly to your secure client portal for verification.'],
           ['Can I operate a gate on this website?','The website demonstrations are simulated. Actual site controls are available only through your organisation’s approved portal and account permissions.']
         ]))
     },
@@ -382,7 +382,7 @@ function writeSite({pages,intro,symbols,posters,dialogs}) {
 ${seoHead(page)}
 <link rel="canonical" href="${origin}${page.route}"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.route}"><meta property="og:image" content="${origin}/assets/app-reference.jpg">
 <link rel="icon" href="/assets/magickeys-logo.png" type="image/png"><link rel="preload" href="/assets/zing-sans-rust.otf" as="font" type="font/otf" crossorigin><link rel="stylesheet" href="/assets/site.css">
-${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>${page.content.includes('data-va-card')?'<script src="/assets/vehicle-access.js" defer></script>':''}
+${usesModels?'<script src="/assets/scene3d.js" defer></script><script src="/assets/scene3d-mounts.js" defer></script>':''}<script src="/assets/site.js" defer></script><script src="/assets/multipage.js" defer></script>${page.content.includes('data-security-demo')?'<script src="/assets/security-demo.js" defer></script>':''}${page.content.includes('data-clear-space-demo')?'<script src="/assets/clear-space.js" defer></script>':''}<script src="/assets/camera-style.js" defer></script>${page.route==='/client-login/'?'<script src="/assets/client-access.js" defer></script>':''}${page.content.includes('data-va-card')?'<script src="/assets/vehicle-access.js" defer></script>':''}
 </head><body data-page="${page.route}" class="${page.route==='/'?'home-page':'detail-page'}">
 ${page.route==='/'?normalise(intro,page.route):''}<a class="skip-link" href="#main">Skip to content</a>${symbols}${header(page.route)}
 <main id="main" tabindex="-1">${normalise(prioritiseHero(page.content),page.route)}</main>
