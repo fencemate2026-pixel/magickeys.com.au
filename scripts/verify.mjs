@@ -73,6 +73,7 @@ for(const [route,page] of pages) {
 const home=pages.get('/').html;
 assert(home.includes('id="site-intro"')&&home.includes('id="hero-preview"'),'Homepage intro or animated gate preview missing');
 assert(home.includes('/assets/app-cctv.svg'),'Homepage CCTV dashboard missing');
+assert(home.includes('promo-tablet-feature')&&['app-overview.svg','app-schedules.svg','app-bookings.svg','app-activity.svg'].every(file=>home.includes('/assets/'+file))&&(home.match(/class="hero-tablet"/g)||[]).length>=5,'Homepage portal images must sit on movable tablets');
 
 // Keep the main search intent aligned with actual visible features and the relevant industry guide.
 assert(home.includes('Open gates.')&&home.includes('Control your site.'),'Homepage gate automation proposition missing');

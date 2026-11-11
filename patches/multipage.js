@@ -53,6 +53,28 @@
     });
   }));
 
+  // Tilt a landscape tablet toward a fine pointer. Small screens and reduced motion stay flat in CSS.
+  const finePointer=window.matchMedia('(pointer: fine)').matches;
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(finePointer&&!reduceMotion) {
+    document.querySelectorAll('.hero-tablet').forEach(tablet=>{
+      tablet.addEventListener('pointermove',event=>{
+        const rect=tablet.getBoundingClientRect();
+        if(!rect.width||!rect.height) return;
+        const x=(event.clientX-rect.left)/rect.width-.5;
+        const y=(event.clientY-rect.top)/rect.height-.5;
+        tablet.style.setProperty('--tablet-y',(x*12).toFixed(2)+'deg');
+        tablet.style.setProperty('--tablet-x',(-y*8).toFixed(2)+'deg');
+        tablet.classList.add('is-tilting');
+      });
+      tablet.addEventListener('pointerleave',()=>{
+        tablet.style.setProperty('--tablet-y','0deg');
+        tablet.style.setProperty('--tablet-x','0deg');
+        tablet.classList.remove('is-tilting');
+      });
+    });
+  }
+
   // Pass a product interest to the contact page without storing visitor data.
   const subjects=new Set(['MagicKeys','Platform','Gate control','Anti-Tailgating Systems','CCTV & Sentinel','Emergency Guidance','Customisation','Security & integrations','Site solution','Site assessment','AI threat & fire detection development']);
   const interest=new URLSearchParams(window.location.search).get('interest');
