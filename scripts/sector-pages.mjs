@@ -26,9 +26,9 @@ export const sectors = [
   },
   {
     slug:'schools', label:'Schools & education',
-    title:'School Access Control & CCTV Melbourne | MagicKeys',
-    description:'All-in-one school automation: control connected gates, integrate compatible existing door access and CCTV, and assess Compass workflows in a customised MagicKeys portal.',
-    h1:'School access.<br><span>A clearer school day.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
+    title:'School Gate Automation & Compass Integration | MagicKeys',
+    description:'Melbourne school gate and door access automation with compatible existing CCTV in one MagicKeys portal. Discuss authorised Compass integration and campus schedules.',
+    h1:'School automation.<br><span>One connected campus.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
     intro:'Bring your school’s connected gate automation, compatible existing door access and current CCTV into one MagicKeys workspace. Staff can manage commissioned entrances, schedules, venue access and supported camera views from a customisable portal. Compass workflows can be assessed subject to authorisation and supported interfaces.',
     image:'app-schedules.svg', alt:'MagicKeys weekly gate schedules inside the consistent school access workspace',
     heading:'Different hours.<br>One campus plan.',
@@ -41,7 +41,7 @@ export const sectors = [
     planningTitle:'Start with the school’s procedures.',
     planning:'Map public entrances, staff-only areas, service access and shared facilities. Share your existing gate operators, door access controllers, RFID readers, intercoms, current camera systems and any Compass workflows to be considered. We assess available interfaces, school authorisations, data permissions, access windows, emergency egress and equipment feedback before proposing an approved connection or automation scope.',
     local:'Discuss campus requirements across metropolitan Melbourne, including the eastern and north-eastern suburbs, northern growth areas, western suburbs and south-east. Existing schools and new campuses can have very different layouts, so coverage and equipment suitability are confirmed during the site discussion.',
-    links:[['See access schedules and bookings','/platform/'],['Discuss Emergency Guidance','/emergency-guidance/']],
+    links:[['Explore gate automation','/gate-control/'],['Connect existing CCTV and access','/security-integrations/'],['See access schedules','/platform/']],
     questions:[
       ['Can school gates have different access schedules?','Schedules can be configured for connected entrances within the agreed project. We work through term-time routines, approved exceptions and the available controller interfaces before confirming the delivered behaviour.'],
       ['Can we coordinate access for after-hours stadium hire?','MagicKeys can be customised around approved venue bookings and connected gate access. The proposal defines the booking process, operator responsibilities and which entrances are included.'],
