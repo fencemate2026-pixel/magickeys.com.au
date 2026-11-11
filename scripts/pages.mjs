@@ -343,6 +343,16 @@ function buildMorePages({solutions, how, login}) {
         ]))
     },
     {
+      route:'/client-signup/', title:'MagicKeys Client Sign Up | Request access',
+      description:'Request a MagicKeys client account. Send your name, email, mobile, organisation and site details for the team to verify.',
+      content:readFileSync('patches/client-signup.html','utf8')
+    },
+    {
+      route:'/client-signup/thanks/', title:'MagicKeys Client Sign Up | We will be in touch shortly',
+      description:'Your MagicKeys access request has been received. The team will check your details and contact you about your account.',
+      content:readFileSync('patches/client-signup-thanks.html','utf8')
+    },
+    {
       route:'/contact/', title:'Contact the MagicKeys Team | Discuss your site & custom app',
       description:'Contact the MagicKeys team on 0400 101 132 to discuss access control, CCTV, Anti-Tailgating Systems, customisation and existing-system integration.',
       content:hero('CONTACT THE MAGICKEYS TEAM','Let’s connect<br><span>your site.</span>','Tell us what you need to control, see and manage. We will discuss your existing equipment, the way your team works and a MagicKeys configuration that fits your requirements.',contactVisual,'Call the team','').replace('<section class="page-hero">','<section class="page-hero" id="contact">').replace('<a class="btn btn-orange" href="/contact/">Call the team','<a class="btn btn-orange" href="tel:+61400101132">Call the team')+

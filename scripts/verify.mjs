@@ -13,7 +13,7 @@ function walk(dir) {
 function assert(condition,message) { if(!condition) throw new Error(message); }
 const files=walk(root);
 const htmlFiles=files.filter(path=>path.endsWith('.html'));
-const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/contact/','/melbourne/',...sectors.map(s=>'/solutions/'+s.slug+'/')];
+const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/client-signup/','/client-signup/thanks/','/contact/','/melbourne/',...sectors.map(s=>'/solutions/'+s.slug+'/')];
 const pages=new Map();
 const titles=new Set(), descriptions=new Set();
 const parseAttributes=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)\s*=\s*"([^"]*)"/g)].map(match=>[match[1],match[2]]));
@@ -91,6 +91,12 @@ const clientLogin=pages.get('/client-login/').html;
 assert(clientLogin.includes('method="post" action="https://access.magickeys.com.au/api/auth/client-entry"'),'Secure native login handoff missing');
 assert(clientLogin.includes('name="username"')&&clientLogin.includes('autocomplete="username"')&&clientLogin.includes('name="password"')&&clientLogin.includes('autocomplete="current-password"'),'Login credential fields missing');
 assert(clientLogin.includes('href="https://magickeys-balwyn-portal.com/client-login?method=google"'),'Google sign-in entry missing');
+assert(clientLogin.includes('href="/client-signup/"')&&clientLogin.includes('Sign up now'),'Sign up now entry missing');
+const clientSignup=pages.get('/client-signup/').html;
+assert(clientSignup.includes('data-netlify="true"')&&clientSignup.includes('name="client-signup"')&&clientSignup.includes('action="/client-signup/thanks/"'),'Client sign-up form missing');
+assert(clientSignup.includes('name="full-name"')&&clientSignup.includes('name="email"')&&clientSignup.includes('name="mobile"')&&clientSignup.includes('name="organisation"')&&clientSignup.includes('name="site-name"')&&clientSignup.includes('name="site-address"')&&clientSignup.includes('name="access-needed"'),'Sign-up detail fields missing');
+assert(!clientSignup.includes('type="password"'),'Sign-up page must not collect a password');
+assert(pages.get('/client-signup/thanks/').html.includes('We will be in touch shortly'),'Sign-up confirmation missing');
 assert(!clientLogin.includes('Balwyn High School')&&!clientLogin.includes('Campus access portal'),'School branding remains on the general login');
 assert(clientLogin.includes('/assets/client-access.js'),'Password visibility control missing');
 assert(pages.get('/development/').html.includes('IN DEVELOPMENT')&&pages.get('/development/').html.includes('Human acknowledgement'),'Development status or human acknowledgement missing');
@@ -121,13 +127,13 @@ for(const [route,page] of pages) {
 
 const sitemap=readFileSync(join(root,'sitemap.xml'),'utf8');
 const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
-const indexableRoutes=expectedRoutes.filter(route=>route!=='/client-login/');
+const indexableRoutes=expectedRoutes.filter(route=>route!=='/client-login/'&&!route.startsWith('/client-signup/'));
 assert(locations.length===indexableRoutes.length,'Sitemap page count mismatch');
 for(const route of indexableRoutes) assert(locations.includes('https://www.magickeys.com.au'+route),'Sitemap URL missing: '+route);
 assert(readFileSync(join(root,'robots.txt'),'utf8').includes('https://www.magickeys.com.au/sitemap.xml'),'Robots sitemap missing');
-assert(!locations.some(url=>url.includes('client-login')||url.includes('404')),'Private utility pages must be absent from sitemap');
+assert(!locations.some(url=>url.includes('client-login')||url.includes('client-signup')||url.includes('404')),'Private utility pages must be absent from sitemap');
 for(const [route,page] of pages) {
-  const noindex=route==='/client-login/'||route==='/404.html';
+  const noindex=route==='/client-login/'||route.startsWith('/client-signup/')||route==='/404.html';
   assert((page.html.match(/<meta name="robots"/g)||[]).length===1,'Expected one robots directive on '+route);
   assert(page.html.includes(noindex?'content="noindex, follow"':'content="index, follow, max-image-preview:large"'),'Unexpected indexing rule on '+route);
   const json=page.html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);

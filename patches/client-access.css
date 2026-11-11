@@ -54,6 +54,10 @@
 .client-google-signin{border:1px solid #b8ccd9;background:#fff;color:#17344c}
 .client-google-signin:hover{background:#f0f7fc;border-color:#5189b1}
 .client-google-signin svg{width:22px;height:22px;flex:0 0 22px}
+.client-signup-now{display:flex;width:100%;align-items:center;justify-content:center;min-height:50px;margin-top:14px;padding:13px 16px;border:1px solid #086eb7;border-radius:7px;background:#fff;color:#08649f;font:700 15px/1.4 Arial,Helvetica,sans-serif;text-decoration:none}
+.client-signup-now:hover{background:#f0f7fc}
+.client-login-form textarea{width:100%;min-height:110px;padding:13px 14px;border:1px solid #a7bfd0;border-radius:7px;background:#fff;color:#15344d;font:16px/1.45 Arial,Helvetica,sans-serif;resize:vertical}
+.client-signup-trap{display:none}
 .client-login-help{font-size:13px;color:#4a6579;margin-top:18px;line-height:1.65}
 .client-login-help summary{cursor:pointer;color:#145781;font-weight:600}
 .client-login-help p{font:13px/1.7 Arial,Helvetica,sans-serif!important;margin:10px 0 0;color:#4a6579!important}

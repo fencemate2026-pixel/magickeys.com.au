@@ -13,10 +13,12 @@ export const metadata={
   '/how-it-works/':['Access Control Assessment & Installation Melbourne | MagicKeys','See how RJL Commercial assesses your Melbourne site, customises MagicKeys, connects compatible access equipment and commissions the agreed installation.','Assessment and installation'],
   '/development/':['AI Threat & Fire Detection in Development | MagicKeys','Explore MagicKeys AI-assisted threat and fire detection in development, with proposed human review and acknowledgement. Availability is not yet confirmed.','AI detection in development'],
   '/client-login/':['MagicKeys Client Login | Secure Site Access','Open your existing MagicKeys client portal to sign in. Your account, credentials and site permissions are managed in your organisation’s secure workspace.','Client login'],
+  '/client-signup/':['MagicKeys Client Sign Up | Request access','Request a MagicKeys client account. Send your name, email, mobile, organisation and site details for the team to verify.','Client sign up'],
+  '/client-signup/thanks/':['MagicKeys Client Sign Up | We will be in touch shortly','Your MagicKeys access request has been received. The team will check your details and contact you about your account.','Sign-up confirmation'],
   '/contact/':['Discuss Gate Automation & CCTV Integration | MagicKeys','Talk to MagicKeys about automating gates, integrating compatible existing door access or CCTV, and planning school and commercial control systems in Melbourne.','Contact MagicKeys']
 };
 export function applyMetadata(pages){
-  return pages.map(p=>{const m=metadata[p.route];return {...p,...(m?{title:m[0],description:m[1],label:m[2]}:{}),noindex:p.route==='/client-login/'};});
+  return pages.map(p=>{const m=metadata[p.route];return {...p,...(m?{title:m[0],description:m[1],label:m[2]}:{}),noindex:p.route==='/client-login/'||p.route.startsWith('/client-signup/')};});
 }
 const area={'@type':'City',name:'Melbourne',containedInPlace:{'@type':'State',name:'Victoria',containedInPlace:{'@type':'Country',name:'Australia'}}};
 const services={

@@ -1,0 +1,46 @@
+<section class="client-section" id="client-signup" aria-labelledby="client-signup-heading">
+  <div class="section-shell client-access-grid">
+    <div class="client-access-intro" data-reveal>
+      <div class="eyebrow">MAGICKEYS / CLIENT SIGN UP</div>
+      <h1 id="client-signup-heading">Request<br><span>your access.</span></h1>
+      <p>Tell us who you are and which site you need. We check the details, then add your account. We will be in touch shortly.</p>
+      <div class="client-security-points" aria-label="What happens next">
+        <div><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Your details come to the MagicKeys team</div>
+        <div><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> We verify the request before adding an account</div>
+        <div><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Approved accounts only</div>
+      </div>
+    </div>
+    <div class="client-access-panel" data-reveal>
+      <div class="client-panel-heading">
+        <img src="/assets/magickeys-logo.png" width="2061" height="763" alt="MagicKeys" loading="lazy">
+        <span class="client-panel-subheading">REQUEST CLIENT ACCESS</span>
+      </div>
+      <div class="client-panel-body">
+        <h3>Your details.</h3>
+        <p class="client-panel-lede">Use the name, email and site we should check before creating your login.</p>
+        <form class="client-login-form" id="client-signup-form" name="client-signup" method="POST" action="/client-signup/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="client-signup">
+          <input type="hidden" name="subject" value="MagicKeys client sign-up request">
+          <p class="client-signup-trap"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <label for="signup-full-name">Full name</label>
+          <input id="signup-full-name" name="full-name" type="text" autocomplete="name" maxlength="120" required placeholder="Your full name">
+          <label for="signup-email">Email</label>
+          <input id="signup-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required placeholder="you@example.com">
+          <label for="signup-mobile">Mobile</label>
+          <input id="signup-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" required placeholder="04">
+          <label for="signup-organisation">Organisation</label>
+          <input id="signup-organisation" name="organisation" type="text" autocomplete="organization" maxlength="160" required placeholder="Company or body corporate">
+          <label for="signup-site-name">Site name</label>
+          <input id="signup-site-name" name="site-name" type="text" maxlength="160" required placeholder="The site this login is for">
+          <label for="signup-site-address">Site address</label>
+          <input id="signup-site-address" name="site-address" type="text" autocomplete="street-address" maxlength="240" required placeholder="Street address and suburb">
+          <label for="signup-access-needed">Access needed</label>
+          <textarea id="signup-access-needed" name="access-needed" maxlength="2000" required placeholder="Gates, schedules, cameras or other access you need"></textarea>
+          <button class="client-login-submit" type="submit">Send my details <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </form>
+        <div class="client-panel-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span>We use these details to verify your request and set up an approved account. This page does not ask for a password.</span></div>
+      </div>
+      <div class="client-panel-footer">Already approved? <a href="/client-login/">Client login <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </div>
+</section>

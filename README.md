@@ -64,7 +64,7 @@ Security copy is limited to the supplied portal's secure sign-in, HTTPS connecti
 
 AI-assisted threat and fire detection is clearly marked IN DEVELOPMENT. The proposed workflow includes authorised human review and acknowledgement. No release date or current commissioned capability is claimed.
 
-The Client Login page contains email/username and password fields plus Continue with Google. The native HTTPS form posts directly to https://access.magickeys.com.au/api/auth/client-entry; the marketing site does not receive or store the credentials. The portal retains existing approval, rate limits, authenticator and session checks. Google continues at the general /client-login page on its existing authorised portal domain. The marketing site sends no hardware commands. All demonstrations are disconnected browser simulations.
+The Client Login page contains email/username and password fields, Continue with Google, and a Sign up now button. Sign up now opens /client-signup/, which sends the person’s name, email, mobile, organisation, site and access details to the MagicKeys team for verification. The person then sees /client-signup/thanks/ with the message that we will be in touch shortly. The sign-up form does not collect a password. The native HTTPS form posts directly to https://access.magickeys.com.au/api/auth/client-entry; the marketing site does not receive or store the credentials. The portal retains existing approval, rate limits, authenticator and session checks. Google continues at the general /client-login page on its existing authorised portal domain. The marketing site sends no hardware commands. All demonstrations are disconnected browser simulations.
 
 ## Netlify deployment
 
