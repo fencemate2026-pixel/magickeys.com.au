@@ -220,3 +220,38 @@
 @media(prefers-reduced-motion:reduce) {
   .home-page .hero::before { animation:none; }
 }
+
+
+/* All-in-one integrations and school automation now lead the homepage. */
+.mk-connect-panel,.mk-school-panel{border-radius:18px;overflow:hidden;}
+.mk-connect-panel{padding:clamp(24px,4.5vw,56px);color:#effaff;border:1px solid #28618b;background:radial-gradient(ellipse at 90% 0,rgba(28,119,188,.35),transparent 58%),linear-gradient(125deg,#071b2d,#0a3252);box-shadow:0 25px 70px rgba(4,29,49,.17)}
+.mk-connect-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:38px;align-items:center;margin-bottom:33px}
+.mk-connect-heading h2,.mk-school-copy h2{font-size:clamp(34px,3.8vw,58px);line-height:1.09;letter-spacing:-.035em;color:#fff;margin:14px 0 17px}
+.mk-connect-heading h2 span,.mk-school-copy h2 span{color:#ff9449}
+.mk-connect-heading p,.mk-school-copy p{font-size:16px;line-height:1.85;max-width:850px;color:#c9e1f1}
+.mk-connect-panel .eyebrow,.mk-school-panel .eyebrow{color:#ff9e51}
+.mk-connect-panel .btn-orange,.mk-school-panel .btn-orange{background:#ff8a39;color:#08233c;border-color:#ffa76b}
+.mk-connect-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mk-connect-card{display:flex;flex-direction:column;padding:25px 23px;min-width:0;border:1px solid #387092;background:linear-gradient(150deg,#103b5c,#08253e);border-radius:12px;color:#fff;transition:transform .2s,border-color .2s,box-shadow .2s}
+.mk-connect-card:hover{transform:translateY(-4px);border-color:#76c9f7;box-shadow:0 14px 32px #0004}
+.mk-connect-card>span{font-size:10px;letter-spacing:1.2px;color:#ffac6f;font-weight:700}
+.mk-connect-card h3{font-size:clamp(20px,2.2vw,29px);line-height:1.2;color:#fff;margin:16px 0}
+.mk-connect-card p{font-size:14px;line-height:1.75;color:#c4deef}
+.mk-connect-card strong{font-size:13px;color:#7cd6ff;margin-top:auto;padding-top:24px;display:flex;align-items:center;gap:9px}
+.mk-connect-card strong svg{width:15px;height:15px}
+.mk-connect-note{font-size:12px;line-height:1.7;color:#b8d6eb;margin:24px 0 0}
+.mk-school-panel{display:grid;grid-template-columns:1.16fr .84fr;border:1px solid #b8d6e7;background:linear-gradient(130deg,#f4faff,#e8f3fc);box-shadow:0 22px 52px #093d6513}
+.mk-school-copy{padding:clamp(25px,4.5vw,58px)}
+.mk-school-copy h2{color:#0b3151}
+.mk-school-copy p{color:#405f76;margin:0 0 16px}
+.mk-school-copy .hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:25px}
+.mk-school-copy .btn-outline{border:1px solid #5e8cad;color:#103b5a;background:transparent}
+.mk-school-points{padding:clamp(23px,3vw,43px);background:linear-gradient(145deg,#0b3554,#061b2f);color:#fff}
+.mk-school-points h3{color:#fff;font-size:26px;line-height:1.2;margin-bottom:24px}
+.mk-school-points>div{padding:14px 0;border-top:1px solid #3a709260;display:grid;gap:7px}
+.mk-school-points strong{font-size:15px;color:#fff}
+.mk-school-points span{font-size:13px;line-height:1.55;color:#bad8eb}
+.mk-connect-card:focus-visible,.mk-school-panel a:focus-visible{outline:3px solid #ff9b4b;outline-offset:4px}
+@media(max-width:1050px){.mk-school-panel{grid-template-columns:1fr}.mk-connect-heading{grid-template-columns:1fr}.mk-connect-heading .btn{justify-self:start}}
+@media(max-width:760px){.mk-connect-grid{grid-template-columns:1fr}.mk-connect-panel{padding:23px 18px}.mk-connect-card{padding:22px}.mk-school-copy,.mk-school-points{padding:26px 21px}.mk-school-copy .hero-actions .btn{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.mk-connect-card{transition:none}.mk-connect-card:hover{transform:none}}
