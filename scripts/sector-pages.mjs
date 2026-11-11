@@ -27,24 +27,25 @@ export const sectors = [
   {
     slug:'schools', label:'Schools & education',
     title:'School Access Control & CCTV Melbourne | MagicKeys',
-    description:'Plan Melbourne school gate access, CCTV, staff permissions and venue hire schedules in one customised MagicKeys app. Discuss your campus requirements.',
+    description:'All-in-one school automation: control connected gates, integrate compatible existing door access and CCTV, and assess Compass workflows in a customised MagicKeys portal.',
     h1:'School access.<br><span>A clearer school day.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
-    intro:'Manage connected campus gates, approved access hours, venue bookings and included CCTV through one MagicKeys workspace. We scope school access control around staff responsibilities, student movement and the way your Melbourne campus operates.',
+    intro:'Bring your school’s connected gate automation, compatible existing door access and current CCTV into one MagicKeys workspace. Staff can manage commissioned entrances, schedules, venue access and supported camera views from a customisable portal. Compass workflows can be assessed subject to authorisation and supported interfaces.',
     image:'app-schedules.svg', alt:'MagicKeys weekly gate schedules inside the consistent school access workspace',
     heading:'Different hours.<br>One campus plan.',
     lead:'A school entrance serves staff arrivals, student drop-off, deliveries, contractors and after-hours users. The useful starting point is a clear access plan for each group and each entrance.',
     needs:[
       ['School hours and staff controls','Plan opening windows for pedestrian and vehicle gates around the school day. Nominate authorised staff and agree the controls they need. Review available gate position feedback separately from the command sent by an operator.'],
       ['Venue hire and shared facilities','Discuss approved evening or weekend access for a stadium, hall or shared sporting facility. Coordinate bookings and the associated entrance schedule so the site team can review planned access in one place.'],
-      ['Camera context at the entrance','Include compatible CCTV views where scoped, giving nominated operators a view of the entrance alongside the access workflow. Overhead anti-tailgating may be assessed for suitable controlled staff entrances, with detection rules appropriate to the location.']
+      ['Keep your current CCTV and door access','Assess existing school cameras, compatible door access controllers, RFID readers and intercoms for inclusion in MagicKeys. Supported CCTV views can appear alongside the associated entrances, while the final scope confirms each interface and staff permission.']
     ],
     planningTitle:'Start with the school’s procedures.',
-    planning:'Map public entrances, staff-only areas, service access and any shared facilities. Share existing gate controllers, camera equipment, operating hours and the roles of reception, facilities and leadership staff. The project should define approved access windows, how exceptions are handled and who reviews the recorded activity. Installation and commissioning are scoped around the agreed equipment and campus needs.',
+    planning:'Map public entrances, staff-only areas, service access and shared facilities. Share your existing gate operators, door access controllers, RFID readers, intercoms, current camera systems and any Compass workflows to be considered. We assess available interfaces, school authorisations, data permissions, access windows, emergency egress and equipment feedback before proposing an approved connection or automation scope.',
     local:'Discuss campus requirements across metropolitan Melbourne, including the eastern and north-eastern suburbs, northern growth areas, western suburbs and south-east. Existing schools and new campuses can have very different layouts, so coverage and equipment suitability are confirmed during the site discussion.',
     links:[['See access schedules and bookings','/platform/'],['Discuss Emergency Guidance','/emergency-guidance/']],
     questions:[
       ['Can school gates have different access schedules?','Schedules can be configured for connected entrances within the agreed project. We work through term-time routines, approved exceptions and the available controller interfaces before confirming the delivered behaviour.'],
       ['Can we coordinate access for after-hours stadium hire?','MagicKeys can be customised around approved venue bookings and connected gate access. The proposal defines the booking process, operator responsibilities and which entrances are included.'],
+      ['Can MagicKeys connect our existing door access, CCTV and Compass?','We can assess supported door access controllers and camera interfaces and propose connections where compatible. Any Compass integration requires the school’s authorisation, the relevant approved API access and validation of the intended workflow. It is not an automatically included or commissioned integration.'],
       ['Does this replace school emergency procedures?','No. Emergency Guidance is an optional, site-specific package assessed against the school’s agreed procedures. Required emergency systems, local safety devices and evacuation responsibilities remain part of the site’s overall arrangements.']
     ]
   },
