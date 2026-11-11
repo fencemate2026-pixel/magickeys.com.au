@@ -124,6 +124,20 @@ export function buildPages() {
   homeHero=homeHero.replace(oldHomeApp,`<div class="hero-tablet" aria-label="MagicKeys app displayed on a landscape tablet"><span class="tablet-camera" aria-hidden="true"></span><div class="tablet-screen" data-app-viewport="1200">${homeApp}</div></div>`);
   const maker=original(/<div class="principle-strip"/,'div').replace('Detection alerts','Anti-Tailgating Systems');
 
+  const integrationSpotlight=section(`<div class="mk-connect-panel">
+    <div class="mk-connect-heading"><div><div class="eyebrow">ONE SYSTEM / YOUR EXISTING INFRASTRUCTURE</div><h2>Open the gate.<br><span>Manage the whole site.</span></h2><p>MagicKeys connects compatible gate automation, existing door access and current CCTV in one customisable interface. Keep the systems that work and give authorised staff a clear view of the entrances they manage.</p></div>${button('Plan your MagicKeys system','/contact/?interest=All-in-one%20site%20automation')}</div>
+    <div class="mk-connect-grid">
+      <a class="mk-connect-card" href="/gate-control/"><span>01 / GATES</span><h3>Open &amp; close automation</h3><p>Control connected sliding gates, swing gates, boom gates and rising bollards with clear operator permissions and confirmed feedback where available.</p><strong>Explore gate automation ${arrow}</strong></a>
+      <a class="mk-connect-card" href="/security-integrations/"><span>02 / EXISTING DOORS</span><h3>Bring your door access</h3><p>Integrate compatible controllers, existing RFID or Wiegand readers, intercoms and door access into a site-specific workspace.</p><strong>Explore access integration ${arrow}</strong></a>
+      <a class="mk-connect-card" href="/cctv/"><span>03 / CURRENT CCTV</span><h3>See your existing cameras</h3><p>Assess the installed CCTV system and connect supported camera views alongside access controls so staff can see the entrance they operate.</p><strong>Explore CCTV integration ${arrow}</strong></a>
+    </div><p class="mk-connect-note">Integration is confirmed after reviewing existing controllers, camera interfaces, permissions and site safety requirements. Live equipment is not controlled by the website demonstration.</p>
+  </div>`, 'section-shell section-space','integrate-existing-systems');
+
+  const schoolSpotlight=section(`<div class="mk-school-panel">
+    <div class="mk-school-copy"><div class="eyebrow">MAGICKEYS FOR SCHOOLS</div><h2>Automate your school.<br><span>One connected campus.</span></h2><p>From staff doors to driveway gates, halls and sports facilities, bring compatible existing automation and CCTV into one MagicKeys workspace. Authorised school staff can operate connected entrances, manage access schedules and review relevant activity from a customised dashboard.</p><p><strong>Already using Compass?</strong> We can assess Compass-linked school workflows where the school and Compass authorise the required API access. Scope, permissions and supported data flows are confirmed before any connection is offered.</p><div class="hero-actions">${button('Discuss your school','/contact/?interest=School%20automation%20and%20Compass')}${button('School access solutions','/solutions/schools/','btn-outline')}</div></div>
+    <div class="mk-school-points"><h3>Connect your campus</h3><div><strong>School gates and boom barriers</strong><span>Open, close and schedule commissioned entrances</span></div><div><strong>Existing doors and access control</strong><span>Assess compatible controllers, credentials and permissions</span></div><div><strong>Existing school CCTV</strong><span>Include supported views from the current camera system</span></div><div><strong>Compass integration assessment</strong><span>Subject to school authorisation and supported Compass APIs</span></div><div><strong>Shared facilities and venue hire</strong><span>Plan approved access windows for halls and stadiums</span></div></div>
+  </div>`, 'section-shell section-space','school-automation');
+
   const productCards=[
     ['/gate-control/','lock','Open &amp; close automation','Operate connected gates, boom barriers and compatible site automation with authorised controls.'],
     ['/security-integrations/','users','Existing door access','Discuss compatible RFID, Wiegand, intercom and door-controller connections to your existing infrastructure.'],
@@ -139,7 +153,7 @@ export function buildPages() {
     {
       route:'/', title:'MagicKeys | Open Gates, Control Doors & Integrate Existing CCTV',
       description:'Open and close automated gates, connect compatible existing door access and CCTV, and manage school and commercial sites in one MagicKeys portal. Discuss Compass integration for schools.',
-      content:homeHero+maker+
+      content:homeHero+maker+integrationSpotlight+schoolSpotlight+
         section(heading('ALL-IN-ONE CONTROL','Your automation.<br>Your access. Your CCTV.','Keep the systems your team already uses in view: connected entrance controls, compatible existing CCTV and a workspace configured around your real site.')+
           image('app-cctv.svg','MagicKeys app with 15 CCTV views and an overhead tailgating detection panel','Custom configuration example · CCTV and overhead anti-tailgating in the same MagicKeys workspace. Final features depend on the agreed installation.',true)+
           `<div class="overview-links">${link('Explore the platform','/platform/')}${link('See CCTV capabilities','/cctv/')}</div>`,'section-shell section-space home-overview','site-overview')+
