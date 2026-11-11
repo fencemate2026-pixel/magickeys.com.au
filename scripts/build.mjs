@@ -38,6 +38,8 @@ try {
   const vehicleModels = prepareVehicleModels();
   buildAppVisuals(vehicleModels);
   appendFileSync('dist/assets/site.css', '\n'+readFileSync('dist/assets/app-palette.css','utf8'));
+  // Cinematic marketing styling is appended last; portal layout/assets remain untouched.
+  appendFileSync('dist/assets/site.css', '\n'+readFileSync('patches/cinematic-theme.css', 'utf8'));
   cpSync('patches/multipage.js', 'dist/assets/multipage.js');
   const siteScript='dist/assets/site.js';
   writeFileSync(siteScript,readFileSync(siteScript,'utf8')
