@@ -29,7 +29,7 @@
   background-color:#061a2d;
   background-image:
     linear-gradient(90deg,rgba(4,22,39,.96) 0%,rgba(5,31,53,.94) 39%,rgba(5,36,61,.88) 67%,rgba(5,30,51,.82) 100%),
-    url('/assets/commercial-entry-concept.webp');
+    url('commercial-entry-concept.webp');
   background-size:cover;
   background-position:center center;
   color:#f4faff;
@@ -197,7 +197,7 @@
   .home-page .hero {
     background-image:
       linear-gradient(105deg,rgba(4,22,39,.96),rgba(5,37,61,.88)),
-      url('/assets/commercial-entry-concept.webp');
+      url('commercial-entry-concept.webp');
     background-position:55% center;
   }
   .home-page .hero-tablet {
@@ -208,7 +208,7 @@
   .home-page .hero {
     background-image:
       linear-gradient(108deg,rgba(4,22,39,.98),rgba(6,39,64,.93)),
-      url('/assets/commercial-entry-concept.webp');
+      url('commercial-entry-concept.webp');
     background-position:center;
   }
   .home-page .hero::before {
