@@ -1,36 +1,36 @@
 // One preferred hostname, unique metadata and truthful, visible structured data.
 export const origin='https://www.magickeys.com.au';
 export const metadata={
-  '/':['Access Control & CCTV Melbourne | MagicKeys','Melbourne access control, CCTV and anti-tailgating in one MagicKeys app. Connect gates, boom barriers and bollards for apartments, schools and commercial sites.','MagicKeys'],
-  '/platform/':['Access Control App Melbourne | MagicKeys Platform','Explore the MagicKeys access control app for Melbourne properties: gate controls, CCTV, schedules, venue bookings and activity in one customised workspace.','Access control platform'],
-  '/gate-control/':['Gate Control Melbourne | Boom Gates & Bollards | MagicKeys','Control compatible sliding gates, swing gates, boom gates and rising bollards in one MagicKeys app. Discuss your Melbourne property and installation requirements.','Gate control'],
+  '/':['Gate Automation, Door Access & CCTV Melbourne | MagicKeys','Open and close connected gates, integrate compatible existing door access and CCTV, and manage school or commercial sites in one MagicKeys portal.','MagicKeys'],
+  '/platform/':['All-in-One Access Control Software Melbourne | MagicKeys','MagicKeys connects gate automation, compatible existing door access, CCTV views, access schedules and site activity in one customisable Melbourne control portal.','All-in-one access control platform'],
+  '/gate-control/':['Remote Gate Control & Automation Melbourne | MagicKeys','Open and close connected sliding gates, swing gates, boom gates and bollards with MagicKeys. Explore authorised remote control, access schedules and status feedback.','Gate automation'],
   '/anti-tailgating/':['Anti-Tailgating Systems Melbourne | OPTEX & HYD | MagicKeys','Overhead anti-tailgating for Melbourne entrances. Explore OPTEX Accurance OV-102, HYD integration and configured door interlocks that hold entry until the zone clears.','Anti-tailgating systems'],
-  '/cctv/':['CCTV Integration Melbourne | Connected Cameras | MagicKeys','Bring compatible CCTV camera views and access controls into one MagicKeys workspace. Discuss Melbourne apartment, school, aged care and commercial requirements.','CCTV integration'],
+  '/cctv/':['Existing CCTV & Gate Access Integration Melbourne | MagicKeys','Connect compatible existing CCTV camera views to MagicKeys alongside authorised gate and door controls. Assess school, commercial and shared-property camera systems.','Existing CCTV integration'],
   '/emergency-guidance/':['Emergency Guidance for Melbourne Sites | MagicKeys','Discuss site-specific Emergency Guidance, staff prompts and agreed gate responses for Melbourne properties. Equipment and procedures are assessed for your site.','Emergency Guidance'],
-  '/customisation/':['Custom Access Control App Melbourne | MagicKeys','Customise the MagicKeys app around your Melbourne site, entrances, operator roles and workflows. Bring compatible gates, CCTV and schedules into one workspace.','Customised access control'],
-  '/security-integrations/':['Security System Integration Melbourne | MagicKeys','Connect compatible Melbourne access control, CCTV, gate controllers and overhead anti-tailgating. Equipment interfaces and feedback are assessed for each site.','Security integration'],
-  '/solutions/':['Melbourne Security Solutions by Industry | MagicKeys','Explore Melbourne access control and CCTV solutions for owners corporations, schools, aged care, commercial buildings, warehouses and logistics sites.','Site solutions'],
+  '/customisation/':['Custom Gate & Door Access Control App Melbourne | MagicKeys','A fully customisable MagicKeys portal for compatible gate automation, existing door access, CCTV, staff permissions and schedules. Tailored to your Melbourne site.','Customised gate and door access'],
+  '/security-integrations/':['Door Access, RFID & Wiegand Integration | MagicKeys','Integrate compatible existing door controllers, RFID and Wiegand readers, intercoms, CCTV and gate automation into one MagicKeys site management workspace.','Existing door access integration'],
+  '/solutions/':['School & Commercial Access Automation Melbourne | MagicKeys','Explore MagicKeys all-in-one gate automation, existing door access and CCTV integration for Melbourne schools, commercial sites and owners corporations.','Site automation solutions'],
   '/how-it-works/':['Access Control Assessment & Installation Melbourne | MagicKeys','See how RJL Commercial assesses your Melbourne site, customises MagicKeys, connects compatible access equipment and commissions the agreed installation.','Assessment and installation'],
   '/development/':['AI Threat & Fire Detection in Development | MagicKeys','Explore MagicKeys AI-assisted threat and fire detection in development, with proposed human review and acknowledgement. Availability is not yet confirmed.','AI detection in development'],
   '/client-login/':['MagicKeys Client Login | Secure Site Access','Open your existing MagicKeys client portal to sign in. Your account, credentials and site permissions are managed in your organisation’s secure workspace.','Client login'],
-  '/contact/':['Contact MagicKeys Melbourne | Access Control & CCTV','Discuss Melbourne access control, CCTV, anti-tailgating and gate integration with RJL Commercial. Call 0400 101 132 or send your site requirements.','Contact MagicKeys']
+  '/contact/':['Discuss Gate Automation & CCTV Integration | MagicKeys','Talk to MagicKeys about automating gates, integrating compatible existing door access or CCTV, and planning school and commercial control systems in Melbourne.','Contact MagicKeys']
 };
 export function applyMetadata(pages){
   return pages.map(p=>{const m=metadata[p.route];return {...p,...(m?{title:m[0],description:m[1],label:m[2]}:{}),noindex:p.route==='/client-login/'};});
 }
 const area={'@type':'City',name:'Melbourne',containedInPlace:{'@type':'State',name:'Victoria',containedInPlace:{'@type':'Country',name:'Australia'}}};
 const services={
-  '/':'Access control and CCTV integration', '/platform/':'Customised access control platform',
-  '/gate-control/':'Gate, boom barrier and rising bollard integration',
+  '/':'All-in-one gate automation, door access and CCTV integration', '/platform/':'Customised gate, door access and CCTV control software',
+  '/gate-control/':'Remote gate automation for swing gates, sliding gates, boom barriers and bollards',
   '/anti-tailgating/':'Overhead anti-tailgating system integration',
-  '/cctv/':'CCTV camera integration','/emergency-guidance/':'Site-specific Emergency Guidance integration',
-  '/customisation/':'Access control app customisation','/security-integrations/':'Security system integration',
+  '/cctv/':'Existing CCTV camera system integration','/emergency-guidance/':'Site-specific Emergency Guidance integration',
+  '/customisation/':'Access control app customisation','/security-integrations/':'Existing door access, RFID, Wiegand and intercom integration',
   '/how-it-works/':'Access control assessment and installation','/melbourne/':'Melbourne access control and CCTV integration'
 };
 export function structuredData(page){
   const url=origin+page.route, org=origin+'/#organisation', web=origin+'/#website';
   const graph=[
-    {'@type':'Organization','@id':org,name:'MagicKeys',url:origin+'/',logo:{'@type':'ImageObject',url:origin+'/assets/magickeys-logo.png',width:2061,height:763},telephone:'+61400101132',description:'MagicKeys by RJL Commercial: customised access control, CCTV and entrance integration for Melbourne sites.',areaServed:area,parentOrganization:{'@type':'Organization',name:'RJL Commercial',url:'https://www.rjlcommercialgroup.com/'}},
+    {'@type':'Organization','@id':org,name:'MagicKeys',url:origin+'/',logo:{'@type':'ImageObject',url:origin+'/assets/magickeys-logo.png',width:2061,height:763},telephone:'+61400101132',description:'MagicKeys by RJL Commercial: gate automation, compatible existing door access and CCTV integration for Melbourne schools and commercial sites.',areaServed:area,parentOrganization:{'@type':'Organization',name:'RJL Commercial',url:'https://www.rjlcommercialgroup.com/'}},
     {'@type':'WebSite','@id':web,url:origin+'/',name:'MagicKeys',inLanguage:'en-AU',publisher:{'@id':org}},
     {'@type':page.route==='/contact/'?'ContactPage':page.route==='/solutions/'?'CollectionPage':'WebPage','@id':url+'#webpage',url,name:page.title,description:page.description,inLanguage:'en-AU',isPartOf:{'@id':web},about:{'@id':org}}
   ];
