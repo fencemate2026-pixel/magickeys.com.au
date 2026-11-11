@@ -1,0 +1,222 @@
+/*
+ * MagicKeys cinematic marketing refresh
+ * Visual layer only: no portal/authentication/demo behavior changes.
+ * Source of truth for logo, fonts, and portal UI remains the approved site.
+ * Uses the existing commercial entry concept asset; no embedded promo/GIF text.
+ */
+:root {
+  --mk-cinema-ink:#061a2d;
+  --mk-cinema-navy:#082943;
+  --mk-cinema-blue:#147dc4;
+  --mk-cinema-cyan:#43caff;
+  --mk-cinema-orange:#ff8a39;
+}
+/* The header and original transparent MagicKeys mark stay intact. */
+.site-header {
+  box-shadow:0 1px 0 rgba(5,40,69,.08),0 9px 30px rgba(5,32,55,.045);
+}
+.site-header .btn-orange,
+.site-header nav a.btn-orange {
+  background:#ff8a39;
+  color:#08233c;
+  box-shadow:0 6px 20px rgba(255,138,57,.16);
+}
+/* Hero: the cinematic lighting of the approved promo, with REAL site controls. */
+.home-page .hero {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background-color:#061a2d;
+  background-image:
+    linear-gradient(90deg,rgba(4,22,39,.96) 0%,rgba(5,31,53,.94) 39%,rgba(5,36,61,.88) 67%,rgba(5,30,51,.82) 100%),
+    url('/assets/commercial-entry-concept.webp');
+  background-size:cover;
+  background-position:center center;
+  color:#f4faff;
+  border-bottom:1px solid rgba(54,185,244,.38);
+}
+.home-page .hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 58% 60% at 86% 28%,rgba(33,124,213,.19),transparent 70%),
+    radial-gradient(ellipse 48% 30% at 58% 89%,rgba(255,130,37,.12),transparent 75%),
+    linear-gradient(120deg,transparent 45%,rgba(65,192,246,.08) 49%,transparent 54%);
+  animation:mk-cinema-breathe 9s ease-in-out infinite alternate;
+}
+.home-page .hero::after {
+  content:"";
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#ff8a39 20%,#43caff 61%,transparent 100%);
+  box-shadow:0 0 17px rgba(67,202,255,.7);
+}
+.home-page .hero-grid,
+.home-page .hero>.section-shell {
+  position:relative;
+  z-index:2;
+}
+.home-page .hero h1 {
+  color:var(--mk-cinema-orange);
+  text-shadow:0 8px 34px rgba(0,0,0,.27);
+  letter-spacing:-.045em;
+}
+.home-page .hero h1 span { color:#f5faff; }
+.home-page .hero-eyebrow {
+  color:#97d4ef;
+  font-weight:700;
+  letter-spacing:.13em;
+}
+.home-page .hero-eyebrow::before {
+  background:#ff8a39;
+  box-shadow:0 0 14px rgba(255,138,57,.45);
+}
+.home-page .hero-intro { color:#fff; font-weight:600; }
+.home-page .hero-detail { color:#cbdfee; }
+.home-page .hero-actions .btn-orange,
+.home-page .hero-actions .btn:first-child {
+  background:#ff8a39;
+  border-color:#ffa76b;
+  color:#08233c;
+  box-shadow:0 10px 30px rgba(255,124,35,.2);
+}
+.home-page .hero-actions .btn:not(.btn-orange):not(:first-child) {
+  background:rgba(10,44,72,.52);
+  border-color:rgba(143,206,243,.62);
+  color:#f6fbff;
+  backdrop-filter:blur(8px);
+}
+.home-page .watch-intro { color:#b8d9ed; }
+.home-page .hero-tablet {
+  border-color:#6b91ae;
+  box-shadow:
+    0 38px 86px rgba(0,0,0,.52),
+    0 0 0 1px rgba(107,200,255,.15),
+    0 0 54px rgba(39,166,242,.14),
+    0 3px 0 rgba(255,139,56,.34) inset;
+}
+.home-page .hero-stage-caption {
+  color:#b2d6ed;
+  text-shadow:0 1px 9px rgba(0,0,0,.55);
+}
+/* Match the campaign across inner-page introductions without changing content. */
+.page-hero {
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 83% 19%,rgba(30,134,213,.34),transparent 60%),
+    radial-gradient(ellipse at 12% 94%,rgba(245,125,38,.12),transparent 50%),
+    linear-gradient(126deg,#061b30,#0a3454 66%,#06253f);
+}
+.page-hero::after {
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:2px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,138,57,.85) 30%,rgba(67,202,255,.85) 66%,transparent);
+}
+.page-hero .eyebrow { color:#8ed6f5; }
+.page-hero h1 span { color:#ff9a4d; }
+.page-hero-copy>p { color:#d4e7f3; }
+.page-hero .detail-figure,.page-hero .detail-model {
+  border-color:rgba(102,184,234,.45);
+  box-shadow:0 30px 70px rgba(0,0,0,.35),0 0 36px rgba(54,177,245,.12);
+}
+/* Product cards read like premium control modules, not bright marketing tiles. */
+.product-card {
+  overflow:hidden;
+  border-color:#c5dce9;
+  background:linear-gradient(153deg,#fff 0%,#f4f9fc 100%);
+  box-shadow:0 6px 23px rgba(8,54,87,.045);
+}
+.product-card::before {
+  content:"";
+  position:absolute;
+  left:0;right:0;top:0;
+  height:3px;
+  background:linear-gradient(90deg,#ff8a39,#51c6f2);
+  opacity:.72;
+}
+.product-card>.icon { color:#ed7a30; }
+.product-card:hover {
+  border-color:#7bb7d7;
+  box-shadow:0 20px 49px rgba(7,54,88,.15);
+}
+.product-card:focus-visible {
+  outline:3px solid #ff8a39;
+  outline-offset:3px;
+}
+/* High-contrast end-of-page invitation inspired by the email campaign. */
+.conversion-panel {
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(88,173,222,.58);
+  background:
+    radial-gradient(ellipse at 95% 5%,rgba(31,119,184,.37),transparent 65%),
+    linear-gradient(115deg,#071d33,#0b3554);
+  box-shadow:0 22px 58px rgba(6,38,63,.14);
+}
+.conversion-panel::before {
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,#ff8a39,#2db9fc,transparent);
+}
+.conversion-panel .eyebrow { color:#ffa35c; }
+.conversion-panel h2 { color:#f8fcff; }
+.conversion-panel p { color:#c7dfef; }
+.conversion-panel>.btn { background:#ff8a39;color:#08233c;border-color:#ffa268; }
+.future-band {
+  background:
+    radial-gradient(ellipse at 88% 16%,rgba(23,118,191,.38),transparent 58%),
+    linear-gradient(115deg,#061b30,#093354);
+  border-top-color:rgba(69,189,249,.32);
+}
+/* Keep interactive states legible when colours change. */
+.home-page .hero a:focus-visible,
+.page-hero a:focus-visible,
+.conversion-panel a:focus-visible {
+  outline:3px solid #ffad68;
+  outline-offset:4px;
+}
+@keyframes mk-cinema-breathe {
+  from { opacity:.7; }
+  to { opacity:1; }
+}
+@media(max-width:980px) {
+  .home-page .hero {
+    background-image:
+      linear-gradient(105deg,rgba(4,22,39,.96),rgba(5,37,61,.88)),
+      url('/assets/commercial-entry-concept.webp');
+    background-position:55% center;
+  }
+  .home-page .hero-tablet {
+    box-shadow:0 24px 53px rgba(0,0,0,.38),0 0 32px rgba(39,166,242,.13);
+  }
+}
+@media(max-width:620px) {
+  .home-page .hero {
+    background-image:
+      linear-gradient(108deg,rgba(4,22,39,.98),rgba(6,39,64,.93)),
+      url('/assets/commercial-entry-concept.webp');
+    background-position:center;
+  }
+  .home-page .hero::before {
+    background:radial-gradient(ellipse 80% 30% at 80% 75%,rgba(41,141,220,.16),transparent 80%);
+  }
+  .home-page .hero h1 { letter-spacing:-.03em; }
+  .conversion-panel { border-radius:12px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-page .hero::before { animation:none; }
+}
