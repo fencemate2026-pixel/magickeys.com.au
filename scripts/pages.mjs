@@ -104,11 +104,11 @@ export function buildPages() {
     .replace('<h2 id="client-access-heading">','<h1 id="client-access-heading">')
     .replace('Your access.</span></h2>','Your access.</span></h1>');
   let homeHero=original(/<section class="hero">/)
-    .replace('THE MAGICKEYS PLATFORM','ALL-IN-ONE ACCESS CONTROL &amp; CCTV')
-    .replace('Access,<br><span>connected.</span>','Your site.<br><span>Connected.</span>')
-    .replace('Gates. People. Spaces.','Access control. CCTV. And more.')
+    .replace('THE MAGICKEYS PLATFORM','ONE PLATFORM / GATES, DOORS &amp; CCTV')
+    .replace('Access,<br><span>connected.</span>','Open gates.<br><span>Control your site.</span>')
+    .replace('Gates. People. Spaces.','Gates. Doors. CCTV. One app.')
     .replace('Control connected gates, plan access schedules and see your site’s activity in one workspace. Add person-detection alerts, CCTV and Emergency Guidance to suit your site.',
-      'Bring gate controls, CCTV, access schedules and activity into one fully customisable MagicKeys app. Built around your people, your equipment and the way your site works.')
+      'Open and close connected gates, manage compatible existing door access and bring your current CCTV into one fully customisable MagicKeys portal. For schools, we can assess campus-wide workflows and approved Compass integrations.')
     .replace('Discuss your site','Plan your MagicKeys system')
     .replace('The selected blue holographic AI face with connected points and data patterns','Blue digital face with connected points and data patterns')
     .replace('<div class="hero-portal-foot">',
@@ -125,22 +125,22 @@ export function buildPages() {
   const maker=original(/<div class="principle-strip"/,'div').replace('Detection alerts','Anti-Tailgating Systems');
 
   const productCards=[
-    ['/gate-control/','lock','Gate control','Manage connected swing, sliding and boom gates through familiar controls.'],
-    ['/cctv/','grid','CCTV &amp; Sentinel','Bring camera views and configured alerts into your site workspace.'],
-    ['/anti-tailgating/','users','Anti-Tailgating Systems','Installed entrance detection, clear-space entry checks and event alerts for your team.'],
-    ['/platform/','clock','Schedules &amp; bookings','Plan gate access around operating hours and approved venue hire.'],
-    ['/customisation/','check','Fully customisable app','Shape the screens, access rules and workflow around your operation.'],
-    ['/emergency-guidance/','shield','Emergency Guidance','Discuss staff prompts, visual instructions and agreed gate responses.']
+    ['/gate-control/','lock','Open &amp; close automation','Operate connected gates, boom barriers and compatible site automation with authorised controls.'],
+    ['/security-integrations/','users','Existing door access','Discuss compatible RFID, Wiegand, intercom and door-controller connections to your existing infrastructure.'],
+    ['/cctv/','grid','Integrate current CCTV','Bring compatible existing camera views alongside gates, doors and recorded access activity.'],
+    ['/solutions/schools/','shield','Schools &amp; Compass','Scope campus automation and approved Compass API connections for authorised school workflows.'],
+    ['/platform/','clock','Schedules &amp; access logs','Plan approved access windows and see relevant activity in one workspace.'],
+    ['/customisation/','check','Fully customisable app','Tailor the dashboard and operator permissions to your school, facility or commercial site.']
   ];
-  const productGrid=section(heading('CONNECTED CAPABILITIES','One platform.<br>A broader view of your site.','Explore each part of MagicKeys and build the combination that fits your site.')+
+  const productGrid=section(heading('CONNECTED CAPABILITIES','Every entrance.<br>One control centre.','Open gates, incorporate compatible door access and existing CCTV, and manage your site from one customised workspace.')+
     `<div class="product-grid">${productCards.map(([href,name,title,text])=>`<a class="product-card" href="${href}">${icon(name)}<h3>${title}</h3><p>${text}</p><span>Explore ${arrow}</span></a>`).join('')}</div>`);
 
   const pages=[
     {
-      route:'/', title:'MagicKeys | All-in-one access control & CCTV',
-      description:'Connect access control, CCTV, schedules and more in one fully customisable MagicKeys app. Installed Anti-Tailgating Systems by RJL Commercial.',
+      route:'/', title:'MagicKeys | Open Gates, Control Doors & Integrate Existing CCTV',
+      description:'Open and close automated gates, connect compatible existing door access and CCTV, and manage school and commercial sites in one MagicKeys portal. Discuss Compass integration for schools.',
       content:homeHero+maker+
-        section(heading('YOUR SITE, IN VIEW','Control the entrance.<br>See the bigger picture.','From the gate at the driveway to the camera above it, MagicKeys brings the parts of your site together in a workspace designed for your team.')+
+        section(heading('ALL-IN-ONE CONTROL','Your automation.<br>Your access. Your CCTV.','Keep the systems your team already uses in view: connected entrance controls, compatible existing CCTV and a workspace configured around your real site.')+
           image('app-cctv.svg','MagicKeys app with 15 CCTV views and an overhead tailgating detection panel','Custom configuration example · CCTV and overhead anti-tailgating in the same MagicKeys workspace. Final features depend on the agreed installation.',true)+
           `<div class="overview-links">${link('Explore the platform','/platform/')}${link('See CCTV capabilities','/cctv/')}</div>`,'section-shell section-space home-overview','site-overview')+
         productGrid+
@@ -223,7 +223,7 @@ export function buildPages() {
       '/contact/':['MELBOURNE / PROJECT ENQUIRIES','Tell us where<br>your site operates.','Discuss <a href="/melbourne/">Melbourne service areas</a> and <a href="/solutions/">solutions for your property type</a>. Include your suburb, current equipment, entrances and the result you want so the team can assess a practical project scope.']
     };
     if(audiences[page.route]) page.content=page.content.replace(/(?=<section class="section-shell conversion-section")/,section(heading(...audiences[page.route])));
-    if(page.route==='/') page.content=page.content.replace('ALL-IN-ONE ACCESS CONTROL &amp; CCTV','MELBOURNE / ACCESS CONTROL &amp; CCTV').replace('Bring gate controls, CCTV, access schedules and activity into one fully customisable MagicKeys app.','Bring Melbourne gate controls, CCTV, access schedules and activity into one fully customisable MagicKeys app.');
+    if(page.route==='/') page.content=page.content.replace('ONE PLATFORM / GATES, DOORS &amp; CCTV','MELBOURNE / ALL-IN-ONE GATE, DOOR &amp; CCTV CONTROL');
   }
   writeSite({pages:applyMetadata(pages), intro, symbols, posters, dialogs});
 }
