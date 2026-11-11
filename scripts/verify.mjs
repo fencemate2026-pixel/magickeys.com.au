@@ -73,6 +73,16 @@ for(const [route,page] of pages) {
 const home=pages.get('/').html;
 assert(home.includes('id="site-intro"')&&home.includes('id="hero-preview"'),'Homepage intro or animated gate preview missing');
 assert(home.includes('/assets/app-cctv.svg'),'Homepage CCTV dashboard missing');
+
+// Keep the main search intent aligned with actual visible features and the relevant industry guide.
+assert(home.includes('Open gates.')&&home.includes('Control your site.'),'Homepage gate automation proposition missing');
+assert(home.includes('integrate-existing-systems')&&home.includes('school-automation'),'Homepage all-in-one and school sections missing');
+assert(home.includes('Existing door access')&&home.includes('current CCTV'),'Homepage existing systems messaging missing');
+const schoolGuide=pages.get('/solutions/schools/').html;
+assert(schoolGuide.includes('Compass')&&schoolGuide.includes('existing door access')&&schoolGuide.includes('CCTV'),'School integration content missing');
+const homeTitle=home.match(/<title>(.*?)<\/title>/)?.[1]||'';
+assert(/Gate Automation|Gate Control/.test(homeTitle)&&/CCTV/.test(homeTitle),'Homepage SEO title no longer matches gate/CCTV focus');
+
 assert(!home.includes('id="portal-tour"')&&!home.includes('id="client-access"'),'Homepage still contains full sections that should have moved');
 assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/platform/').html.includes('id="media-gallery"'),'Actual portal tour and full gallery missing');
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');
