@@ -10,7 +10,19 @@ const archive = join(process.cwd(), 'MagicKeys-Azure-Website (1).zip');
 if (!existsSync(archive)) throw new Error('The original MagicKeys Azure website ZIP is missing.');
 const scratch = mkdtempSync(join(tmpdir(), 'magickeys-'));
 try {
-  execFileSync('unzip', ['-q', archive, 'magickeys-website/dist/*', '-d', scratch], {timeout: 90_000});
+  // Git for Windows unzip stops * at a slash, so ** is required to reach dist/assets.
+  // Linux unzip already lets * cross directories. Try ** first, then *.
+  const extractedCss = join(scratch, 'magickeys-website', 'dist', 'assets', 'site.css');
+  let extractError = null;
+  for (const pattern of ['magickeys-website/dist/**', 'magickeys-website/dist/*']) {
+    try {
+      execFileSync('unzip', ['-q', archive, pattern, '-d', scratch], {timeout: 90_000});
+    } catch (error) {
+      extractError = error;
+    }
+    if (existsSync(extractedCss)) break;
+  }
+  if (!existsSync(extractedCss)) throw new Error('Could not extract dist/assets/site.css from the original MagicKeys website ZIP.' + (extractError ? ' ' + extractError.message : ''));
   rmSync('dist', {recursive:true, force:true});
   cpSync(join(scratch, 'magickeys-website', 'dist'), 'dist', {recursive:true});
   const page = 'dist/index.html';

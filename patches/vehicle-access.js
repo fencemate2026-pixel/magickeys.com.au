@@ -10,9 +10,10 @@
     if (!stage || !['open', 'closed'].includes(state)) return;
     clearTimeout(timers.get(stage.id));
     const bollard = card.dataset.vaKind === 'bollard';
+    const nouns = { bollard: 'bollards', sliding: 'sliding gate', single: 'pedestrian door', double: 'foyer doors', boom: 'boom gate' };
     const status = card.querySelector('.va-current');
     stage.dataset.state = state;
-    stage.setAttribute('aria-label', 'Simulated ' + (bollard ? 'bollards, ' : (card.dataset.vaKind === 'sliding' ? 'sliding gate, ' : 'boom gate, ')) + (state === 'open' ? (bollard ? 'lowered' : 'open') : (bollard ? 'raised' : 'closed')));
+    stage.setAttribute('aria-label', 'Simulated ' + (nouns[card.dataset.vaKind] || 'entrance') + ', ' + (state === 'open' ? (bollard ? 'lowered' : 'open') : (bollard ? 'raised' : 'closed')));
     const poster = stage.querySelector('.model-poster');
     poster.src = '/assets/model-' + card.dataset.vaKind + '-' + state + '.svg';
     globalThis.MagicKeysViews?.update(stage.id, { kind: card.dataset.vaKind, state, animate: !reduced.matches });

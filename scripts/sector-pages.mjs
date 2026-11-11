@@ -6,7 +6,7 @@ export const sectors = [
     description:'Access control, CCTV and anti-tailgating for Melbourne owners corporations and apartment buildings. Connect foyer doors, boom gates and rising bollards.',
     h1:'Apartment security.<br><span>Connected access.</span>', eyebrow:'MELBOURNE / BODY CORPORATE & OWNERS CORPORATIONS',
     intro:'Bring foyer access, car park entrances and CCTV into one MagicKeys workspace. We work with owners corporation managers, building managers and committees to scope access control for Melbourne apartment buildings and mixed-use developments.',
-    image:'app-cctv.svg', alt:'MagicKeys apartment security workspace showing foyer cameras and overhead anti-tailgating tracking',
+    image:'app-cctv.svg', alt:'MagicKeys apartment workspace with simulated gates, doors, foyer cameras and overhead anti-tailgating tracking',
     heading:'From the foyer<br>to the basement.',
     lead:'A resident entrance, visitor driveway and contractor loading area need different rules. Start with how people actually move through the building, then assess the equipment and responsibilities at each point.',
     needs:[
@@ -79,7 +79,7 @@ export const sectors = [
     description:'Connect Melbourne commercial property access control, CCTV, boom gates and bollards in one app. Built around building managers and facilities teams.',
     h1:'Commercial access.<br><span>One working view.</span>', eyebrow:'MELBOURNE / COMMERCIAL PROPERTY & FACILITIES',
     intro:'Coordinate connected entrances, CCTV and approved access schedules in one customised MagicKeys workspace. Discuss access control for Melbourne office buildings, business parks, retail properties and mixed-use sites with RJL Commercial.',
-    image:'app-vehicle-access.svg', alt:'MagicKeys commercial vehicle access workspace with boom gate, sliding gate and rising bollard controls',
+    image:'app-vehicle-access.svg', alt:'MagicKeys commercial workspace with boom gate, sliding gate, rising bollards and linked camera views',
     heading:'Tenants, visitors<br>and service access.',
     lead:'A commercial building has more than one type of arrival. Start with the lobby, car park, loading area and staff entrances, then agree how the facilities team should manage each one.',
     needs:[
@@ -103,7 +103,7 @@ export const sectors = [
     description:'Melbourne warehouse and factory access control for sliding gates, boom gates, service yards and CCTV. Plan delivery access in one MagicKeys workspace.',
     h1:'Warehouse access.<br><span>Built around operations.</span>', eyebrow:'MELBOURNE / WAREHOUSES, FACTORIES & LOGISTICS',
     intro:'Coordinate connected vehicle entrances, service-yard access and included CCTV in one MagicKeys workspace. We assess access control for Melbourne warehouses, factories, distribution sites and industrial facilities around the way your operation moves.',
-    image:'app-vehicle-access.svg', alt:'MagicKeys industrial access workspace with simulated sliding gate, boom barrier and retractable bollards',
+    image:'app-vehicle-access.svg', alt:'MagicKeys industrial workspace with simulated sliding gate, boom barrier, retractable bollards and linked camera views',
     heading:'Keep the access plan<br>close to operations.',
     lead:'Staff arrivals, delivery vehicles and after-hours contractors place different demands on an industrial entrance. Map the routes and handover points before defining the controls.',
     needs:[
@@ -141,7 +141,7 @@ export function localPages({hero,image,section,heading,cards,rows,faq,cta,link})
       cta('Tell us about your entrances.','Call 0400 101 132 or share your location, equipment and priorities. The team will discuss a suitable MagicKeys assessment.',s.label)
   }));
   pages.push({route:'/melbourne/',title:'Access Control & CCTV Melbourne | MagicKeys Service Areas',label:'Melbourne service areas',description:'Discuss Melbourne access control, CCTV and anti-tailgating with MagicKeys. Solutions for apartments, owners corporations, schools, aged care and commercial sites.',content:
-    hero('MELBOURNE / ACCESS CONTROL & CCTV','Melbourne access.<br><span>Connected entrances.</span>','MagicKeys by RJL Commercial brings compatible access control, CCTV and entrance management into one customised app. Discuss your Melbourne property with the team, from an apartment foyer to a school campus, care facility or industrial yard.',image('app-cctv.svg','MagicKeys connected access and CCTV workspace for Melbourne properties','Configuration example · Your layout and included functions are agreed for your site.'))+
+    hero('MELBOURNE / ACCESS CONTROL & CCTV','Melbourne access.<br><span>Connected entrances.</span>','MagicKeys by RJL Commercial brings compatible access control, CCTV and entrance management into one customised app. Discuss your Melbourne property with the team, from an apartment foyer to a school campus, care facility or industrial yard.',image('app-cctv.svg','MagicKeys workspace with gates, doors, cameras and foyer detection for Melbourne properties','Configuration example · Your layout and included functions are agreed for your site.'))+
     section(heading('BUILT AROUND YOUR PROPERTY','Find the right<br>starting point.','Choose the property type that matches your operation. Each guide explains the entrances, operator roles and integration questions to discuss with our team.')+sectorCards({includeCoverage:false}))+
     section(heading('METROPOLITAN MELBOURNE','Your location.<br>Your site requirements.','We discuss projects across Melbourne. Share your suburb and equipment details so the team can confirm site attendance, installation scope and suitability.')+cards([
       ['CBD & inner Melbourne','Melbourne CBD, Docklands, Southbank, Carlton, Richmond and Cremorne: discuss commercial lobbies, apartment foyers, shared car parks and mixed-use access.'],

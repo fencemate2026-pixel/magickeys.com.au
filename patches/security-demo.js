@@ -1,4 +1,4 @@
-/* Disconnected camera wall and physical foyer detection demonstration. */
+/* Disconnected site workspace: simulated gates and doors, camera wall, and foyer detection. Never sends a hardware command. */
 (() => {
   const root=document.querySelector('[data-security-demo]');
   if(!root) return;
@@ -61,7 +61,7 @@
   get('sd-reset').addEventListener('click',()=>{
     eventZone=null; reviewed=false; render();
     get('sd-event-title').textContent='Demonstration reset';
-    get('sd-event-description').textContent='Select any of the 15 camera views, or choose another foyer to try the detection example again.';
+    get('sd-event-description').textContent='Select any of the 15 camera views, try a simulated gate or door, or choose another foyer.';
     get('sd-simulate').focus();
   });
   selectCamera(0);

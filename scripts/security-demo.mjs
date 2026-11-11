@@ -1,5 +1,6 @@
 import {appShell} from './app-layout.mjs';
 import {cameraOverlay} from './camera-style.mjs';
+import {vehicleCard} from './vehicle-access.mjs';
 // One disconnected apartment configuration, never a connection to client equipment.
 export const securityCameras = [
   'Foyer 01 · inner doors','Foyer 02 · inner doors','Foyer 03 · inner doors',
@@ -9,7 +10,9 @@ export const securityCameras = [
 ];
 export function securityDemo() {
   return appShell(`
-    <div class="sd-toolbar"><div><span class="sd-led" aria-hidden="true"></span><strong>CCTV &amp; zones</strong></div><div><span><b>15</b> camera views</span><span><b>3</b> foyer zones</span></div></div>
+    <div class="sd-toolbar"><div><span class="sd-led" aria-hidden="true"></span><strong>Site workspace</strong></div><div class="sd-counts"><span><b>3</b> gates</span><span><b>2</b> doors</span><span><b>15</b> cameras</span><span><b>3</b> foyer zones</span></div></div>
+    <div class="sd-camera-wall-heading sd-entrance-heading"><div><span class="sd-led" aria-hidden="true"></span><strong>Gates and doors</strong><span>Simulated controls · no live equipment</span></div><span>BOOM / SLIDING / BOLLARDS / DOORS</span></div>
+    <div class="sd-entrances">${vehicleCard('sd-boom','boom','Car park boom','01')}${vehicleCard('sd-sliding','sliding','Sliding gate','02')}${vehicleCard('sd-bollard','bollard','Driveway bollards','03')}${vehicleCard('sd-foyer-door','double','Foyer doors','04')}${vehicleCard('sd-pedestrian','single','Pedestrian door','05')}</div>
     <div class="sd-workspace"><div class="sd-vision"><div class="sd-panel-heading"><span>SELECTED CAMERA</span><span id="sd-camera-code">CAM 01</span></div>
       <div class="sd-camera-main" id="sd-camera-main" data-event="false"><div class="sd-scene" id="sd-camera-scene" role="img" aria-label="Illustrative camera view: Foyer 01, inner doors" style="--camera-x:0%;--camera-y:0%"></div>${cameraOverlay('CAM 01',{codeId:'sd-recording-code'})}<div class="sd-view-top"><span>ILLUSTRATIVE CAMERA VIEW</span><span id="sd-camera-label">Foyer 01 · inner doors</span></div><div class="sd-event-overlay" aria-hidden="true"><div class="sd-main-track"><span class="sd-track sd-track-one"><b>Person 01</b></span><span class="sd-track sd-track-two"><b>Following person</b></span></div><span class="sd-event-tag">TAILGATING EVENT · REVIEW REQUIRED</span></div><div class="sd-view-bottom"><span>MagicKeys / CCTV</span><span id="sd-view-status">Example view · no live connection</span></div></div>
       <div class="sd-camera-caption"><strong id="sd-selected-title">Foyer 01 · inner doors</strong><span>Select any camera below to change the view.</span></div>
@@ -21,8 +24,8 @@ export function securityDemo() {
     </div></div>
     <div class="sd-camera-wall-heading"><div><span class="sd-led" aria-hidden="true"></span><strong>Active camera views</strong><span>15 views · select to inspect</span></div><span>FOYERS / LIFTS / PARKING / PERIMETER</span></div>
     <div class="sd-camera-wall" role="group" aria-label="15 illustrative CCTV cameras">${securityCameras.map((name,i)=>`<button type="button" class="sd-camera-tile" id="sd-cam-${i+1}" data-security-camera="${i}" data-camera-label="${name}" aria-label="Select camera ${String(i+1).padStart(2,'0')}: ${name}" aria-pressed="${i===0}" style="--camera-x:${(i%5)*25}%;--camera-y:${Math.floor(i/5)*50}%"><span class="sd-scene" aria-hidden="true"></span>${cameraOverlay('CAM '+String(i+1).padStart(2,'0'),{compact:true})}<span class="sd-tile-number">CAM ${String(i+1).padStart(2,'0')}</span><span class="sd-tile-alert" aria-hidden="true">EVENT</span><span class="sd-tile-name">${name}</span></button>`).join('')}</div>
-    <div class="sd-event-log" role="status" aria-live="polite" aria-atomic="true"><span class="sd-event-icon" aria-hidden="true">●</span><div><strong id="sd-event-title">Ready to explore</strong><p id="sd-event-description">Select a camera, choose a foyer, then simulate a tailgating event to see the linked view and operator alert.</p></div></div>
-    <div class="sd-footnote"><span>CONFIGURATION EXAMPLE</span><p>Illustrative camera scenes and simulated detection. No live cameras, notifications or equipment are connected. Camera compatibility, detection equipment and operator workflows are assessed and agreed for each site.</p><img src="/assets/rjl-logo.png" width="900" height="210" alt="RJL Commercial"></div>
-    <noscript><p class="sd-noscript">Enable JavaScript to select cameras and try the anti-tailgating demonstration.</p></noscript>
-  `,{active:'cameras',classes:'security-demo',attributes:'id="apartment-security-demo" data-security-demo'});
+    <div class="sd-event-log" role="status" aria-live="polite" aria-atomic="true"><span class="sd-event-icon" aria-hidden="true">●</span><div><strong id="sd-event-title">Ready to explore</strong><p id="sd-event-description">Open a simulated gate or door, select a camera, or run the foyer detection example. This workspace does not connect to live equipment.</p></div></div>
+    <div class="sd-footnote"><span>CONFIGURATION EXAMPLE</span><p>Illustrative gates, doors, camera scenes and simulated detection. Open, close, lower and raise move the pictures on this page only. No live cameras, notifications or equipment are connected. Compatibility and operator workflows are assessed and agreed for each site.</p><img src="/assets/rjl-logo.png" width="900" height="210" alt="RJL Commercial"></div>
+    <noscript><p class="sd-noscript">Enable JavaScript to try the simulated gates and doors, select cameras and run the anti-tailgating demonstration.</p></noscript>
+  `,{active:'overview',classes:'security-demo',attributes:'id="apartment-security-demo" data-security-demo'});
 }

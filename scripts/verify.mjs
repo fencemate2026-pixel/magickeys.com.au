@@ -118,6 +118,11 @@ for(const file of files.filter(path=>/\/assets\/app-[^/]+\.svg$/.test(path))) {
 assert(home.includes('data-app-layout="magickeys-reference-v1"'),'Homepage does not use the common app layout');
 const cameraSvg=readFileSync(join(root,'assets/app-cctv.svg'),'utf8');
 assert((cameraSvg.match(/class="mk-rec-led"/g)||[]).length===16,'Each of the 15 cameras and the overhead camera must have a recording indicator');
+assert(cameraSvg.includes('Car park boom')&&cameraSvg.includes('Foyer doors')&&cameraSvg.includes('Pedestrian door'),'CCTV app image must show gates and doors with the cameras');
+const securityPage=pages.get('/security-integrations/').html;
+assert(securityPage.includes('Site workspace')&&securityPage.includes('data-va-kind="sliding"')&&securityPage.includes('data-va-kind="double"')&&securityPage.includes('data-va-kind="single"')&&(securityPage.match(/data-security-camera=/g)||[]).length===15,'Security workspace must show gates, doors and cameras together');
+assert(pages.get('/gate-control/').html.includes('va-linked-cameras')&&pages.get('/customisation/').html.includes('va-linked-cameras'),'Gate workspaces must show linked camera views');
+assert(readFileSync(join(root,'assets/app-vehicle-access.svg'),'utf8').includes('Linked camera views'),'Vehicle app image must show linked cameras');
 assert(cameraSvg.includes('@keyframes rec-led'),'SVG camera recording animation missing');
 assert(pages.get('/anti-tailgating/').html.includes('youtube-nocookie.com/embed/SOBpnzIweak?rel=0'),'Supplied OPTEX video is missing');
 for(const [route,page] of pages) {

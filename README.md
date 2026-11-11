@@ -13,7 +13,7 @@ The approved original website archive, MagicKeys-Azure-Website (1).zip, supplies
 - /cctv/ — CCTV views and the optional Sentinel package
 - /emergency-guidance/ — site-specific staff prompts, instructions and configured responses
 - /customisation/ — fully customisable app, dashboard concepts and four independent demo gates
-- /security-integrations/ — interactive MagicKeys app-style 15-camera apartment CCTV and three-foyer overhead anti-tailgating example, secure portal access, permissions and integration options
+- /security-integrations/ — interactive MagicKeys workspace with simulated gates, doors, 15 camera views and three-foyer overhead anti-tailgating, plus secure portal access, permissions and integration options
 - /solutions/ — commercial, education, body corporate and logistics requirements
 - /how-it-works/ — assessment, app scope, connections, commissioning and handover
 - /development/ — developing AI threat and fire detection with human acknowledgement
@@ -50,7 +50,7 @@ The single anti-tailgating product page is /anti-tailgating/. It has one direct 
 - patches/app-consistency.css owns the shared MagicKeys app palette and accurate screen colours; app screenshots are exempt from photographic brightness filters. The displayed app views use one shared frame; superseded generated dashboards are no longer referenced.
 - scripts/anti-tailgating.mjs owns the OPTEX and HYD product and integration page, with links to the manufacturer references.
 - patches/multipage.css owns responsive layouts and the brighter image presentation.
-- scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected apartment security demo. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review. The ceiling-camera photo pair shows one entrant and a follower directly from above; a red box identifies the following person. Portal chrome follows the supplied MagicKeys app screen.
+- scripts/security-demo.mjs and patches/security-demo.css/.js own the disconnected site workspace. It shows simulated boom, sliding, bollard and door controls above the camera wall. The camera wall uses a single generated 5-by-3 photo atlas, supports all 15 selections and links three foyer zones to simulated events and operator review. The ceiling-camera photo pair shows one entrant and a follower directly from above; a red box identifies the following person. Open, close, lower and raise move the on-screen pictures only. Portal chrome follows the supplied MagicKeys app screen.
 - patches/multipage.js owns dropdown navigation, legacy bookmarks and the simulated multi-gate controls.
 - patches/hero-layers.css keeps the original AI face behind the gate preview.
 - patches/client-access.html and .css define the general client login form. patches/client-access.js only toggles password visibility. Authentication and sessions remain in the existing Azure portal.
@@ -74,4 +74,4 @@ The retained Azure static configuration also sends legacy login URLs to the new 
 
 ## Vehicle access previews
 
-The homepage tablet now includes a boom barrier, retractable bollards and a sliding gate, alongside CCTV and overhead anti-tailgating. `scripts/vehicle-access.mjs` extends the original native mesh renderer with three vertically retracting bollards and creates matching SVG fallbacks. The same meshes produce the animated `app-vehicle-access.svg` used on the platform, customisation and client-entry pages. A complete interactive workspace on /gate-control/ and /customisation/ offers OPEN/CLOSE and LOWER/RAISE with matching position text and flashing status indicators. Reduced motion uses immediate position changes and steady LEDs. No live controller calls are made.
+The homepage tablet now includes a boom barrier, retractable bollards and a sliding gate, alongside CCTV and overhead anti-tailgating. The gate-control and customisation workspaces show example camera views beside those controls. The security and anti-tailgating workspace shows simulated gates and doors above the camera wall. `scripts/vehicle-access.mjs` extends the original native mesh renderer with three vertically retracting bollards and creates matching SVG fallbacks. The same meshes produce the animated `app-vehicle-access.svg` used on the platform, customisation and client-entry pages. A complete interactive workspace on /gate-control/ and /customisation/ offers OPEN/CLOSE and LOWER/RAISE with matching position text and flashing status indicators. Reduced motion uses immediate position changes and steady LEDs. No live controller calls are made.
