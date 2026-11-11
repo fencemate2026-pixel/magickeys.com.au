@@ -78,7 +78,7 @@ assert(pages.get('/platform/').html.includes('id="portal-tour"')&&pages.get('/pl
 assert(pages.get('/gate-control/').html.includes('id="interactive-demo"'),'Original 3D demonstration missing');
 assert((pages.get('/customisation/').html.match(/data-gate-target=/g)||[]).length===8,'Multi-gate controls missing');
 const clientLogin=pages.get('/client-login/').html;
-assert(clientLogin.includes('method="post" action="https://magickeys-balwyn-portal.com/api/auth/client-entry"'),'Secure native login handoff missing');
+assert(clientLogin.includes('method="post" action="https://access.magickeys.com.au/api/auth/client-entry"'),'Secure native login handoff missing');
 assert(clientLogin.includes('name="username"')&&clientLogin.includes('autocomplete="username"')&&clientLogin.includes('name="password"')&&clientLogin.includes('autocomplete="current-password"'),'Login credential fields missing');
 assert(clientLogin.includes('href="https://magickeys-balwyn-portal.com/client-login?method=google"'),'Google sign-in entry missing');
 assert(!clientLogin.includes('Balwyn High School')&&!clientLogin.includes('Campus access portal'),'School branding remains on the general login');
