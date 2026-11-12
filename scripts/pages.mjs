@@ -9,7 +9,7 @@ import { antiTailgatingContent } from './anti-tailgating.mjs';
 import { origin, applyMetadata, seoHead } from './seo.mjs';
 import { localPages, sectorCards, sectors } from './sector-pages.mjs';
 import { schoolGallery, hardwareGallery, doorGallery, acbGallery } from './life-gallery.mjs';
-import { placeFor } from './place-shots.mjs';
+import { placeFor, schoolScreen } from './place-shots.mjs';
 const arrow = '<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>';
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
@@ -35,14 +35,14 @@ const portalScreens=[
 ];
 const portalShowcase=`<div class="portal-showcase">${tabletShot('app-cctv.svg','MagicKeys workspace with simulated gates, doors, 15 camera views and overhead foyer detection','Portal example on a tablet · Gates, doors, CCTV and overhead detection in the same MagicKeys workspace. Final features depend on the agreed installation.',true)}<p class="portal-tablet-note">More portal screens. Each one is a configuration example. This website does not open a gate or connect a live camera.</p><div class="portal-tablet-grid">${portalScreens.map(([file,alt,caption])=>tabletShot(file,alt,caption)).join('')}</div></div>`;
 const model = (id, kind, title, compact=false) => `<div class="model-stage detail-model${compact?' model-stage-compact':''}" id="${id}" data-scene-kind="${kind}" data-state="closed"${compact?' data-scene-compact="true"':''} role="group" aria-label="Illustrative 3D ${title}"><img class="model-poster" src="/assets/model-${kind}-closed.svg" width="800" height="560" alt="Proportioned 3D ${title}" loading="lazy"><canvas class="model-canvas" tabindex="0" role="img" aria-label="3D ${title}. Drag or use arrow keys to rotate; press R to reset." hidden></canvas><div class="model-caption"><span>Drag to inspect · Arrow keys · R to reset</span><span>ILLUSTRATIVE HARDWARE</span></div></div>`;
-const hero = (eyebrow, title, text, visual, primary='Discuss your site', extra='') => `<section class="page-hero"><div class="section-shell"><a class="breadcrumb" href="/">MagicKeys ${arrow}</a><div class="page-hero-grid"><div class="page-hero-copy"><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${text}</p><div class="hero-actions">${button(primary)}${extra}</div></div><div class="page-hero-visual">${visual}</div></div></div></section>`;
+const hero = (eyebrow, title, text, visual, primary='Discuss your site', extra='', primaryHref='/contact/#project-enquiry') => `<section class="page-hero"><div class="section-shell"><a class="breadcrumb" href="/">MagicKeys ${arrow}</a><div class="page-hero-grid"><div class="page-hero-copy"><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${text}</p><div class="hero-actions">${button(primary, primaryHref)}${extra}</div></div><div class="page-hero-visual">${visual}</div></div></div></section>`;
 const cta = (title='A system built around your site.', text='Tell the MagicKeys team what you need to control, see and manage. We will work through the equipment and tailor a proposal to your operation.', interest='MagicKeys') => section(`<div class="conversion-panel"><div><div class="eyebrow">YOUR NEXT STEP</div><h2>${title}</h2><p>${text}</p></div>${button('Discuss your requirements', '/contact/?interest='+encodeURIComponent(interest)+'#project-enquiry')}</div>`, 'section-shell conversion-section');
 const rows = items => `<div class="story-rows">${items.map(([no,title,text])=>`<article><span>${no}</span><h3>${title}</h3><p>${text}</p></article>`).join('')}</div>`;
 const future = () => section(`<div class="development-teaser"><div><span class="development-status">IN DEVELOPMENT</span><h2>AI-assisted threat and fire detection.<br>Human judgement at the centre.</h2><p>We are developing detection that can flag potential threats and signs of fire for authorised staff to review and acknowledge. Human acknowledgement is central to the proposed response workflow.</p><p class="development-note">This capability is in development. Availability and project scope will be confirmed by the team.</p></div>${link('Explore the development programme','/development/')}</div>`, 'future-band', 'in-development');
 
 const vehicleSection=()=>section(heading('BOOM GATES / SLIDING GATES / RISING BOLLARDS','Every driveway.<br>The cameras too.','Try each piece of hardware in the same MagicKeys workspace, with example camera views for the entrances. Open and close the gates, then lower and raise the bollards. The pictures stay on this page.')+appShell(vehicleModule(),{active:'overview',classes:'va-full-workspace'}),'section-shell section-space','vehicle-controls');
 const planChoices=[
-  ['plan-school','School','Schools & education','/solutions/schools/','Staff gates, existing doors, current CCTV and a Compass assessment where the school authorises it.'],
+  ['plan-school','School','Schools & education','/solutions/schools/','The commissioned gate, then the doors and cameras already on site. Compass only if the school and Compass both approve a supported interface.'],
   ['plan-apartments','Apartments','Owners corporations & apartments','/solutions/owners-corporations/','Foyer doors, car park boom gates and bollards, plus anti-tailgating where that entrance can support it.'],
   ['plan-aged-care','Aged care','Aged care & retirement living','/solutions/aged-care/','Assisted access, staff permissions and camera views scoped for the residence.'],
   ['plan-commercial','Commercial','Commercial property & facilities','/solutions/commercial-properties/','Staff entrances, vehicle gates and the cameras already on the building.'],
@@ -126,7 +126,7 @@ export function buildPages() {
     .replace('Access,<br><span>connected.</span>','Open gates.<br><span>Control your site.</span>')
     .replace('Gates. People. Spaces.','Gates. Doors. CCTV. One app.')
     .replace('Control connected gates, plan access schedules and see your site’s activity in one workspace. Add person-detection alerts, CCTV and Emergency Guidance to suit your site.',
-      'Open and close connected gates, manage compatible existing door access and bring your current CCTV into one fully customisable MagicKeys portal. For schools, we can assess campus-wide workflows and approved Compass integrations.')
+      'Open and close connected gates, manage compatible existing door access and bring your current CCTV into one fully customisable MagicKeys portal.')
     .replace('Discuss your site','Plan your MagicKeys system')
     .replace('The selected blue holographic AI face with connected points and data patterns','Blue digital face with connected points and data patterns')
     .replace('<div class="hero-portal-foot">',
@@ -152,15 +152,29 @@ export function buildPages() {
   </div>`, 'section-shell section-space','integrate-existing-systems');
 
   const schoolSpotlight=section(`<div class="mk-school-panel">
-    <div class="mk-school-copy"><div class="eyebrow">MAGICKEYS FOR SCHOOLS</div><h2>On the office desk.<br><span>And in reception.</span></h2><p>Staff run the gates from one workspace. They use the same screen for the doors and the CCTV. On this page you see that screen on a desk, and again in reception.</p><p><strong>Already using Compass?</strong> We assess a connection only where the school and Compass authorise the API access. We agree what it includes, and who can use it, before we offer it.</p><div class="hero-actions">${button('Discuss your school','/contact/?interest=School%20automation%20and%20Compass#project-enquiry')}${button('School access solutions','/solutions/schools/','btn-outline')}</div></div>
-    <div class="mk-school-points"><h3>Connect your campus</h3><div><strong>School gates and boom barriers</strong><span>Open, close and schedule commissioned entrances</span></div><div><strong>Existing doors and access control</strong><span>Assess compatible controllers, credentials and permissions</span></div><div><strong>Existing school CCTV</strong><span>Include supported views from the current camera system</span></div><div><strong>Compass integration assessment</strong><span>Subject to school authorisation and supported Compass APIs</span></div><div><strong>Shared facilities and venue hire</strong><span>Plan approved access windows for halls and stadiums</span></div></div>
-  </div>`, 'section-shell section-space','school-automation');
+    <div class="mk-school-copy">
+      <div class="eyebrow">MAGICKEYS FOR SCHOOLS</div>
+      <h2>Run the school entrance.<br><span>From the office desk.</span></h2>
+      <p>You open the gate we commissioned, from that desk. We write the scope and the monthly total before you commit.</p>
+      <div class="hero-actions">${button('Book a site report','/contact/?interest=School%20automation%20and%20Compass#project-enquiry')}${button('See how a school runs it','/solutions/schools/','btn-outline')}</div>
+      <p>More than 5,889 completed RJL jobs. 40+ years combined experience. 24/7. Thomastown, Melbourne.</p>
+    </div>
+    <div class="mk-school-points">
+      <h3>Three jobs</h3>
+      <div><strong>School day</strong><span>You need the gate open at drop-off and shut when the day ends. The person you name runs the schedule. Schedules are part of this plan. They are not an Advanced extra.</span></div>
+      <div><strong>Venue hire</strong><span>You name the hirer, the gate or door, and the window. We end that window at the finish. Hire does not add a second gate for free.</span></div>
+      <div><strong>Gear you keep</strong><span>Readers and cameras you already have can stay where we can connect them. Existing door access is assessed. A camera view stays off until we show the amount. CCTV and PTZ are MagicKeys Advanced and need their own commissioning.</span></div>
+    </div>
+  </div>
+  ${heading('THE SCHOOL RECORD','Compass stays the record.<br><span>MagicKeys runs the entrance.</span>','Compass stays the school record. A connection needs the school and Compass, on a supported interface. An ACB-004 is assessed the same way. It is not an automatically included or commissioned integration.')}
+  <p>The base plan is one owner login, Open on the commissioned gate, and that owner's recent activity. An extra person, a guest key, an extra phone number, a left-open alert, a camera view or a second gate is shown as an amount before it is switched on. If the plan stops, the app stops for the whole site.</p>
+  ${schoolScreen}`, 'section-shell section-space','school-automation');
 
   const productCards=[
     ['/gate-control/','lock','Open &amp; close automation','Operate connected gates, boom barriers and compatible site automation with authorised controls.'],
     ['/security-integrations/','users','Existing door access','Discuss compatible RFID, Wiegand, intercom and door-controller connections to your existing infrastructure.'],
     ['/cctv/','grid','Integrate current CCTV','Bring compatible existing camera views alongside gates, doors and recorded access activity.'],
-    ['/solutions/schools/','shield','Schools &amp; Compass','Scope campus automation and approved Compass API connections for authorised school workflows.'],
+    ['/solutions/schools/','shield','Schools','Commissioned gates, the doors the school already has, and Compass only if the school and Compass approve a supported interface.'],
     ['/platform/','clock','Schedules &amp; access logs','Plan approved access windows and see relevant activity in one workspace.'],
     ['/customisation/','check','Fully customisable app','Tailor the dashboard and operator permissions to your school, facility or commercial site.']
   ];
@@ -186,7 +200,7 @@ export function buildPages() {
           ['Does this website open a gate or show a live camera?','No. The controls and camera pictures on this website are examples in your browser. A commissioned MagicKeys installation is separate, and agreed controls are used by authorised people in that client workspace.'],
           ['Can MagicKeys use the gates, doors and cameras we already have?','The team assesses the controllers, readers and cameras on the site. The proposal says what can be connected. There is no promise that every brand will connect.'],
           ['What happens after the enquiry form is sent?','The team reads it and contacts you. The next page is the confirmation. You are not sent a separate email, the form does not create a login, and it does not ask for a password.'],
-          ['Can a school connect Compass?','Compass-linked workflows can be assessed where the school authorises the required access. A connection is offered only after the supported data and permissions are confirmed.']
+          ['Can a school connect Compass?','A connection needs the school and Compass, on a supported interface. It is not included because the school already uses Compass.']
         ]), 'section-shell section-space', 'home-faq')+
         section(`<div class="customisation-pitch"><div><div class="eyebrow">FULLY CUSTOMISABLE</div><h2>Your operation.<br>Your MagicKeys.</h2><p>Your site has its own entrances, routines and responsibilities. The MagicKeys app can be customised to suit your client requirements, from the dashboard layout to the access rules and day-to-day workflows.</p>${link('Explore customisation','/customisation/')}</div>${image('commercial-entry-concept.webp','Commercial site concept with double swing gates, a boom gate and CCTV cameras','Site configuration example · Equipment and layout are agreed for each project.')}</div>`)+future()+cta()
     },
@@ -256,7 +270,7 @@ export function buildPages() {
   ];
 
   const morePages=buildMorePages({solutions, how, login, source});
-  pages.push(...morePages, ...localPages({hero,image,section,heading,cards,rows,faq,cta,link}));
+  pages.push(...morePages, ...localPages({hero,image,section,heading,cards,rows,faq,cta,link,button}));
   const industrySection=section(heading('MELBOURNE / SITES WE DESIGN AROUND','Access control for<br>your kind of property.','Explore site-specific access control and CCTV requirements for Melbourne owners corporations, schools, aged care, commercial properties and industrial facilities.')+sectorCards());
   for(const page of pages) {
     const place=placeFor(page.route);

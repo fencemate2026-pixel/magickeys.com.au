@@ -27,7 +27,7 @@ function shot(file, alt, title, text, { open = '', wide = false, portrait = fals
 export function schoolGallery() {
   return section('school-pictures', heading('SCHOOL ENTRANCES', 'What a school<br><span>often already has.</span>', 'These pictures are examples. They are not a photo of your campus. This page does not open a gate or a door.') +
     `<div class="life-grid">${shot('life-school-boom.webp', 'Example of a school drop-off boom gate and a camera pole beside a brick building', 'Drop-off boom', 'A vehicle entrance beside a campus building, with a camera pole in the same view.')}${shot('life-staff-door.webp', 'Example of an existing single staff door with a card reader and a door closer', 'Staff door', 'A single door, with a reader and a closer. We check the controller behind that door separately.')}${shot('life-swing-gates.webp', 'Example of closed double swing gates between stone piers', 'Service swing gates', 'Closed double gates between stone piers. A school uses this sort of entrance for service vehicles.')}</div>` +
-    `<p class="life-note">We assess Compass and an ACB-004 the same way. The school or the site authorises the connection. We then check the interface we can support. Neither connection is already switched on.</p>` +
+    `<p class="life-note">Examples only. Not your campus. This page does not open a gate or a door.</p>` +
     `<div class="life-actions">${button('Discuss your school', '/contact/?interest=School%20automation%20and%20Compass#project-enquiry')}</div>`);
 }
 

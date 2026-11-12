@@ -1,4 +1,5 @@
 import { schoolGallery, hardwareGallery, doorGallery, acbGallery } from './life-gallery.mjs';
+import { schoolScreen } from './place-shots.mjs';
 // Substantive industry pages: each describes its own operating needs and project scope.
 export const sectors = [
   {
@@ -27,28 +28,29 @@ export const sectors = [
   },
   {
     slug:'schools', label:'Schools & education',
-    title:'School Gate Automation & Compass Integration | MagicKeys',
-    description:'Melbourne school gate and door access automation with compatible existing CCTV in one MagicKeys portal. Discuss authorised Compass integration and campus schedules.',
-    h1:'Run the gates<br><span>from the office.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
-    intro:'Staff use one workspace for the gates, the existing door access and the CCTV. They can put that screen on the office desk, or on the wall in reception. We assess Compass only where the school authorises it.',
-    image:'app-schedules.svg', alt:'MagicKeys weekly gate schedules inside the consistent school access workspace',
-    heading:'Different hours.<br>One campus plan.',
-    lead:'A school entrance serves staff arrivals, student drop-off, deliveries, contractors and after-hours users. The useful starting point is a clear access plan for each group and each entrance.',
+    title:'School Gate Automation | MagicKeys',
+    description:'Staff open the commissioned school gate from the office desk. The scope and the monthly total are written before you commit. Thomastown, Melbourne.',
+    h1:'Open the<br><span>commissioned gate.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
+    intro:'Staff open the commissioned gate from the office. Existing door access is assessed on the doors the school already has. CCTV views are MagicKeys Advanced and need their own commissioning. We write the scope and the monthly total before you commit.',
+    image:'app-schedules.svg', alt:'MagicKeys weekly gate schedules on a school office screen',
+    heading:'The school day.<br>Then hire. Then the gear you keep.',
+    lead:'A school entrance has three jobs. The day needs the gate open at drop-off and shut when the day ends. A hirer needs one entrance for a set window. Readers and cameras already on the campus can stay where we can connect them. Compass stays the school record.',
     needs:[
-      ['School hours and staff controls','Plan opening windows for pedestrian and vehicle gates around the school day. Nominate authorised staff and agree the controls they need. Review available gate position feedback separately from the command sent by an operator.'],
-      ['Venue hire and shared facilities','Discuss approved evening or weekend access for a stadium, hall or shared sporting facility. Coordinate bookings and the associated entrance schedule so the site team can review planned access in one place.'],
-      ['Keep your current CCTV and door access','Assess existing school cameras, compatible door access controllers, RFID readers and intercoms for inclusion in MagicKeys. Supported CCTV views can appear alongside the associated entrances, while the final scope confirms each interface and staff permission.']
+      ['School day','You need the gate open at drop-off and shut when the day ends. The person you name runs the schedule from the login. Schedules are part of this plan. They are not an Advanced extra.'],
+      ['Venue hire','You name the hirer, the gate or door, and the window. We end that window at the finish. Hire does not add a second gate for free.'],
+      ['Gear you keep','Readers and cameras you already have can stay where we can connect them. Existing door access is assessed. A camera view stays off until we show the amount. CCTV and PTZ are MagicKeys Advanced and need their own commissioning.']
     ],
-    planningTitle:'Start with the school’s procedures.',
-    planning:'Map public entrances, staff-only areas, service access and shared facilities. Share your existing gate operators, door access controllers, RFID readers, intercoms, current camera systems and any Compass workflows to be considered. We assess available interfaces, school authorisations, data permissions, access windows, emergency egress and equipment feedback before proposing an approved connection or automation scope.',
-    local:'Discuss campus requirements across metropolitan Melbourne, including the eastern and north-eastern suburbs, northern growth areas, western suburbs and south-east. Existing schools and new campuses can have very different layouts, so coverage and equipment suitability are confirmed during the site discussion.',
-    links:[['Explore gate automation','/gate-control/'],['Connect existing CCTV and access','/security-integrations/'],['See access schedules','/platform/']],
+    planningTitle:'Compass stays the school record.',
+    planning:'MagicKeys is the entrance workspace. Compass stays the school record. A connection needs the school and Compass, on a supported interface. It is not included because the school already uses Compass. Until that connection is written into the scope, staff keep the school record in Compass and open the commissioned gate in MagicKeys.',
+    local:'An ACB-004 is assessed the same way. The school authorises the connection, and the readers, the locks and the network link have to be ones we can support. It is not an automatically included or commissioned integration.',
+    links:[['Explore gate automation','/gate-control/'],['See how doors are assessed','/security-integrations/'],['Melbourne service areas','/melbourne/']],
     questions:[
-      ['Can school gates have different access schedules?','Schedules can be configured for connected entrances within the agreed project. We work through term-time routines, approved exceptions and the available controller interfaces before confirming the delivered behaviour.'],
-      ['Can we coordinate access for after-hours stadium hire?','MagicKeys can be customised around approved venue bookings and connected gate access. The proposal defines the booking process, operator responsibilities and which entrances are included.'],
-      ['Can MagicKeys connect our existing door access, CCTV and Compass?','We can assess supported door access controllers and camera interfaces and propose connections where compatible. Any Compass integration requires the school’s authorisation, the relevant approved API access and validation of the intended workflow. It is not an automatically included or commissioned integration.'],
-      ['Can an installed ACB-004 be connected the same way as Compass?','An ACB-004 can be assessed where the school or site authorises the connection and the readers, locks and network interface on that board are supported. Scope is confirmed before any connection is offered. It is not an automatically included or commissioned integration.'],
-      ['Does this replace school emergency procedures?','No. Emergency Guidance is an optional, site-specific package assessed against the school’s agreed procedures. Required emergency systems, local safety devices and evacuation responsibilities remain part of the site’s overall arrangements.']
+      ['Can the school day use different gate schedules?','Schedules are part of this plan. They are not an Advanced extra. You give us drop-off and the end of the day, and the person you name runs that schedule from the login. Term dates and exceptions are written in the scope before we commission them.'],
+      ['How does venue hire work?','You name the hirer, the gate or door, and the window. We end that window at the finish. Hire does not add a second gate for free. A second gate is shown as an amount before it is switched on.'],
+      ['Can MagicKeys connect Compass?','Compass stays the school record. A connection needs the school and Compass, on a supported interface. It is not included because the school already uses Compass.'],
+      ['Can an installed ACB-004 be connected?','An ACB-004 is assessed the same way as Compass. The school authorises the connection, and the readers, the locks and the network link have to be ones we can support. It is not an automatically included or commissioned integration.'],
+      ['Is threat and fire detection included?','Threat and fire detection is in development. A person reviews the alert and acknowledges it before any agreed response. It does not replace the school\'s required fire systems. It does not open a gate. It is not included until we confirm it in writing.'],
+      ['What happens if the plan stops?','If the plan stops, the app stops for the whole site. The base plan is one owner login, Open on the commissioned gate, and that owner\'s recent activity. An extra person, a guest key, an extra phone number, a left-open alert, a camera view or a second gate is shown as an amount before it is switched on.']
     ]
   },
   {
@@ -130,15 +132,57 @@ export function sectorCards({includeCoverage=true}={}) {
 }
 
 const sectorGalleries={
-  schools:()=>schoolGallery()+hardwareGallery({spikes:false})+doorGallery()+acbGallery(),
+  schools:()=>schoolGallery(),
   'owners-corporations':()=>doorGallery(),
   'aged-care':()=>doorGallery(),
   'commercial-properties':()=>hardwareGallery()+doorGallery(),
   'warehouses-logistics':()=>hardwareGallery()
 };
 
-export function localPages({hero,image,section,heading,cards,rows,faq,cta,link}) {
-  const pages=sectors.map(s=>({
+function schoolLocal(s, {hero, image, section, heading, cards, rows, faq, link, button}) {
+  const proof = 'More than 5,889 completed RJL jobs. 40+ years combined experience. 24/7. Thomastown, Melbourne.';
+  const top = hero(
+    s.eyebrow,
+    s.h1,
+    s.intro,
+    image(s.image, s.alt, 'School office example. Schedules for the commissioned gate. This page does not open a gate.'),
+    'Book a site report',
+    button('Request a client login', '/client-signup/', 'btn-outline'),
+    '/contact/?interest=School%20automation%20and%20Compass#project-enquiry'
+  ).replace('</div></div><div class="page-hero-visual">', `</div><p>${proof}</p></div><div class="page-hero-visual">`);
+  return {
+    route:'/solutions/schools/', title:s.title, description:s.description, label:s.label,
+    content:top +
+      section(heading('THREE JOBS', s.heading, s.lead) + cards(s.needs)) +
+      section(heading('THE SCHOOL RECORD', s.planningTitle, s.planning) + `<p>${s.local}</p>`) +
+      section(heading('IN THE LOGIN', 'What the named person<br>can run.', 'The base plan is one owner login, Open on the commissioned gate, and that owner\'s recent activity. Anything else is shown as an amount before it is switched on.') + cards([
+        ['Commissioned gates', 'We test Open and Close with you on site. The person you name uses those controls after handover. A hold is only on a gate we have commissioned for it.', 'lock'],
+        ['School-day schedules', 'Schedules are part of the entrance workspace. The person you name can change them. Morning drop-off, afternoon pickup and the staff hours you set are written in the scope.', 'clock'],
+        ['Venue hire', 'You set the hirer, the entrance and the times in the login. We end that window at the finish. Hire does not add a second entrance for free.', 'users'],
+        ['Doors and cameras you keep', 'We assess existing door access you already have. A camera view stays off until we show the amount and commission it. CCTV views, PTZ, emergency guidance and projector broadcasts are MagicKeys Advanced.', 'grid'],
+        ['Recent activity', 'The owner sees their own recent Open on the commissioned gate: which gate, what they did, and the time they did it. Clients see only the gates assigned to them.', 'log']
+      ])) +
+      schoolScreen +
+      schoolGallery() +
+      section(heading('THE WORK BEHIND THE DESK', 'RJL installs it.<br>Then the school runs the login.', 'These figures are RJL\'s. They are not a count of schools, and they are not a rating.') + cards([
+        ['5,889+ completed RJL jobs', 'We have finished more than 5,889 jobs at RJL. That figure is not a count of schools.', 'check'],
+        ['40+ years combined experience', 'That is combined experience at RJL. It is not the age of the app.', 'users'],
+        ['24/7 call-out', 'Ring 0400 101 132 at any hour when a gate or motor is stuck. The visit is a call-out. It is not inside the access plan.', 'clock']
+      ])) +
+      section(heading('STRAIGHT ANSWERS', 'Before you book<br>the site report.', 'The monthly total is written before anything is switched on. The pictures on this page do not move a gate.') + faq(s.questions) + `<div class="overview-links">${link('Melbourne service areas','/melbourne/')}${link('Compare site solutions','/solutions/')}${s.links.map(([text,url])=>link(text,url)).join('')}</div>`) +
+      section(heading('LATER', 'Threat and fire detection<br>is in development.', 'A person reviews the alert and acknowledges it before any agreed response. It does not replace the school\'s required fire systems. It does not open a gate. It is not included until we confirm it in writing.') + link('See what is in development','/development/')) +
+      section(heading('WHAT HAPPENS NEXT', 'Three steps.<br>Then the named staff.', 'The walk is free. The scope and the monthly total come in writing. Then we commission the entrance.') + rows([
+        ['01', 'Walk the campus', 'We walk the entrances with you. The walk is free. You show us the gate, the doors you want assessed, and who should run the login.'],
+        ['02', 'Write the scope', 'We send the scope and the monthly total in writing. An extra person, a guest key, an extra phone number, a left-open alert, a camera view or a second gate is an amount on that page before it is switched on.'],
+        ['03', 'Commission and hand over', 'We commission the entrance. The staff you name run it, as that scope lists them. If the plan stops, the app stops for the whole site.']
+      ])) +
+      section(`<div class="conversion-panel"><div><div class="eyebrow">YOUR NEXT STEP</div><h2>Book the site report.</h2><p>Call <a href="tel:+61400101132">0400 101 132</a> or email <a href="mailto:info@rjlcommercialgroup.com">info@rjlcommercialgroup.com</a>. <a href="/client-signup/">Request a client login</a>. The sign-up form does not ask for a password. We will be in touch shortly.</p><p>RJL Commercial. Thomastown, Melbourne. Safety devices stay in charge. A reported position needs a sensor. A portal pulse runs only where we commissioned it. Pictures on this website do not move a gate. A phone we have not added does nothing. Clients see only assigned gates. Emergency guidance does not replace the school's emergency procedures.</p></div>${button('Book a site report','/contact/?interest=School%20automation%20and%20Compass#project-enquiry')}</div>`, 'section-shell conversion-section')
+  };
+}
+
+export function localPages(helpers) {
+  const {hero,image,section,heading,cards,rows,faq,cta,link} = helpers;
+  const pages=sectors.map(s=>s.slug==='schools' ? schoolLocal(s, helpers) : ({
     route:`/solutions/${s.slug}/`,title:s.title,description:s.description,label:s.label,
     content:hero(s.eyebrow,s.h1,s.intro,image(s.image,s.alt,'MagicKeys configuration example · Features and compatible equipment are confirmed for your installation.'),'Discuss your site')+
       section(heading('YOUR OPERATING REQUIREMENTS',s.heading,s.lead)+cards(s.needs))+

@@ -21,18 +21,17 @@ function block({ id, eyebrow, title, text, frames, note = NOTE, interest, cta = 
   return `<section class="section-shell section-space" id="${id}">${heading(eyebrow, title, text)}<figure class="screen-shot"${frames.length > 1 ? ' data-screen-shot' : ''}><img src="/assets/${first.src}" width="1400" height="933" alt="${escape(first.alt)}" loading="lazy"><figcaption><strong>${escape(first.label)}</strong><span data-screen-caption>${escape(first.line)}</span></figcaption>${controls}</figure><p class="screen-note">${note}</p>${ask}</section>`;
 }
 
-const school = block({
+export const schoolScreen = block({
   id: 'school-in-use',
-  eyebrow: 'THE SCHOOL DAY',
-  title: 'Office desk.<br><span>Reception screen.</span>',
-  text: 'Staff use the same workspace from the desk, or they leave it on the screen in reception. After hours, staff leave the bookings on that desk, next to the gate plan.',
+  eyebrow: 'THE WORKSPACE',
+  title: 'The desk.<br><span>Then reception.</span>',
+  text: 'Staff open the commissioned gate from this screen. The same login sits on the office desk, on the reception screen, and on the desk after hours for bookings.',
   frames: [
     frame('Office desk', 'use-school-office-schedules.webp', 'School office. The week’s gate schedules.', 'School office desk with MagicKeys gate schedules on the monitor'),
     frame('Reception', 'use-school-lobby-gates.webp', 'Reception. The same workspace on the wall screen.', 'School reception wall screen showing the MagicKeys workspace'),
     frame('After hours', 'use-school-office-bookings.webp', 'After hours. Bookings on the office desk.', 'School office desk with MagicKeys bookings on the monitor')
   ],
-  interest: 'School automation and Compass',
-  cta: 'Discuss your school'
+  note: 'The buttons only change the picture. A phone we have not added does nothing. You see only the gates assigned to you. A portal pulse runs only where we commissioned it. A reported position needs a sensor. Safety devices stay in charge.'
 });
 
 function commercial(interest, cta) {
@@ -183,8 +182,8 @@ const contact = block({
 });
 
 const places = {
-  '/': school,
-  '/solutions/schools/': school,
+  '/': '',
+  '/solutions/schools/': '',
   '/platform/': commercial('Platform', 'Discuss the platform'),
   '/customisation/': commercial('Customisation', 'Discuss a custom app'),
   '/solutions/commercial-properties/': commercial('Commercial property & facilities', 'Discuss a commercial site'),
