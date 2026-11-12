@@ -261,6 +261,7 @@
 .life-card-wide{grid-column:span 2}
 .life-card img{width:100%;height:auto;display:block;object-fit:cover;aspect-ratio:1280/669;background:#d7e3ec;filter:none}
 .life-card:not(.life-card-wide) img{aspect-ratio:1248/773}
+.life-card.life-card-portrait img{aspect-ratio:384/512;object-fit:contain;object-position:center bottom;background:#d5dde3}
 .life-card figcaption{display:grid;gap:6px;padding:14px 16px 8px}
 .life-card strong{color:#0b3151;font-size:16px}
 .life-card figcaption span{color:#405f76;font-size:14px;line-height:1.55}

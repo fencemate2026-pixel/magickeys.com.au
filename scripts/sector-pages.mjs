@@ -130,7 +130,7 @@ export function sectorCards({includeCoverage=true}={}) {
 }
 
 const sectorGalleries={
-  schools:()=>schoolGallery()+hardwareGallery()+doorGallery()+acbGallery(),
+  schools:()=>schoolGallery()+hardwareGallery({spikes:false})+doorGallery()+acbGallery(),
   'owners-corporations':()=>doorGallery(),
   'aged-care':()=>doorGallery(),
   'commercial-properties':()=>hardwareGallery()+doorGallery(),

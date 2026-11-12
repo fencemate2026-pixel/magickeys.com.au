@@ -80,10 +80,16 @@ assert(home.includes('Open gates.')&&home.includes('Control your site.'),'Homepa
 assert(home.includes('integrate-existing-systems')&&home.includes('school-automation'),'Homepage all-in-one and school sections missing');
 assert(home.includes('Existing door access')&&home.includes('current CCTV'),'Homepage existing systems messaging missing');
 assert(home.includes('id="plan-your-site"')&&home.includes('id="home-faq"')&&home.includes('id="plan-school"')&&home.includes('id="plan-warehouse"'),'Homepage property chooser or answers missing');
-assert(home.includes('id="school-pictures"')&&home.includes('id="spike-boom-example"')&&home.includes('id="existing-doors"')&&home.includes('id="acb-004"'),'Homepage photoreal school, spike boom, door or ACB-004 section missing');
+assert(home.includes('id="school-pictures"')&&home.includes('id="ground-spikes-example"')&&home.includes('/assets/life-ground-spikes.webp')&&home.includes('id="existing-doors"')&&home.includes('id="acb-004"'),'Homepage photoreal school, ground spikes, door or ACB-004 section missing');
+assert(!home.includes('life-spike-boom')&&!/spike skirt/i.test(home),'Homepage still shows the hanging spike skirt');
 const schoolGuide=pages.get('/solutions/schools/').html;
 assert(schoolGuide.includes('Compass')&&schoolGuide.includes('existing door access')&&schoolGuide.includes('CCTV'),'School integration content missing');
-assert(schoolGuide.includes('ACB-004')&&schoolGuide.includes('not an automatically included or commissioned integration')&&schoolGuide.includes('life-spike-boom-closed.webp'),'School page must assess ACB-004 like Compass and show the spike-boom example');
+assert(schoolGuide.includes('ACB-004')&&schoolGuide.includes('not an automatically included or commissioned integration')&&!schoolGuide.includes('life-ground-spikes')&&!schoolGuide.includes('life-spike-boom')&&!/spike skirt/i.test(schoolGuide),'School page must assess ACB-004 like Compass and must not show tyre spikes');
+for (const route of ['/','/gate-control/','/solutions/commercial-properties/','/solutions/warehouses-logistics/']) {
+  const html=pages.get(route).html;
+  assert(html.includes('/assets/life-ground-spikes.webp')&&html.includes('not a school drop-off')&&!html.includes('life-spike-boom')&&!/spike skirt/i.test(html),'Real ground-spike photo missing or fake spike skirt still present on '+route);
+}
+assert(!existsSync(join(root,'assets','life-spike-boom-closed.webp'))&&!existsSync(join(root,'assets','life-spike-boom-open.webp')),'Fake spike-skirt images are still in the published assets');
 assert(schoolGuide.includes('id="school-in-use"')&&schoolGuide.includes('use-school-office-schedules.webp'),'School page is missing the office-desk workspace picture');
 assert(home.includes('data-screen-shot')&&home.includes('use-school-lobby-gates.webp'),'Homepage is missing the desk and reception screen switcher');
 const homeTitle=home.match(/<title>(.*?)<\/title>/)?.[1]||'';

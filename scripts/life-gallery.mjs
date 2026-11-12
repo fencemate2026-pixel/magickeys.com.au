@@ -5,8 +5,7 @@ const button = (text, href) => `<a class="btn btn-orange" href="${href}">${text}
 const heading = (eyebrow, title, text) => `<div class="section-heading"><div><div class="eyebrow">${eyebrow}</div><h2>${title}</h2></div><p>${text}</p></div>`;
 const section = (id, content) => `<section class="section-shell section-space" id="${id}">${content}</section>`;
 const sizes = {
-  'life-spike-boom-closed.webp': [1280, 669],
-  'life-spike-boom-open.webp': [1280, 669],
+  'life-ground-spikes.webp': [384, 512],
   'life-school-boom.webp': [1248, 773],
   'life-staff-door.webp': [1248, 773],
   'life-double-doors.webp': [1248, 773],
@@ -16,12 +15,13 @@ const sizes = {
   'life-swing-gates.webp': [1248, 773]
 };
 
-function shot(file, alt, title, text, { open = '', wide = false, id = '' } = {}) {
+function shot(file, alt, title, text, { open = '', wide = false, portrait = false, id = '' } = {}) {
   const [width, height] = sizes[file];
   const controls = open
     ? `<div class="life-controls"><button type="button" data-life-state="raised">Show raised</button><button type="button" data-life-state="closed" disabled>Show closed</button><span data-life-status>CLOSED</span></div>`
     : '';
-  return `<figure class="life-card${wide ? ' life-card-wide' : ''}"${id ? ` id="${id}"` : ''}${open ? ` data-life-shot data-life-closed="/assets/${file}" data-life-open="/assets/${open}"` : ''}><img src="/assets/${file}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy"><figcaption><strong>${escape(title)}</strong><span>${text}</span></figcaption>${controls}</figure>`;
+  const cardClass = `life-card${wide ? ' life-card-wide' : ''}${portrait ? ' life-card-portrait' : ''}`;
+  return `<figure class="${cardClass}"${id ? ` id="${id}"` : ''}${open ? ` data-life-shot data-life-closed="/assets/${file}" data-life-open="/assets/${open}"` : ''}><img src="/assets/${file}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy"><figcaption><strong>${escape(title)}</strong><span>${text}</span></figcaption>${controls}</figure>`;
 }
 
 export function schoolGallery() {
@@ -31,10 +31,22 @@ export function schoolGallery() {
     `<div class="life-actions">${button('Discuss your school', '/contact/?interest=School%20automation%20and%20Compass#project-enquiry')}</div>`);
 }
 
-export function hardwareGallery() {
-  return section('hardware-examples', heading('THE DRIVEWAY', 'A boom with a spike skirt.<br><span>Then a sliding gate and bollards.</span>', 'Each picture is an example. In the proposal, we name the equipment we can connect. We cannot promise that every brand will connect.') +
-    `<div class="life-grid">${shot('life-spike-boom-closed.webp', 'Boom gate closed across an empty driveway, with a black spike skirt hanging from the arm', 'Boom with a spike skirt', 'The same example, closed and then raised. The skirt is site safety equipment. We specify it and commission it on site. This button only changes the picture.', { open: 'life-spike-boom-open.webp', wide: true, id: 'spike-boom-example' })}${shot('life-sliding-gate.webp', 'Cantilever sliding gate with vertical slats, a ground track and an amber beacon', 'Sliding gate', 'A cantilever gate, with a ground track and a beacon. We confirm position feedback on the operator that is installed.')}${shot('life-bollards.webp', 'Three raised stainless bollards with orange reflective bands', 'Rising bollards', 'Three posts, raised, across a paved entrance. We commission the lowering and the raising with the safety devices on site.')}</div>` +
-    `<p class="life-note">Show raised swaps two still pictures. It does not move a boom, a skirt or a bollard. Skirts, ground loops and spikes are site safety equipment.</p>` +
+export function hardwareGallery({ spikes = true } = {}) {
+  const title = spikes
+    ? 'Tyre spikes in the road.<br><span>Then a sliding gate and bollards.</span>'
+    : 'A sliding gate.<br><span>Then rising bollards.</span>';
+  const intro = spikes
+    ? 'The first picture is an RJL project photo. The other two are examples. In the proposal, we name the equipment we can connect. We cannot promise that every brand will connect.'
+    : 'Each picture is an example. In the proposal, we name the equipment we can connect. We cannot promise that every brand will connect.';
+  const spikeCard = spikes
+    ? shot('life-ground-spikes.webp', 'RJL project photo of tyre spikes lying in a steel channel in the roadway, with a separate boom arm behind them', 'Tyre spikes in the road', 'RJL project photo. The teeth sit in a steel channel in the road. The boom arm is a separate barrier behind them. This is a vehicle exit, not a school drop-off. The picture does not move the equipment.', { portrait: true, id: 'ground-spikes-example' })
+    : '';
+  const note = spikes
+    ? 'There is one photograph, so this card has no raised and closed switch. The spikes lie in the roadway. They are not attached to the boom arm. This entrance is not a school drop-off.'
+    : 'These pictures are examples of vehicle entrances. This page does not move the equipment.';
+  return section('hardware-examples', heading('THE DRIVEWAY', title, intro) +
+    `<div class="life-grid">${spikeCard}${shot('life-sliding-gate.webp', 'Cantilever sliding gate with vertical slats, a ground track and an amber beacon', 'Sliding gate', 'A cantilever gate, with a ground track and a beacon. We confirm position feedback on the operator that is installed.')}${shot('life-bollards.webp', 'Three raised stainless bollards with orange reflective bands', 'Rising bollards', 'Three posts, raised, across a paved entrance. We commission the lowering and the raising with the safety devices on site.')}</div>` +
+    `<p class="life-note">${note}</p>` +
     `<div class="life-actions">${button('Discuss these entrances', '/contact/?interest=Gate%20control#project-enquiry')}</div>`);
 }
 
