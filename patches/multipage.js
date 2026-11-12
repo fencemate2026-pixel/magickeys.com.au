@@ -75,12 +75,78 @@
     });
   }
 
-  // Pass a product interest to the contact page without storing visitor data.
-  const subjects=new Set(['MagicKeys','Platform','Gate control','Anti-Tailgating Systems','CCTV & Sentinel','Emergency Guidance','Customisation','Security & integrations','Site solution','Site assessment','AI threat & fire detection development']);
+  // Pass a known product interest to the contact page. Unknown text is ignored.
+  const subjects=new Set(['MagicKeys','Platform','Gate control','Anti-Tailgating Systems','CCTV & Sentinel','Emergency Guidance','Customisation','Security & integrations','Site solution','Site assessment','AI threat & fire detection development','All-in-one site automation','School automation and Compass','Melbourne access control','Owners corporations & apartments','Schools & education','Aged care & retirement living','Commercial property & facilities','Warehouses, factories & logistics','Existing doors and access control','ACB-004 access control board']);
   const interest=new URLSearchParams(window.location.search).get('interest');
-  if(subjects.has(interest)) {
+  const known=subjects.has(interest);
+  const field=document.getElementById('enquiry-interest');
+  if(field) field.value='MagicKeys project enquiry'+(known?': '+interest:'');
+  if(known) {
     const context=document.getElementById('enquiry-context');
     const label=document.getElementById('enquiry-subject');
     if(context&&label) {label.textContent='Discuss '+interest;context.hidden=false;}
   }
+
+  // Keep the property chooser label in sync when a visitor picks a site type.
+  const chooser=document.getElementById('plan-your-site');
+  if(chooser) {
+    const mark=()=>{
+      const id=(window.location.hash||'#plan-school').slice(1);
+      chooser.querySelectorAll('.plan-choice').forEach(link=>{
+        if(link.getAttribute('href')==='#'+id) link.setAttribute('aria-current','true');
+        else if(typeof link.removeAttribute==='function') link.removeAttribute('aria-current');
+      });
+    };
+    mark();
+    window.addEventListener('hashchange',mark);
+  }
+
+  // Explain a missed enquiry field without replacing the browser's own check.
+  document.querySelectorAll('form').forEach(form=>{
+    if(form.getAttribute('name')!=='project-enquiry') return;
+    const note=form.querySelector('[data-form-error]');
+    form.addEventListener('invalid',()=>{ if(note) note.hidden=false; },true);
+    form.addEventListener('input',()=>{
+      if(note&&typeof form.checkValidity==='function'&&form.checkValidity()) note.hidden=true;
+    });
+  });
+
+  document.querySelectorAll('[data-life-shot]').forEach(shot=>{
+    const img=shot.querySelector('img');
+    const status=shot.querySelector('[data-life-status]');
+    if(!img) return;
+    shot.querySelectorAll('[data-life-state]').forEach(button=>{
+      button.addEventListener('click',()=>{
+        const state=button.getAttribute('data-life-state');
+        const next=state==='raised'?shot.getAttribute('data-life-open'):shot.getAttribute('data-life-closed');
+        if(next) img.src=next;
+        shot.querySelectorAll('[data-life-state]').forEach(other=>{
+          other.disabled=other.getAttribute('data-life-state')===state;
+        });
+        if(status) status.textContent=state==='raised'?'RAISED':'CLOSED';
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-screen-shot]').forEach(shot=>{
+    const img=shot.querySelector('img');
+    const line=shot.querySelector('[data-screen-caption]');
+    const title=shot.querySelector('strong');
+    if(!img) return;
+    shot.querySelectorAll('[data-screen-src]').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.disabled) return;
+        const src=button.getAttribute('data-screen-src');
+        const alt=button.getAttribute('data-screen-alt');
+        const text=button.getAttribute('data-screen-line');
+        if(src) img.src=src;
+        if(alt) img.alt=alt;
+        if(line&&text) line.textContent=text;
+        if(title) title.textContent=button.textContent.trim();
+        shot.querySelectorAll('[data-screen-src]').forEach(other=>{
+          other.disabled=other===button;
+        });
+      });
+    });
+  });
 })();

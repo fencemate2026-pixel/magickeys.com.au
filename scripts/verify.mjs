@@ -13,7 +13,7 @@ function walk(dir) {
 function assert(condition,message) { if(!condition) throw new Error(message); }
 const files=walk(root);
 const htmlFiles=files.filter(path=>path.endsWith('.html'));
-const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/client-signup/','/client-signup/thanks/','/contact/','/melbourne/',...sectors.map(s=>'/solutions/'+s.slug+'/')];
+const expectedRoutes=['/','/platform/','/gate-control/','/anti-tailgating/','/cctv/','/emergency-guidance/','/customisation/','/security-integrations/','/solutions/','/how-it-works/','/development/','/client-login/','/client-signup/','/client-signup/thanks/','/contact/','/contact/thanks/','/melbourne/',...sectors.map(s=>'/solutions/'+s.slug+'/')];
 const pages=new Map();
 const titles=new Set(), descriptions=new Set();
 const parseAttributes=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)\s*=\s*"([^"]*)"/g)].map(match=>[match[1],match[2]]));
@@ -79,8 +79,13 @@ assert(home.includes('promo-tablet-feature')&&['app-overview.svg','app-schedules
 assert(home.includes('Open gates.')&&home.includes('Control your site.'),'Homepage gate automation proposition missing');
 assert(home.includes('integrate-existing-systems')&&home.includes('school-automation'),'Homepage all-in-one and school sections missing');
 assert(home.includes('Existing door access')&&home.includes('current CCTV'),'Homepage existing systems messaging missing');
+assert(home.includes('id="plan-your-site"')&&home.includes('id="home-faq"')&&home.includes('id="plan-school"')&&home.includes('id="plan-warehouse"'),'Homepage property chooser or answers missing');
+assert(home.includes('id="school-pictures"')&&home.includes('id="spike-boom-example"')&&home.includes('id="existing-doors"')&&home.includes('id="acb-004"'),'Homepage photoreal school, spike boom, door or ACB-004 section missing');
 const schoolGuide=pages.get('/solutions/schools/').html;
 assert(schoolGuide.includes('Compass')&&schoolGuide.includes('existing door access')&&schoolGuide.includes('CCTV'),'School integration content missing');
+assert(schoolGuide.includes('ACB-004')&&schoolGuide.includes('not an automatically included or commissioned integration')&&schoolGuide.includes('life-spike-boom-closed.webp'),'School page must assess ACB-004 like Compass and show the spike-boom example');
+assert(schoolGuide.includes('id="school-in-use"')&&schoolGuide.includes('use-school-office-schedules.webp'),'School page is missing the office-desk workspace picture');
+assert(home.includes('data-screen-shot')&&home.includes('use-school-lobby-gates.webp'),'Homepage is missing the desk and reception screen switcher');
 const homeTitle=home.match(/<title>(.*?)<\/title>/)?.[1]||'';
 assert(/Gate Automation|Gate Control/.test(homeTitle)&&/CCTV/.test(homeTitle),'Homepage SEO title no longer matches gate/CCTV focus');
 
@@ -98,6 +103,10 @@ assert(clientSignup.includes('data-netlify="true"')&&clientSignup.includes('name
 assert(clientSignup.includes('name="full-name"')&&clientSignup.includes('name="email"')&&clientSignup.includes('name="mobile"')&&clientSignup.includes('name="organisation"')&&clientSignup.includes('name="site-name"')&&clientSignup.includes('name="site-address"')&&clientSignup.includes('name="access-needed"'),'Sign-up detail fields missing');
 assert(!clientSignup.includes('type="password"'),'Sign-up page must not collect a password');
 assert(pages.get('/client-signup/thanks/').html.includes('We will be in touch shortly'),'Sign-up confirmation missing');
+const projectEnquiry=pages.get('/contact/').html;
+assert(projectEnquiry.includes('id="project-enquiry"')&&projectEnquiry.includes('data-netlify="true"')&&projectEnquiry.includes('name="project-enquiry"')&&projectEnquiry.includes('action="/contact/thanks/"')&&projectEnquiry.includes('id="enquiry-interest"'),'Project enquiry form missing');
+assert(!projectEnquiry.includes('type="password"'),'Project enquiry must not collect a password');
+assert(pages.get('/contact/thanks/').html.includes('We will be in touch shortly'),'Project enquiry confirmation missing');
 assert(!clientLogin.includes('Balwyn High School')&&!clientLogin.includes('Campus access portal'),'School branding remains on the general login');
 assert(clientLogin.includes('/assets/client-access.js'),'Password visibility control missing');
 assert(pages.get('/development/').html.includes('IN DEVELOPMENT')&&pages.get('/development/').html.includes('Human acknowledgement'),'Development status or human acknowledgement missing');
@@ -133,13 +142,13 @@ for(const [route,page] of pages) {
 
 const sitemap=readFileSync(join(root,'sitemap.xml'),'utf8');
 const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
-const indexableRoutes=expectedRoutes.filter(route=>route!=='/client-login/'&&!route.startsWith('/client-signup/'));
+const indexableRoutes=expectedRoutes.filter(route=>route!=='/client-login/'&&!route.startsWith('/client-signup/')&&route!=='/contact/thanks/');
 assert(locations.length===indexableRoutes.length,'Sitemap page count mismatch');
 for(const route of indexableRoutes) assert(locations.includes('https://www.magickeys.com.au'+route),'Sitemap URL missing: '+route);
 assert(readFileSync(join(root,'robots.txt'),'utf8').includes('https://www.magickeys.com.au/sitemap.xml'),'Robots sitemap missing');
-assert(!locations.some(url=>url.includes('client-login')||url.includes('client-signup')||url.includes('404')),'Private utility pages must be absent from sitemap');
+assert(!locations.some(url=>url.includes('client-login')||url.includes('client-signup')||url.includes('contact/thanks')||url.includes('404')),'Private utility pages must be absent from sitemap');
 for(const [route,page] of pages) {
-  const noindex=route==='/client-login/'||route.startsWith('/client-signup/')||route==='/404.html';
+  const noindex=route==='/client-login/'||route.startsWith('/client-signup/')||route==='/contact/thanks/'||route==='/404.html';
   assert((page.html.match(/<meta name="robots"/g)||[]).length===1,'Expected one robots directive on '+route);
   assert(page.html.includes(noindex?'content="noindex, follow"':'content="index, follow, max-image-preview:large"'),'Unexpected indexing rule on '+route);
   const json=page.html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
@@ -150,6 +159,11 @@ for(const [route,page] of pages) {
   assert(graph.some(n=>n['@type']==='Organization'&&n.telephone==='+61400101132'),'Missing consistent business contact on '+route);
   assert(graph.some(n=>n['@id']==='https://www.magickeys.com.au'+route+'#webpage'),'Missing page entity on '+route);
   for(const n of graph) assert(!n.aggregateRating&&!n.review&&!n.address,'Unverified business claims must not be introduced');
+  if(!noindex&&page.html.includes('class="faq-list"')) {
+    const faqPage=graph.find(n=>n['@type']==='FAQPage');
+    assert(faqPage&&faqPage.mainEntity.length>=2,'Visible questions need FAQ structured data on '+route);
+    assert(faqPage.mainEntity.every(item=>item.name&&item.acceptedAnswer?.text&&!item.acceptedAnswer.text.includes('<')),'FAQ structured data must repeat a plain answer on '+route);
+  }
   if(route.startsWith('/solutions/')) {
     const crumbs=graph.find(n=>n['@type']==='BreadcrumbList');
     assert(crumbs?.itemListElement.length===3,'Industry page needs a complete breadcrumb hierarchy');

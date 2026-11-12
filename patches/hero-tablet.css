@@ -123,16 +123,16 @@ body[data-page="/anti-tailgating/"] .page-hero-copy>p{font-size:15px;line-height
 .promo-tablet-feature{width:min(920px,100%);margin-inline:auto}
 .promo-tablet .hero-tablet{animation:mk-tablet-drift 7s ease-in-out infinite}
 .promo-tablet-feature .hero-tablet{--tablet-base-y:-8deg;--tablet-base-x:3deg;--tablet-base-z:-1.6deg;padding:18px 22px 20px}
-.portal-tablet-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;align-items:start}
+.portal-tablet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:46px 32px;align-items:start;padding:16px 4px 8px}
 .portal-tablet-grid .promo-tablet:nth-child(2) .hero-tablet{--tablet-base-y:6.5deg;--tablet-base-z:1.4deg;animation-delay:-2s}
 .portal-tablet-grid .promo-tablet:nth-child(3) .hero-tablet{--tablet-base-y:-4deg;--tablet-base-z:-.8deg;animation-delay:-3.5s}
 .portal-tablet-grid .promo-tablet:nth-child(4) .hero-tablet{--tablet-base-y:5deg;--tablet-base-z:1deg;animation-delay:-1.2s}
 .promo-tablet .tablet-screen{aspect-ratio:1891/895;display:grid;background:var(--mk-app-paper)}
 .promo-tablet .tablet-screen>.detail-image-button{grid-area:1/1;height:100%;min-height:0;background:var(--mk-app-paper)}
 .promo-tablet .detail-image-button>img{width:100%;height:100%;object-fit:cover;object-position:center;filter:none}
-.promo-tablet figcaption{margin-top:14px;text-align:center;font-size:13px;line-height:1.6;color:#496b84}
+.promo-tablet figcaption{margin-top:16px;text-align:center;font-size:14px;line-height:1.6;color:#496b84}
 .portal-tablet-note{max-width:640px;margin:4px auto 0;text-align:center;font-size:15px;line-height:1.7;color:#4d6d84}
 @keyframes mk-tablet-drift{0%,100%{translate:0 0}50%{translate:0 -12px}}
-@media(max-width:980px){.portal-tablet-grid{grid-template-columns:1fr 1fr;gap:26px 18px}}
-@media(max-width:620px){.portal-tablet-grid{grid-template-columns:1fr}.promo-tablet .hero-tablet{animation:none}.promo-tablet figcaption{font-size:12px}}
+@media(max-width:860px){.portal-tablet-grid{grid-template-columns:1fr;gap:34px;max-width:720px;margin-inline:auto}}
+@media(max-width:620px){.portal-tablet-grid{max-width:none}.promo-tablet .hero-tablet{animation:none}.promo-tablet figcaption{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.promo-tablet .hero-tablet{animation:none}}

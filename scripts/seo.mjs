@@ -15,10 +15,11 @@ export const metadata={
   '/client-login/':['MagicKeys Client Login | Secure Site Access','Open your existing MagicKeys client portal to sign in. Your account, credentials and site permissions are managed in your organisation’s secure workspace.','Client login'],
   '/client-signup/':['MagicKeys Client Sign Up | Request access','Request a MagicKeys client account. Send your name, email, mobile, organisation and site details for the team to verify.','Client sign up'],
   '/client-signup/thanks/':['MagicKeys Client Sign Up | We will be in touch shortly','Your MagicKeys access request has been received. The team will check your details and contact you about your account.','Sign-up confirmation'],
-  '/contact/':['Discuss Gate Automation & CCTV Integration | MagicKeys','Talk to MagicKeys about automating gates, integrating compatible existing door access or CCTV, and planning school and commercial control systems in Melbourne.','Contact MagicKeys']
+  '/contact/':['Discuss Gate Automation & CCTV Integration | MagicKeys','Call MagicKeys on 0400 101 132 or send your site details. Discuss gate automation, compatible door access, CCTV and a configuration for your Melbourne property.','Contact MagicKeys'],
+  '/contact/thanks/':['MagicKeys project enquiry | We will be in touch shortly','Your MagicKeys project enquiry has been received. The team will read it and contact you about your site.','Project enquiry received']
 };
 export function applyMetadata(pages){
-  return pages.map(p=>{const m=metadata[p.route];return {...p,...(m?{title:m[0],description:m[1],label:m[2]}:{}),noindex:p.route==='/client-login/'||p.route.startsWith('/client-signup/')};});
+  return pages.map(p=>{const m=metadata[p.route];return {...p,...(m?{title:m[0],description:m[1],label:m[2]}:{}),noindex:p.route==='/client-login/'||p.route.startsWith('/client-signup/')||p.route==='/contact/thanks/'};});
 }
 const area={'@type':'City',name:'Melbourne',containedInPlace:{'@type':'State',name:'Victoria',containedInPlace:{'@type':'Country',name:'Australia'}}};
 const services={
@@ -48,7 +49,25 @@ export function structuredData(page){
     graph.push({'@type':'Service','@id':url+'#service',name:service,serviceType:service,url,provider:{'@id':org},areaServed:area,description:page.description});
     graph[2].mainEntity={'@id':url+'#service'};
   }
+  const questions=faqEntities(page.content||'');
+  if(questions.length&&!page.noindex){
+    graph.push({'@type':'FAQPage','@id':url+'#faq',url,isPartOf:{'@id':url+'#webpage'},mainEntity:questions.map(item=>({'@type':'Question',name:item.question,acceptedAnswer:{'@type':'Answer',text:item.answer}}))});
+  }
   return JSON.stringify({'@context':'https://schema.org','@graph':graph}).replaceAll('<','\\u003c');
+}
+function faqEntities(html){
+  const questions=[];
+  for(const block of html.matchAll(/<div class="faq-list">([\s\S]*?)<\/div>/g)){
+    for(const item of block[1].matchAll(/<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>/g)){
+      const question=plainText(item[1].replace(/<span>[\s\S]*?<\/span>/g,''));
+      const answer=plainText(item[2]);
+      if(question&&answer) questions.push({question,answer});
+    }
+  }
+  return questions;
+}
+function plainText(value){
+  return value.replace(/<[^>]+>/g,' ').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&#39;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>').replace(/\s+/g,' ').trim();
 }
 export function seoHead(page){
   return `<meta name="robots" content="${page.noindex?'noindex, follow':'index, follow, max-image-preview:large'}"><meta property="og:locale" content="en_AU"><meta property="og:site_name" content="MagicKeys"><meta property="og:image:width" content="1891"><meta property="og:image:height" content="895"><meta property="og:image:alt" content="MagicKeys app workspace with site access controls"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeAttribute(page.title)}"><meta name="twitter:description" content="${escapeAttribute(page.description)}"><meta name="twitter:image" content="${origin}/assets/app-reference.jpg"><script type="application/ld+json">${structuredData(page)}</script>`;

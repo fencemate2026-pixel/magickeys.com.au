@@ -260,6 +260,28 @@ export function verifyInteractions(pages) {
       assert.equal(stage.dataset.state,'closed');
       assert.equal(card.querySelector('.va-current').querySelector('span').textContent,card.dataset.vaKind==='bollard'?'RAISED':'CLOSED');
     }
+    const life=document.querySelector('[data-life-shot]');
+    if(life) {
+      const picture=life.querySelector('img');
+      const raised=life.querySelector('[data-life-state="raised"]');
+      raised.click();actions++;
+      assert.equal(picture.src,life.getAttribute('data-life-open'));
+      assert.equal(life.querySelector('[data-life-status]').textContent,'RAISED');
+      assert.equal(raised.disabled,true);
+      life.querySelector('[data-life-state="closed"]').click();actions++;
+      assert.equal(picture.src,life.getAttribute('data-life-closed'));
+      assert.equal(life.querySelector('[data-life-status]').textContent,'CLOSED');
+    }
+    const screen=document.querySelector('[data-screen-shot]');
+    if(screen) {
+      const shot=screen.querySelector('img');
+      const next=Array.from(screen.querySelectorAll('[data-screen-src]')).find(button=>!button.disabled);
+      next.click();actions++;
+      assert.equal(shot.src,next.getAttribute('data-screen-src'));
+      assert.equal(next.disabled,true);
+      assert.equal(screen.querySelector('[data-screen-caption]').textContent,next.getAttribute('data-screen-line'));
+      assert.equal(screen.querySelector('strong').textContent,next.textContent.trim());
+    }
     if(preview) {
       preview.click();actions++;
       assert.equal(node('image-dialog-image').src,preview.dataset.preview);
@@ -269,8 +291,16 @@ export function verifyInteractions(pages) {
   const validInterest=environment(pages.get('/contact/').html,'/contact/',true,'?interest=Anti-Tailgating%20Systems').document;
   assert.equal(validInterest.getElementById('enquiry-context').hidden,false);
   assert.equal(validInterest.getElementById('enquiry-subject').textContent,'Discuss Anti-Tailgating Systems');
+  assert.equal(validInterest.getElementById('enquiry-interest').value,'MagicKeys project enquiry: Anti-Tailgating Systems');
+  const schoolInterest=environment(pages.get('/contact/').html,'/contact/',true,'?interest=School%20automation%20and%20Compass').document;
+  assert.equal(schoolInterest.getElementById('enquiry-context').hidden,false);
+  assert.equal(schoolInterest.getElementById('enquiry-interest').value,'MagicKeys project enquiry: School automation and Compass');
+  const acbInterest=environment(pages.get('/contact/').html,'/contact/',true,'?interest=ACB-004%20access%20control%20board').document;
+  assert.equal(acbInterest.getElementById('enquiry-context').hidden,false);
+  assert.equal(acbInterest.getElementById('enquiry-interest').value,'MagicKeys project enquiry: ACB-004 access control board');
   const invalidInterest=environment(pages.get('/contact/').html,'/contact/',true,'?interest=%3Cscript%3E').document;
   assert.equal(invalidInterest.getElementById('enquiry-context').hidden,true);
+  assert.equal(invalidInterest.getElementById('enquiry-interest').value,'MagicKeys project enquiry');
   for(const [anchor,destination] of Object.entries({
     'portal-tour':'/platform/#portal-tour','platform':'/platform/#platform',
     'interactive-demo':'/gate-control/#interactive-demo','solutions':'/solutions/#solutions',

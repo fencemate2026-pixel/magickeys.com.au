@@ -1,3 +1,4 @@
+import { schoolGallery, hardwareGallery, doorGallery, acbGallery } from './life-gallery.mjs';
 // Substantive industry pages: each describes its own operating needs and project scope.
 export const sectors = [
   {
@@ -28,8 +29,8 @@ export const sectors = [
     slug:'schools', label:'Schools & education',
     title:'School Gate Automation & Compass Integration | MagicKeys',
     description:'Melbourne school gate and door access automation with compatible existing CCTV in one MagicKeys portal. Discuss authorised Compass integration and campus schedules.',
-    h1:'School automation.<br><span>One connected campus.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
-    intro:'Bring your school’s connected gate automation, compatible existing door access and current CCTV into one MagicKeys workspace. Staff can manage commissioned entrances, schedules, venue access and supported camera views from a customisable portal. Compass workflows can be assessed subject to authorisation and supported interfaces.',
+    h1:'Run the gates<br><span>from the office.</span>', eyebrow:'MELBOURNE / SCHOOLS & EDUCATION',
+    intro:'Staff use one workspace for the gates, the existing door access and the CCTV. They can put that screen on the office desk, or on the wall in reception. We assess Compass only where the school authorises it.',
     image:'app-schedules.svg', alt:'MagicKeys weekly gate schedules inside the consistent school access workspace',
     heading:'Different hours.<br>One campus plan.',
     lead:'A school entrance serves staff arrivals, student drop-off, deliveries, contractors and after-hours users. The useful starting point is a clear access plan for each group and each entrance.',
@@ -46,6 +47,7 @@ export const sectors = [
       ['Can school gates have different access schedules?','Schedules can be configured for connected entrances within the agreed project. We work through term-time routines, approved exceptions and the available controller interfaces before confirming the delivered behaviour.'],
       ['Can we coordinate access for after-hours stadium hire?','MagicKeys can be customised around approved venue bookings and connected gate access. The proposal defines the booking process, operator responsibilities and which entrances are included.'],
       ['Can MagicKeys connect our existing door access, CCTV and Compass?','We can assess supported door access controllers and camera interfaces and propose connections where compatible. Any Compass integration requires the school’s authorisation, the relevant approved API access and validation of the intended workflow. It is not an automatically included or commissioned integration.'],
+      ['Can an installed ACB-004 be connected the same way as Compass?','An ACB-004 can be assessed where the school or site authorises the connection and the readers, locks and network interface on that board are supported. Scope is confirmed before any connection is offered. It is not an automatically included or commissioned integration.'],
       ['Does this replace school emergency procedures?','No. Emergency Guidance is an optional, site-specific package assessed against the school’s agreed procedures. Required emergency systems, local safety devices and evacuation responsibilities remain part of the site’s overall arrangements.']
     ]
   },
@@ -127,6 +129,14 @@ export function sectorCards({includeCoverage=true}={}) {
   return `<div class="product-grid">${sectors.map(s=>`<a class="product-card" href="/solutions/${s.slug}/"><h3>${s.label}</h3><p>${s.intro.split('. ')[0]}.</p><span>Explore the requirements →</span></a>`).join('')}${includeCoverage?'<a class="product-card" href="/melbourne/"><h3>Melbourne service areas</h3><p>Discuss access control, CCTV and entrance integration across metropolitan Melbourne.</p><span>Find your area →</span></a>':''}</div>`;
 }
 
+const sectorGalleries={
+  schools:()=>schoolGallery()+hardwareGallery()+doorGallery()+acbGallery(),
+  'owners-corporations':()=>doorGallery(),
+  'aged-care':()=>doorGallery(),
+  'commercial-properties':()=>hardwareGallery()+doorGallery(),
+  'warehouses-logistics':()=>hardwareGallery()
+};
+
 export function localPages({hero,image,section,heading,cards,rows,faq,cta,link}) {
   const pages=sectors.map(s=>({
     route:`/solutions/${s.slug}/`,title:s.title,description:s.description,label:s.label,
@@ -138,6 +148,7 @@ export function localPages({hero,image,section,heading,cards,rows,faq,cta,link})
         ['03','Commission and hand over','Check the agreed behaviour onsite, review available feedback and explain the operating workflow to nominated staff.']
       ])+`<div class="overview-links">${s.links.map(([text,url])=>link(text,url)).join('')}</div>`)+
       section(heading('MELBOURNE SITE DISCUSSIONS','Local requirements.<br>Individual assessment.',s.local)+`<div class="overview-links">${link('Melbourne service areas','/melbourne/')}${link('Compare site solutions','/solutions/')}</div>`+faq(s.questions))+
+      (sectorGalleries[s.slug]?sectorGalleries[s.slug]():'')+
       cta('Tell us about your entrances.','Call 0400 101 132 or share your location, equipment and priorities. The team will discuss a suitable MagicKeys assessment.',s.label)
   }));
   pages.push({route:'/melbourne/',title:'Access Control & CCTV Melbourne | MagicKeys Service Areas',label:'Melbourne service areas',description:'Discuss Melbourne access control, CCTV and anti-tailgating with MagicKeys. Solutions for apartments, owners corporations, schools, aged care and commercial sites.',content:
