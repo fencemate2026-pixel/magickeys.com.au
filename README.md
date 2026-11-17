@@ -75,3 +75,12 @@ The retained Azure static configuration also sends legacy login URLs to the new 
 ## Vehicle access previews
 
 The homepage tablet now includes a boom barrier, retractable bollards and a sliding gate, alongside CCTV and overhead anti-tailgating. The gate-control and customisation workspaces show example camera views beside those controls. The security and anti-tailgating workspace shows simulated gates and doors above the camera wall. `scripts/vehicle-access.mjs` extends the original native mesh renderer with three vertically retracting bollards and creates matching SVG fallbacks. The same meshes produce the animated `app-vehicle-access.svg` used on the platform, customisation and client-entry pages. A complete interactive workspace on /gate-control/ and /customisation/ offers OPEN/CLOSE and LOWER/RAISE with matching position text and flashing status indicators. Reduced motion uses immediate position changes and steady LEDs. No live controller calls are made.
+
+## Magic Keys 4 Schools portal section - 17 November 2026
+
+`/solutions/schools/` now introduces Magic Keys 4 Schools, the portal school staff sign in to. `schoolPortal()` in `scripts/sector-pages.mjs` adds the Magic Keys 4 Schools logo, a Today page preview and a "School staff sign-in" button. `MK4S_SIGNIN` in the same file is the single source for the sign-in address (`https://admin.magickeys.com.au/operations`); `patches/client-access.html` carries the same link on `/client-login/`.
+
+- `site-assets/mk4s-logo.webp` is the logo file from the portal repository (`fencemate2026-pixel/-magic-keys-4-schools`, `public/operations/magic-keys-4-schools-logo.webp`).
+- `site-assets/mk4s-today-preview.webp` is a 1440x900 capture of the portal's own read-only preview (`/operations/demo`) taken on 17 November 2026. It shows sample data only. Re-capture it when the portal's Today page changes.
+- The page states only the plan rule the owner gave (commissioned gates plus after-hours and weekend schedules first; other parts locked until added) and what the preview shows. It says that some menu sections are optional or still being built.
+- School pages never offer a lockdown. `scripts/verify.mjs` fails the build if the schools page mentions one, or if the logo, the sample-data label or either sign-in link is missing.

@@ -63,3 +63,7 @@
 .client-login-help p{font:13px/1.7 Arial,Helvetica,sans-serif!important;margin:10px 0 0;color:#4a6579!important}
 .client-access-panel :is(input,button,a,summary):focus-visible{outline:3px solid #087ccc;outline-offset:3px}
 @media(max-width:760px){.client-section .client-access-intro :is(h1,h2){font-size:clamp(41px,11vw,63px)}}
+
+/* Magic Keys 4 Schools sign-in link on the client login panel (17 Nov 2026). */
+.client-school-signin{display:block;margin-top:12px;text-align:center;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:inherit}
+.client-school-signin:focus-visible{outline:2px solid currentColor;outline-offset:3px}

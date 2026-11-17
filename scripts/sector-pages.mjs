@@ -139,6 +139,31 @@ const sectorGalleries={
   'warehouses-logistics':()=>hardwareGallery()
 };
 
+// Magic Keys 4 Schools: the portal every school signs in to (17 Nov 2026).
+// One place for the address, so the page and its checks cannot drift apart.
+export const MK4S_SIGNIN = 'https://admin.magickeys.com.au/operations';
+const MK4S_PREVIEW = {src:'mk4s-today-preview.webp', width:1440, height:900};
+const MK4S_LOGO = {src:'mk4s-logo.webp', width:1200, height:483};
+
+// Portal section for the schools page. Every statement is either visible in the preview
+// picture (sample data) or is the owner's stated plan rule. Nothing here operates equipment.
+function schoolPortal({section, heading, cards}) {
+  const arrow = '<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>';
+  return section(
+    heading('THE SCHOOL PORTAL', 'Magic Keys 4 Schools.<br><span>One sign-in for your school.</span>', 'School staff sign in to Magic Keys 4 Schools. Each school sees its own site and the parts on its plan. The picture is the portal preview with sample data.') +
+    `<p class="mk4s-brand"><img src="/assets/${MK4S_LOGO.src}" width="${MK4S_LOGO.width}" height="${MK4S_LOGO.height}" alt="Magic Keys 4 Schools" loading="lazy"></p>` +
+    `<figure class="screen-shot mk4s-preview"><img src="/assets/${MK4S_PREVIEW.src}" width="${MK4S_PREVIEW.width}" height="${MK4S_PREVIEW.height}" alt="Magic Keys 4 Schools Today page preview showing local weather and the side menu, with sample data" loading="lazy"><figcaption><strong>Today page</strong><span>Preview with sample data. No real school records are shown.</span></figcaption></figure>` +
+    `<p class="screen-note">Some menu sections are optional and some are still being built. Your written scope lists what your school gets. This picture does not open a gate.</p>` +
+    cards([
+      ['Today, at a glance', 'The Today page opens with the local weather for the school. Gate control for your commissioned gates is part of the plan.', 'grid'],
+      ['Gates and schedules first', 'The plan starts with your commissioned gates and their after-hours and weekend schedules. The person you name runs them.', 'clock'],
+      ['Add parts when you want them', 'Other parts of the portal stay locked until the school adds them. Each one is an amount in writing before it is switched on.', 'lock'],
+      ['Your school only', 'Staff see their own school. Clients see only the gates assigned to them.', 'shield']
+    ]) +
+    `<div class="life-actions"><a class="btn btn-orange" href="${MK4S_SIGNIN}">School staff sign-in ${arrow}</a></div>`
+  );
+}
+
 function schoolLocal(s, {hero, image, section, heading, cards, rows, faq, link, button}) {
   const proof = 'More than 5,889 completed RJL jobs. 40+ years combined experience. 24/7. Thomastown, Melbourne.';
   const top = hero(
@@ -153,6 +178,7 @@ function schoolLocal(s, {hero, image, section, heading, cards, rows, faq, link, 
   return {
     route:'/solutions/schools/', title:s.title, description:s.description, label:s.label,
     content:top +
+      schoolPortal({section, heading, cards}) +
       section(heading('THREE JOBS', s.heading, s.lead) + cards(s.needs)) +
       section(heading('THE SCHOOL RECORD', s.planningTitle, s.planning) + `<p>${s.local}</p>`) +
       section(heading('IN THE LOGIN', 'What the named person<br>can run.', 'The base plan is one owner login, Open on the commissioned gate, and that owner\'s recent activity. Anything else is shown as an amount before it is switched on.') + cards([
