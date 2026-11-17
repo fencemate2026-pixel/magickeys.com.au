@@ -237,4 +237,13 @@ assert(readFileSync(join(root,'assets/app-vehicle-access.svg'),'utf8').includes(
   assert(login.includes(`href="${MK4S_SIGNIN}"`),'Client login page is missing the school staff sign-in link');
   assert(!/lock\s?down/i.test(schools),'Schools page must not mention lockdown');
 }
+// Homepage brand band (17 Nov 2026): the Schools logo leads the home page and both branches are shown and linked.
+{
+  const home = readFileSync(join(root,'index.html'),'utf8');
+  assert(home.includes('/assets/mk4-schools-banner.webp'),'Home page is missing the MagicKeys 4 Schools main logo');
+  assert(home.indexOf('mk4-schools-banner.webp') < home.indexOf('<section class="hero'),'The Schools logo must come before the home hero');
+  assert(/class="brand-branch" href="\/solutions\/schools\/"/.test(home)&&/class="brand-branch" href="\/solutions\/"/.test(home),'Home page must link both MagicKeys branches');
+  assert(home.includes('alt="MagicKeys 4 Access Control"'),'Home page is missing the Access Control branch logo');
+  assert((home.match(/<h1[\s>]/g)||[]).length===1,'Home page must keep exactly one main heading');
+}
 console.log('Verified '+expectedRoutes.length+' pages plus 404, '+links+' links/media references, all canonical URLs and sitemap entries, '+preserved+' unchanged original media assets, and page/control behaviour.');

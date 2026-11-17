@@ -330,3 +330,18 @@
 .mk4s-brand{margin:0 0 24px}
 .mk4s-brand img{width:min(320px,70%);height:auto;border-radius:12px;background:#fff;padding:10px 14px}
 .mk4s-preview img{width:100%;height:auto}
+
+/* Homepage brand band: Schools main logo, then the MagicKeys branches (17 Nov 2026). */
+.brand-band{padding-top:28px;padding-bottom:36px}
+.brand-main{margin:0 0 28px}
+.brand-main img{display:block;width:100%;height:auto;border-radius:16px;background:#fff}
+.brand-branches-title{margin:8px 0 20px}
+.brand-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.brand-branch{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:16px;background:#fff;color:#0e1630;text-decoration:none;border:1px solid rgba(14,22,48,.14);box-shadow:0 10px 28px rgba(5,12,32,.18);transition:transform .18s ease,box-shadow .18s ease}
+.brand-branch img{width:100%;height:auto;border-radius:10px}
+.brand-branch-line{font-size:1rem;line-height:1.5}
+.brand-branch-cta{font-weight:700;color:#c2410c;display:inline-flex;align-items:center;gap:8px}
+.brand-branch:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(5,12,32,.26)}
+.brand-branch:focus-visible{outline:3px solid #f97316;outline-offset:3px}
+@media (max-width:720px){.brand-branches{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.brand-branch{transition:none}.brand-branch:hover{transform:none}}
