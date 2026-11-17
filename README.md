@@ -84,3 +84,7 @@ The homepage tablet now includes a boom barrier, retractable bollards and a slid
 - `site-assets/mk4s-today-preview.webp` is a 1440x900 capture of the portal's own read-only preview (`/operations/demo`) taken on 17 November 2026. It shows sample data only. Re-capture it when the portal's Today page changes.
 - The page states only the plan rule the owner gave (commissioned gates plus after-hours and weekend schedules first; other parts locked until added) and what the preview shows. It says that some menu sections are optional or still being built.
 - School pages never offer a lockdown. `scripts/verify.mjs` fails the build if the schools page mentions one, or if the logo, the sample-data label or either sign-in link is missing.
+
+## Homepage brand band - 17 November 2026
+
+The home page now opens with the MagicKeys 4 Schools logo as its main logo (`site-assets/mk4-schools-banner.webp`, owner-supplied `4.png`), followed by an "Our branches" row linking MagicKeys 4 Schools (`/solutions/schools/`) and MagicKeys 4 Access Control (`/solutions/`, logo `site-assets/mk4-access-control.webp`, owner-supplied). `brandBand` in `scripts/pages.mjs` owns it; add a branch by adding one entry to `BRANCHES`. The header logo on every page is unchanged. `scripts/verify.mjs` checks the logo comes before the hero, both branches are linked and the page keeps one main heading.

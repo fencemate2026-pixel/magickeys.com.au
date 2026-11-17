@@ -181,11 +181,24 @@ export function buildPages() {
   const productGrid=section(heading('CONNECTED CAPABILITIES','Every entrance.<br>One control centre.','Open gates, incorporate compatible door access and existing CCTV, and manage your site from one customised workspace.')+
     `<div class="product-grid">${productCards.map(([href,name,title,text])=>`<a class="product-card" href="${href}">${icon(name)}<h3>${title}</h3><p>${text}</p><span>Explore ${arrow}</span></a>`).join('')}</div>`);
 
+  // Homepage brand band (17 Nov 2026, owner's instruction): the MagicKeys 4 Schools logo is the
+  // main logo on the home page, followed by the MagicKeys branches. Sizes are the real pixel
+  // sizes of the files in site-assets, so the browser reserves the space and nothing jumps.
+  const BRAND_MAIN={src:'mk4-schools-banner.webp',width:1600,height:592,alt:'MagicKeys 4 Schools. Secure access, safer environments, protecting futures.'};
+  const BRANCHES=[
+    {name:'MagicKeys 4 Schools',src:'mk4s-logo.webp',width:1200,height:483,href:'/solutions/schools/',line:'The school portal: commissioned gates and their schedules first.',cta:'See MagicKeys 4 Schools'},
+    {name:'MagicKeys 4 Access Control',src:'mk4-access-control.webp',width:1200,height:439,href:'/solutions/',line:'Gates, doors and CCTV for commercial sites, apartments and warehouses.',cta:'See access control'}
+  ];
+  const brandBand=section(
+    `<p class="brand-main"><img src="/assets/${BRAND_MAIN.src}" width="${BRAND_MAIN.width}" height="${BRAND_MAIN.height}" alt="${BRAND_MAIN.alt}" fetchpriority="high"></p>`+
+    `<div class="eyebrow">OUR BRANCHES</div><h2 class="brand-branches-title">One MagicKeys. A branch for your kind of site.</h2>`+
+    `<div class="brand-branches">${BRANCHES.map(b=>`<a class="brand-branch" href="${b.href}"><img src="/assets/${b.src}" width="${b.width}" height="${b.height}" alt="${b.name}" loading="lazy"><span class="brand-branch-line">${b.line}</span><span class="brand-branch-cta">${b.cta} <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>`).join('')}</div>`,
+    'section-shell brand-band','our-branches');
   const pages=[
     {
       route:'/', title:'MagicKeys | Open Gates, Control Doors & Integrate Existing CCTV',
       description:'Open and close automated gates, connect compatible existing door access and CCTV, and manage school and commercial sites in one MagicKeys portal. Discuss Compass integration for schools.',
-      content:homeHero+maker+integrationSpotlight+schoolSpotlight+schoolGallery()+hardwareGallery()+doorGallery()+acbGallery()+
+      content:brandBand+homeHero+maker+integrationSpotlight+schoolSpotlight+schoolGallery()+hardwareGallery()+doorGallery()+acbGallery()+
         section(heading('ALL-IN-ONE CONTROL','Your automation.<br>Your access. Your CCTV.','Keep the systems your team already uses in view: connected entrance controls, compatible existing CCTV and a workspace configured around your real site.')+
           portalShowcase+
           `<div class="overview-links">${link('Explore the platform','/platform/')}${link('See CCTV capabilities','/cctv/')}</div>`,'section-shell section-space home-overview','site-overview')+
