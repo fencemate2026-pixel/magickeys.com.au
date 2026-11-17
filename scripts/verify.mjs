@@ -222,4 +222,19 @@ for(const progress of [0,.25,.5,.75,1]) {
 }
 assert(shaftHeights.every((height,i)=>i===0||height<shaftHeights[i-1]),'Bollards must retract vertically as the driveway opens');
 assert(readFileSync(join(root,'assets/app-vehicle-access.svg'),'utf8').includes('Main sliding gate'),'Sliding gate missing from the vehicle portal image');
+// Magic Keys 4 Schools portal section (17 Nov 2026): the schools page must show the portal
+// logo, the sample-data preview and the school sign-in address; the client login page must
+// link to the same address. School pages must never offer a lockdown (fire is the only mode).
+{
+  const { MK4S_SIGNIN } = await import('./sector-pages.mjs');
+  const schools = readFileSync(join(root,'solutions/schools/index.html'),'utf8');
+  const login = readFileSync(join(root,'client-login/index.html'),'utf8');
+  assert(/^https:\/\/admin\.magickeys\.com\.au\//.test(MK4S_SIGNIN),'School sign-in must stay on the MagicKeys portal address');
+  assert(schools.includes('Magic Keys 4 Schools.<br>'),'Schools page is missing the Magic Keys 4 Schools section');
+  assert(schools.includes('/assets/mk4s-logo.webp')&&schools.includes('/assets/mk4s-today-preview.webp'),'Schools page is missing the portal logo or preview');
+  assert(schools.includes('Preview with sample data'),'Portal preview must be labelled as sample data');
+  assert(schools.includes(`href="${MK4S_SIGNIN}"`),'Schools page is missing the school staff sign-in link');
+  assert(login.includes(`href="${MK4S_SIGNIN}"`),'Client login page is missing the school staff sign-in link');
+  assert(!/lock\s?down/i.test(schools),'Schools page must not mention lockdown');
+}
 console.log('Verified '+expectedRoutes.length+' pages plus 404, '+links+' links/media references, all canonical URLs and sitemap entries, '+preserved+' unchanged original media assets, and page/control behaviour.');
